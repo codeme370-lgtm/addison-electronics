@@ -1,36 +1,45 @@
-import gs_logo from "./gs_logo.jpg"
-import happy_store from "./happy_store.webp"
 import upload_area from "./upload_area.svg"
-import hero_model_img from "./hero_model_img.png"
-import hero_model_img1 from "./dis.jpg"
-import hero_model_img2 from "./hero_model_img2.png"
-import hero_model_img3 from "./hero_model_img3.jpg"
-import hero1 from "./dis2.jpg"
-import hero2 from "./dis4.jpg"
-import hero_product_img1 from "./hero_product_img1.png"
-import hero_product_img2 from "./hero_product_img2.png"
-import product_img1 from "./product_img1.png"
-import product_img2 from "./product_img2.png"
-import product_img3 from "./product_img3.png"
-import product_img4 from "./product_img4.png"
-import product_img5 from "./product_img5.png"
-import product_img6 from "./product_img6.png"
-import product_img7 from "./product_img7.png"
-import product_img8 from "./product_img8.png"
-import product_img9 from "./product_img9.png"
-import product_img10 from "./product_img10.png"
-import product_img11 from "./product_img11.png"
-import product_img12 from "./product_img12.png"
+import ban1 from "./ban1.jpg"
+import ban2 from "./ban2.jpg"
+import ban3 from "./ban3.jpg"
+import ban4 from "./ban4.jpg"
+import ban5 from "./ban5.jpg"
 import { ClockFadingIcon, HeadsetIcon, SendIcon } from "lucide-react";
-import profile_pic1 from "./profile_pic1.jpg"
-import profile_pic2 from "./profile_pic2.jpg"
-import profile_pic3 from "./profile_pic3.jpg"
+
+// Many image assets referenced across the app are not present in the repo.
+// Map missing image identifiers to existing placeholder banner/upload assets so the app builds.
+const gs_logo = ban1
+const happy_store = ban2
+const hero_model_img = ban3
+const hero_model_img1 = ban3
+const hero_model_img2 = ban4
+const hero_model_img3 = ban5
+const hero1 = ban1
+const hero2 = ban2
+const hero_product_img1 = ban3
+const hero_product_img2 = ban4
+const product_img1 = ban1
+const product_img2 = ban2
+const product_img3 = ban3
+const product_img4 = ban4
+const product_img5 = ban5
+const product_img6 = ban1
+const product_img7 = ban2
+const product_img8 = ban3
+const product_img9 = ban4
+const product_img10 = ban5
+const product_img11 = ban1
+const product_img12 = ban2
+const profile_pic1 = ban3
+const profile_pic2 = ban4
+const profile_pic3 = ban5
 
 export const assets = {
     upload_area, hero_model_img, hero_model_img1, hero_model_img2, hero_model_img3, hero1, hero2,
     hero_product_img1, hero_product_img2, gs_logo,
     product_img1, product_img2, product_img3, product_img4, product_img5, product_img6,
     product_img7, product_img8, product_img9, product_img10, product_img11, product_img12,
+    ban1, ban2, ban3, ban4, ban5,
 }
 
 export const categories = ["Headphones", "Speakers", "Watch", "Earbuds", "Mouse", "Decoration"];

@@ -98,3 +98,24 @@
 .animate-continuousRight {
     animation: continuousSlideRight 4s ease-in-out infinite;
 }
+
+/* Blurred background for hero */
+.hero-bg-blur {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: blur(12px) saturate(0.95);
+    transform: scale(1.06);
+    z-index: 0;
+    pointer-events: none;
+    transition: opacity 600ms ease-in-out;
+}
+
+.hero-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.22);
+    z-index: 1;
+    pointer-events: none;
+}
