@@ -2,6 +2,7 @@
 
 import ProductDescription from "@/components/ProductDescription";
 import ProductDetails from "@/components/ProductDetails";
+import RelatedProducts from "@/components/RelatedProducts";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -38,6 +39,9 @@ export default function Product({ params }) {
 
                 {/* Description & Reviews */}
                 {product && (<ProductDescription product={product} />)}
+
+                {/* Related Products */}
+                {product && (<RelatedProducts product={product} />)}
             </div>
         </div>
     );

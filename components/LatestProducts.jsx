@@ -39,7 +39,7 @@ const LatestProducts = () => {
                         <div className='grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6'>
                             {categoryGroup.products.map((product, productIndex) => (
                                 <div key={productIndex} className='transform transition-all duration-300 hover:scale-105'>
-                                    <ProductCard product={product} />
+                                    <ProductCard product={product} hideAddToCart={true} />
                                 </div>
                             ))}
                         </div>

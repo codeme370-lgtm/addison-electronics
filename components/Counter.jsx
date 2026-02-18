@@ -2,7 +2,6 @@
 import { addToCart, removeFromCart } from "@/lib/features/cart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useUser } from '@clerk/nextjs'
-import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 
 const Counter = ({ productId }) => {
@@ -16,7 +15,6 @@ const Counter = ({ productId }) => {
     const addToCartHandler = () => {
         if (!isLoaded || !user) {
             toast.error('Please sign in to add items to your cart')
-            router.push('/sign-in')
             return
         }
         dispatch(addToCart({ productId }))

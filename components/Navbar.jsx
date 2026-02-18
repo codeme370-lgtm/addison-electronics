@@ -1,10 +1,13 @@
 'use client'
 import { PackageIcon, Search, ShoppingCart } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import Image from "next/image";
+import { useRouter, usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useClerk, UserButton,useUser,Protect } from "@clerk/nextjs";
+import logo from "@/app/logo.jpg";
+import "./Navbar.css";
 
 const Navbar = () => {
 //let's get the user
@@ -12,13 +15,29 @@ const { user } = useUser();
 //Get the  sign in form from clerk
 const {openSignIn}=useClerk();
     const router = useRouter();
+    const pathname = usePathname();
 
     const [search, setSearch] = useState('')
+    const [cartPulse, setCartPulse] = useState(false)
     const cartCount = useSelector(state => state.cart.total)
+
+    useEffect(() => {
+        if (cartCount > 0) {
+            setCartPulse(true)
+            const timer = setTimeout(() => setCartPulse(false), 600)
+            return () => clearTimeout(timer)
+        }
+    }, [cartCount])
 
     const handleSearch = (e) => {
         e.preventDefault()
         router.push(`/shop?search=${search}`)
+    }
+
+    const handleOpenSignIn = () => {
+        openSignIn({
+            redirectUrl: pathname
+        })
     }
 
     return (
@@ -26,8 +45,19 @@ const {openSignIn}=useClerk();
             <div className="mx-6">
                 <div className="flex items-center justify-between max-w-7xl mx-auto py-4  transition-all">
 
-                    <Link href="/" className="relative text-4xl font-semibold text-slate-700">
-                        <span className="text-green-600">jees</span>cage<span className="text-green-600 text-5xl leading-0">.</span>
+                    <Link href="/" className="relative flex items-center gap-3">
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden shadow-lg flex-shrink-0 border-2 border-green-600">
+                            <Image 
+                                src={logo} 
+                                alt="JeesCage Logo" 
+                                width={56}
+                                height={56}
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
+                        <span className="text-3xl sm:text-4xl font-semibold text-slate-700">
+                            <span className="text-green-600">jees</span>cage<span className="text-green-600 text-4xl sm:text-5xl leading-0">.</span>
+                        </span>
                         <Protect plan="plus">
                         <p className="absolute text-xs font-semibold -top-1 -right-8 px-3 p-0.5 rounded-full flex items-center gap-2 text-white bg-green-500">
                             plus
@@ -47,14 +77,18 @@ const {openSignIn}=useClerk();
                             <input className="w-full bg-transparent outline-none placeholder-slate-600" type="text" placeholder="Search products" value={search} onChange={(e) => setSearch(e.target.value)} required />
                         </form>
 
-                        <Link href="/cart" className="relative flex items-center gap-2 text-slate-600">
-                            <ShoppingCart size={18} />
+                        <Link href="/cart" className="relative flex items-center gap-2 text-slate-600 hover:text-slate-800 transition group">
+                            <ShoppingCart size={18} className="group-hover:scale-110 transition" />
                             Cart
-                            <button className="absolute -top-1 left-3 text-[8px] text-white bg-slate-600 size-3.5 rounded-full">{cartCount}</button>
+                            {cartCount > 0 && (
+                                <span className={`absolute -top-2 left-2 text-[10px] text-white bg-gradient-to-r from-red-500 to-red-600 size-5 rounded-full flex items-center justify-center font-bold shadow-lg ring-2 ring-white ${cartPulse ? 'cart-badge-pulse' : 'cart-badge-bounce'}`}>
+                                    {cartCount}
+                                </span>
+                            )}
                         </Link>
                          {
                             !user ? (
-                             <button onClick={openSignIn} className="px-8 py-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full">
+                             <button onClick={handleOpenSignIn} className="px-8 py-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full">
                             Login
                         </button>
                             ): (
@@ -71,17 +105,21 @@ const {openSignIn}=useClerk();
 
                     </div>
 
-                    {/* Mobile User Button  */}
-                    <div className="sm:hidden">
+                    {/* Mobile User Button and Cart Badge */}
+                    <div className="sm:hidden flex items-center gap-3">
+                        {/* Mobile Cart Badge */}
+                        <Link href="/cart" className="relative flex items-center gap-2 text-slate-600 hover:text-slate-800 transition">
+                            <ShoppingCart size={20} />
+                            {cartCount > 0 && (
+                                <span className={`absolute -top-1 -right-2 text-[10px] text-white bg-gradient-to-r from-red-500 to-red-600 size-5 rounded-full flex items-center justify-center font-bold shadow-lg ring-2 ring-white ${cartPulse ? 'cart-badge-pulse' : 'cart-badge-bounce'}`}>
+                                    {cartCount}
+                                </span>
+                            )}
+                        </Link>
+                        
                         {
                             user ? (
                                 <div>
-                                <UserButton>
-                                    <UserButton.MenuItems>
-                                        <UserButton.Action labelIcon={<PackageIcon size={16}/>}
-                                         label="My Cart" onClick={()=>router.push('/cart')}/>
-                                    </UserButton.MenuItems>
-                                </UserButton>
                                 <UserButton>
                                     <UserButton.MenuItems>
                                         <UserButton.Action labelIcon={<PackageIcon size={16}/>}
@@ -90,8 +128,7 @@ const {openSignIn}=useClerk();
                                 </UserButton>
 
                                 </div>
-                            ): (
-<button onClick={openSignIn} className="px-7 py-1.5 bg-indigo-500 hover:bg-indigo-600 text-sm transition text-white rounded-full">
+                            ): (<button onClick={handleOpenSignIn} className="px-7 py-1.5 bg-indigo-500 hover:bg-indigo-600 text-sm transition text-white rounded-full">
                             Login
                         </button>
                             )

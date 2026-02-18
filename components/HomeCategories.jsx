@@ -32,7 +32,7 @@ const HomeCategories = () => {
                             <div className='flex gap-4 px-4 sm:px-0'>
                                 {sorted.slice(0, displayPerCategory).map((product, i) => (
                                     <div key={product.id || i} className='min-w-[160px] sm:min-w-[190px] md:min-w-[220px] flex-shrink-0'>
-                                        <ProductCard product={product} />
+                                        <ProductCard product={product} hideAddToCart={true} />
                                     </div>
                                 ))}
                             </div>
