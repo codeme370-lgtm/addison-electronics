@@ -99,6 +99,31 @@ const {openSignIn}=useClerk();
                         
                     </div>
                 </div>
+                
+                {/* Mobile Navigation: Search bar and page links on top of banner */}
+                <div className="sm:hidden max-w-7xl mx-auto pb-4 space-y-3">
+                    {/* Mobile Search Bar */}
+                    <form onSubmit={handleSearch} className="flex items-center text-sm gap-3 bg-gradient-to-r from-slate-50 to-slate-100 px-4 py-3 rounded-xl shadow-md border border-slate-200 hover:shadow-lg hover:border-slate-300 transition-all duration-200">
+                        <Search size={20} className="text-green-600 flex-shrink-0" />
+                        <input className="w-full bg-transparent outline-none placeholder-slate-400 text-slate-700 font-medium" type="text" placeholder="Search your favorite products..." value={search} onChange={(e) => setSearch(e.target.value)} required />
+                    </form>
+                    
+                    {/* Mobile Page Navigators */}
+                    <div className="flex items-center gap-2 justify-center p-3 bg-gradient-to-r from-indigo-50 to-green-50 rounded-xl border border-indigo-100 shadow-sm">
+                        <Link href="/" className="flex-1 px-3 py-2 text-center text-sm font-semibold text-slate-700 hover:text-green-600 hover:bg-white rounded-lg transition-all duration-200 hover:shadow-md">
+                            Home
+                        </Link>
+                        <Link href="/shop" className="flex-1 px-3 py-2 text-center text-sm font-semibold text-slate-700 hover:text-green-600 hover:bg-white rounded-lg transition-all duration-200 hover:shadow-md">
+                            Shop
+                        </Link>
+                        <Link href="/about" className="flex-1 px-3 py-2 text-center text-sm font-semibold text-slate-700 hover:text-green-600 hover:bg-white rounded-lg transition-all duration-200 hover:shadow-md">
+                            About
+                        </Link>
+                        <Link href="/contact" className="flex-1 px-3 py-2 text-center text-sm font-semibold text-slate-700 hover:text-green-600 hover:bg-white rounded-lg transition-all duration-200 hover:shadow-md">
+                            Contact
+                        </Link>
+                    </div>
+                </div>
             </div>
             <hr className="border-gray-300" />
         </nav>
