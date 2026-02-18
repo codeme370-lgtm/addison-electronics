@@ -21,6 +21,7 @@ export async function POST(request) {
 
     const formData = await request.formData();
     const name = formData.get("name");
+    const brand = formData.get("brand");
     const description = formData.get("description");
     const price = Number(formData.get("price"));
     const category = formData.get("category");
@@ -47,6 +48,7 @@ export async function POST(request) {
     await prisma.product.create({
       data: {
         name,
+        brand,
         description,
         mrp,
         price,

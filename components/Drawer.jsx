@@ -1,8 +1,10 @@
-'use client'
+"use client"
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { X, ShoppingCart, Box, Tag, Home, User, Briefcase, Phone } from 'lucide-react'
 import { useSelector } from 'react-redux'
+import logo from '@/app/logo.jpg'
 
 const Drawer = ({ open, onClose }) => {
     const cartCount = useSelector(state => state.cart.total)
@@ -10,13 +12,21 @@ const Drawer = ({ open, onClose }) => {
     return (
         <>
             {/* Overlay */}
-            <div className={`fixed inset-0 bg-black/40 transition-opacity ${open ? 'opacity-100 visible' : 'opacity-0 invisible'}`} onClick={onClose} />
+            <div className={`fixed inset-0 bg-black/40 transition-opacity ${open ? 'opacity-100 visible' : 'opacity-0 invisible'}`} onClick={onClose} style={{ zIndex: 40 }} />
 
-            {/* Drawer panel (right side) */}
-            <aside className={`fixed top-0 right-0 h-full w-80 sm:w-96 bg-white shadow-2xl transform transition-transform duration-300 ${open ? 'translate-x-0' : 'translate-x-full'}`} aria-hidden={!open}>
+            {/* Drawer panel (left side) */}
+            <aside className={`fixed top-0 left-0 h-full w-80 sm:w-96 bg-white shadow-2xl transform transition-transform duration-300 ${open ? 'translate-x-0' : '-translate-x-full'}`} aria-hidden={!open} style={{ zIndex: 50 }}>
                 <div className="p-4 h-full flex flex-col">
                     <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-bold">Menu</h3>
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-green-600 shadow">
+                                <Image src={logo} alt="jeescage" width={40} height={40} className="object-cover w-full h-full" />
+                            </div>
+                            <div>
+                                <div className="text-sm font-semibold text-slate-800">jees<span className="text-green-600">cage</span></div>
+                                <div className="text-xs text-slate-500">Shop smarter</div>
+                            </div>
+                        </div>
                         <button onClick={onClose} aria-label="Close menu" className="p-2 rounded-md hover:bg-slate-100">
                             <X />
                         </button>
