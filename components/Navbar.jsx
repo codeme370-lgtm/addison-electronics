@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useClerk, UserButton,useUser,Protect } from "@clerk/nextjs";
 import logo from "@/app/logo.jpg";
+import Drawer from './Drawer'
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -20,6 +21,7 @@ const {openSignIn}=useClerk();
     const [search, setSearch] = useState('')
     const [cartPulse, setCartPulse] = useState(false)
     const cartCount = useSelector(state => state.cart.total)
+    const [drawerOpen, setDrawerOpen] = useState(false)
 
     useEffect(() => {
         if (cartCount > 0) {
@@ -45,7 +47,13 @@ const {openSignIn}=useClerk();
             <div className="mx-6">
                 <div className="flex items-center justify-between max-w-7xl mx-auto py-4  transition-all">
 
-                    <Link href="/" className="relative flex items-center gap-3">
+                    <div className="flex items-center gap-3">
+                        <button aria-label="Open menu" onClick={() => setDrawerOpen(true)} className="p-2 rounded-md hover:bg-slate-100 mr-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                        <Link href="/" className="relative flex items-center gap-3">
                         <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden shadow-lg flex-shrink-0 border-2 border-green-600">
                             <Image 
                                 src={logo} 
@@ -63,7 +71,8 @@ const {openSignIn}=useClerk();
                             plus
                         </p>
                         </Protect>
-                    </Link>
+                        </Link>
+                    </div>
 
                     {/* Desktop Menu */}
                     <div className="hidden sm:flex items-center gap-4 lg:gap-8">
@@ -175,6 +184,7 @@ const {openSignIn}=useClerk();
                 </div>
             </div>
             <hr className="border-gray-300" />
+            <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
         </nav>
     )
 }
