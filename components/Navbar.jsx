@@ -66,19 +66,31 @@ const {openSignIn}=useClerk();
                     </Link>
 
                     {/* Desktop Menu */}
-                    <div className="hidden sm:flex items-center gap-4 lg:gap-8 text-slate-600">
-                        <Link href="/">Home</Link>
-                        <Link href="/shop">Shop</Link>
-                        <Link href="/about">About</Link>
-                        <Link href="/contact">Contact</Link>
+                    <div className="hidden sm:flex items-center gap-4 lg:gap-8">
+                        <Link href="/" className="text-slate-700 font-medium hover:text-green-600 transition-all duration-300 relative group">
+                            Home
+                            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-green-600 to-green-400 group-hover:w-full transition-all duration-300"></span>
+                        </Link>
+                        <Link href="/shop" className="text-slate-700 font-medium hover:text-green-600 transition-all duration-300 relative group">
+                            Shop
+                            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-green-600 to-green-400 group-hover:w-full transition-all duration-300"></span>
+                        </Link>
+                        <Link href="/about" className="text-slate-700 font-medium hover:text-green-600 transition-all duration-300 relative group">
+                            About
+                            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-green-600 to-green-400 group-hover:w-full transition-all duration-300"></span>
+                        </Link>
+                        <Link href="/contact" className="text-slate-700 font-medium hover:text-green-600 transition-all duration-300 relative group">
+                            Contact
+                            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-green-600 to-green-400 group-hover:w-full transition-all duration-300"></span>
+                        </Link>
 
-                        <form onSubmit={handleSearch} className="hidden xl:flex items-center w-xs text-sm gap-2 bg-slate-100 px-4 py-3 rounded-full">
-                            <Search size={18} className="text-slate-600" />
-                            <input className="w-full bg-transparent outline-none placeholder-slate-600" type="text" placeholder="Search products" value={search} onChange={(e) => setSearch(e.target.value)} required />
+                        <form onSubmit={handleSearch} className="hidden xl:flex items-center w-xs text-sm gap-2 bg-gradient-to-r from-slate-50 to-slate-100 px-4 py-3 rounded-full border-2 border-slate-200 hover:border-green-400 focus-within:border-green-500 shadow-md hover:shadow-lg transition-all duration-300">
+                            <Search size={18} className="text-green-600" />
+                            <input className="w-full bg-transparent outline-none placeholder-slate-500 text-slate-700 font-medium" type="text" placeholder="Search products" value={search} onChange={(e) => setSearch(e.target.value)} required />
                         </form>
 
-                        <Link href="/cart" className="relative flex items-center gap-2 text-slate-600 hover:text-slate-800 transition group">
-                            <ShoppingCart size={18} className="group-hover:scale-110 transition" />
+                        <Link href="/cart" className="relative flex items-center gap-2 text-slate-700 font-medium hover:text-green-600 transition-all duration-300 group px-3 py-2 rounded-lg hover:bg-green-50">
+                            <ShoppingCart size={18} className="group-hover:scale-125 transition-transform duration-300" />
                             Cart
                             {cartCount > 0 && (
                                 <span className={`absolute -top-2 left-2 text-[10px] text-white bg-gradient-to-r from-red-500 to-red-600 size-5 rounded-full flex items-center justify-center font-bold shadow-lg ring-2 ring-white ${cartPulse ? 'cart-badge-pulse' : 'cart-badge-bounce'}`}>
@@ -88,7 +100,7 @@ const {openSignIn}=useClerk();
                         </Link>
                          {
                             !user ? (
-                             <button onClick={handleOpenSignIn} className="px-8 py-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full">
+                             <button onClick={handleOpenSignIn} className="px-8 py-2.5 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 transition-all duration-300 text-white font-bold rounded-full shadow-lg hover:shadow-xl hover:scale-105">
                             Login
                         </button>
                             ): (
@@ -108,8 +120,8 @@ const {openSignIn}=useClerk();
                     {/* Mobile User Button and Cart Badge */}
                     <div className="sm:hidden flex items-center gap-3">
                         {/* Mobile Cart Badge */}
-                        <Link href="/cart" className="relative flex items-center gap-2 text-slate-600 hover:text-slate-800 transition">
-                            <ShoppingCart size={20} />
+                        <Link href="/cart" className="relative flex items-center gap-2 text-slate-700 font-semibold hover:text-green-600 transition-all duration-300 p-2 rounded-lg hover:bg-green-50">
+                            <ShoppingCart size={20} className="hover:scale-125 transition-transform duration-300" />
                             {cartCount > 0 && (
                                 <span className={`absolute -top-1 -right-2 text-[10px] text-white bg-gradient-to-r from-red-500 to-red-600 size-5 rounded-full flex items-center justify-center font-bold shadow-lg ring-2 ring-white ${cartPulse ? 'cart-badge-pulse' : 'cart-badge-bounce'}`}>
                                     {cartCount}
@@ -128,7 +140,7 @@ const {openSignIn}=useClerk();
                                 </UserButton>
 
                                 </div>
-                            ): (<button onClick={handleOpenSignIn} className="px-7 py-1.5 bg-indigo-500 hover:bg-indigo-600 text-sm transition text-white rounded-full">
+                            ): (<button onClick={handleOpenSignIn} className="px-7 py-1.5 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-sm font-bold transition-all duration-300 text-white rounded-full shadow-lg hover:shadow-xl hover:scale-105">
                             Login
                         </button>
                             )
@@ -140,24 +152,24 @@ const {openSignIn}=useClerk();
                 {/* Mobile Navigation: Search bar and page links on top of banner */}
                 <div className="sm:hidden max-w-7xl mx-auto pb-4 space-y-3">
                     {/* Mobile Search Bar */}
-                    <form onSubmit={handleSearch} className="flex items-center text-sm gap-3 bg-gradient-to-r from-slate-50 to-slate-100 px-4 py-3 rounded-xl shadow-md border border-slate-200 hover:shadow-lg hover:border-slate-300 transition-all duration-200">
+                    <form onSubmit={handleSearch} className="flex items-center text-sm gap-3 bg-gradient-to-r from-green-50 to-slate-100 px-4 py-3 rounded-2xl shadow-md border-2 border-green-200 hover:shadow-lg hover:border-green-400 focus-within:border-green-500 transition-all duration-300">
                         <Search size={20} className="text-green-600 flex-shrink-0" />
                         <input className="w-full bg-transparent outline-none placeholder-slate-400 text-slate-700 font-medium" type="text" placeholder="Search your favorite products..." value={search} onChange={(e) => setSearch(e.target.value)} required />
                     </form>
                     
                     {/* Mobile Page Navigators */}
-                    <div className="flex items-center gap-2 justify-center p-3 bg-gradient-to-r from-indigo-50 to-green-50 rounded-xl border border-indigo-100 shadow-sm">
-                        <Link href="/" className="flex-1 px-3 py-2 text-center text-sm font-semibold text-slate-700 hover:text-green-600 hover:bg-white rounded-lg transition-all duration-200 hover:shadow-md">
-                            Home
+                    <div className="flex items-center gap-2 justify-center p-3 bg-gradient-to-r from-green-50 via-slate-50 to-indigo-50 rounded-2xl border-2 border-green-200 shadow-md">
+                        <Link href="/" className="flex-1 px-3 py-2.5 text-center text-xs sm:text-sm font-bold text-slate-700 bg-white hover:bg-gradient-to-r hover:from-green-500 hover:to-green-400 hover:text-white rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 border border-slate-200 hover:border-green-500">
+                            🏠 Home
                         </Link>
-                        <Link href="/shop" className="flex-1 px-3 py-2 text-center text-sm font-semibold text-slate-700 hover:text-green-600 hover:bg-white rounded-lg transition-all duration-200 hover:shadow-md">
-                            Shop
+                        <Link href="/shop" className="flex-1 px-3 py-2.5 text-center text-xs sm:text-sm font-bold text-slate-700 bg-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 hover:text-white rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 border border-slate-200 hover:border-blue-500">
+                            🛍️ Shop
                         </Link>
-                        <Link href="/about" className="flex-1 px-3 py-2 text-center text-sm font-semibold text-slate-700 hover:text-green-600 hover:bg-white rounded-lg transition-all duration-200 hover:shadow-md">
-                            About
+                        <Link href="/about" className="flex-1 px-3 py-2.5 text-center text-xs sm:text-sm font-bold text-slate-700 bg-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-purple-400 hover:text-white rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 border border-slate-200 hover:border-purple-500">
+                            ℹ️ About
                         </Link>
-                        <Link href="/contact" className="flex-1 px-3 py-2 text-center text-sm font-semibold text-slate-700 hover:text-green-600 hover:bg-white rounded-lg transition-all duration-200 hover:shadow-md">
-                            Contact
+                        <Link href="/contact" className="flex-1 px-3 py-2.5 text-center text-xs sm:text-sm font-bold text-slate-700 bg-white hover:bg-gradient-to-r hover:from-orange-500 hover:to-orange-400 hover:text-white rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 border border-slate-200 hover:border-orange-500">
+                            📧 Contact
                         </Link>
                     </div>
                 </div>
