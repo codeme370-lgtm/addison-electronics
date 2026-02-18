@@ -54,78 +54,77 @@ const ProductCard = ({ product, hideAddToCart = false }) => {
 
     return (
         <Link href={`/product/${product.id}`} className='group max-xl:mx-auto block'>
-            <div className='flex flex-col h-full'>
-                {/* Product Image Container */}
-                <div className='relative bg-gradient-to-br from-slate-100 to-slate-50 h-32 sm:h-40 md:h-56 lg:h-68 w-full rounded-lg flex items-center justify-center overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300'>
+            <div className='relative'>
+                {/* Product Image */}
+                <div className='bg-gradient-to-br from-slate-100 to-slate-50 h-40 w-full sm:h-68 rounded-lg flex items-center justify-center overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300'>
                     <Image 
-                        width={300} 
-                        height={300}
+                        width={500} 
+                        height={500}
                         className='w-full h-full object-contain group-hover:scale-115 transition duration-300' 
                         src={product.images?.[0] || '/placeholder.jpg'} 
                         alt={product?.name ? `${product.name} image` : 'Product image'} 
-                        priority={false}
                     />
-
-                    {/* Add to Cart Button - Overlay on Hover */}
-                    {!hideAddToCart && (
-                        <button
-                            onClick={handleAddToCart}
-                            disabled={isAdding}
-                            className={`absolute bottom-0 left-0 right-0 py-2 sm:py-3 px-4 font-semibold text-white text-xs sm:text-sm flex items-center justify-center gap-2 transition-all duration-300 transform rounded-t-lg ${
-                                addedSuccess
-                                    ? 'bg-green-500 translate-y-0'
-                                    : 'translate-y-full group-hover:translate-y-0 bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-900 hover:to-black'
-                            } ${isAdding ? 'opacity-90' : ''}`}
-                        >
-                            {isAdding ? (
-                                <>
-                                    <div className='w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin'></div>
-                                    <span className='hidden sm:inline'>Adding...</span>
-                                </>
-                            ) : addedSuccess ? (
-                                <>
-                                    <Check size={16} className='animate-bounce' />
-                                    <span className='hidden sm:inline'>Added!</span>
-                                </>
-                            ) : (
-                                <>
-                                    <ShoppingCart size={14} />
-                                    <span className='hidden sm:inline'>{cart[product.id] ? 'View in Cart' : 'Add to Cart'}</span>
-                                </>
-                            )}
-                        </button>
-                    )}
-
-                    {/* Stock Badge */}
-                    {product.inStock ? (
-                        <div className='absolute top-2 right-2 bg-green-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs font-bold shadow-lg animate-pulse'>
-                            In Stock
-                        </div>
-                    ) : (
-                        <div className='absolute top-2 right-2 bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs font-bold shadow-lg'>
-                            Out of Stock
-                        </div>
-                    )}
                 </div>
 
+                {/* Add to Cart Button - Overlay on Hover */}
+                {!hideAddToCart && (
+                    <button
+                        onClick={handleAddToCart}
+                        disabled={isAdding}
+                        className={`absolute bottom-0 left-0 right-0 py-3 px-4 font-semibold text-white text-sm flex items-center justify-center gap-2 transition-all duration-300 transform rounded-t-lg ${
+                            addedSuccess
+                                ? 'bg-green-500 translate-y-0'
+                                : 'translate-y-full group-hover:translate-y-0 bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-900 hover:to-black'
+                        } ${isAdding ? 'opacity-90' : ''}`}
+                    >
+                        {isAdding ? (
+                            <>
+                                <div className='w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin'></div>
+                                Adding...
+                            </>
+                        ) : addedSuccess ? (
+                            <>
+                                <Check size={18} className='animate-bounce' />
+                                Added!
+                            </>
+                        ) : (
+                            <>
+                                <ShoppingCart size={18} />
+                                {cart[product.id] ? 'View in Cart' : 'Add to Cart'}
+                            </>
+                        )}
+                    </button>
+                )}
+
+                {/* Stock Badge */}
+                {product.inStock ? (
+                    <div className='absolute top-2 right-2 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg animate-pulse'>
+                        In Stock
+                    </div>
+                ) : (
+                    <div className='absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg'>
+                        Out of Stock
+                    </div>
+                )}
+            </div>
+
             {/* Product Info */}
-            <div className='w-full pt-2 sm:pt-3'>
-                <div className='flex flex-col gap-1 sm:gap-2'>
-                    <p className='font-semibold text-xs sm:text-sm line-clamp-2 text-slate-800 leading-tight'>{product.name}</p>
+            <div className='w-full pt-3'>
+                <div className='flex flex-col gap-2'>
+                    <p className='font-semibold text-sm line-clamp-2 text-slate-800 leading-tight'>{product.name}</p>
                     <div className='flex items-center gap-1'>
-                        <div className='flex gap-0.5'>
+                        <div className='flex'>
                             {Array(5).fill('').map((_, index) => (
-                                <StarIcon key={index} size={10} className='text-transparent' fill={rating >= index + 1 ? "#fbbf24" : "#D1D5DB"} />
+                                <StarIcon key={index} size={12} className='text-transparent' fill={rating >= index + 1 ? "#fbbf24" : "#D1D5DB"} />
                             ))}
                         </div>
                         <span className='text-xs text-slate-500'>({product.rating?.length || 0})</span>
                     </div>
-                    <div className='flex items-baseline gap-1 sm:gap-2'>
-                        <p className='font-bold text-slate-900 text-xs sm:text-sm'>{currency}{product.price}</p>
+                    <div className='flex items-baseline gap-2'>
+                        <p className='font-bold text-slate-900 text-sm'>{currency}{product.price}</p>
                         <p className='text-xs text-slate-400 line-through'>{currency}{product.mrp}</p>
                     </div>
                 </div>
-            </div>
             </div>
         </Link>
     )
