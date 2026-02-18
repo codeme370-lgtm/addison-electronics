@@ -27,7 +27,7 @@ const LatestProducts = () => {
     }))
 
     return (
-        <div className='px-6 my-30 max-w-6xl mx-auto'>
+        <div className='px-6 my-12 max-w-6xl mx-auto'>
             <Title title='Latest Products' description='Browse our latest products by category' href='/shop' />
             <div className='mt-12 space-y-16'>
                 {categorizedProducts.map((categoryGroup, categoryIndex) => (
