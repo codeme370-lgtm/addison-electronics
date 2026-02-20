@@ -2,6 +2,13 @@
 const nextConfig = {
     images:{
         unoptimized: true
+    },
+    webpack: (config, { dev }) => {
+        if (dev) {
+            // disable devtool to avoid noisy invalid source map warnings from some packages
+            config.devtool = false
+        }
+        return config
     }
 };
 

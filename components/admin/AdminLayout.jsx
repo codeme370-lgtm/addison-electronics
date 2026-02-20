@@ -6,6 +6,7 @@ import Link from "next/link"
 import { ArrowRightIcon } from "lucide-react"
 import AdminNavbar from "./AdminNavbar"
 import AdminSidebar from "./AdminSidebar"
+import AdminDrawer from "./AdminDrawer"
 import { useUser, useAuth } from "@clerk/nextjs"
 import axios from "axios"
 
@@ -16,6 +17,7 @@ const AdminLayout = ({ children }) => {
 
     const [isAdmin, setIsAdmin] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [drawerOpen, setDrawerOpen] = useState(false)
 
     const fetchIsAdmin = async () => {
        //fetching the user is admin
@@ -45,7 +47,8 @@ fetchIsAdmin()
         <Loading />
     ) : isAdmin ? (
         <div className="flex flex-col h-screen">
-            <AdminNavbar />
+            <AdminNavbar onMenuClick={() => setDrawerOpen(true)} />
+            <AdminDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} userImage={user?.imageUrl} userName={user?.fullName} />
             <div className="flex flex-1 items-start h-full overflow-y-scroll no-scrollbar">
                 <AdminSidebar />
                 <div className="flex-1 h-full p-5 lg:pl-12 lg:pt-12 overflow-y-scroll">

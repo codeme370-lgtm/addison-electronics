@@ -4,8 +4,8 @@ import crypto from "crypto";
 
 export async function POST(request) {
   try {
-    const body = await request.text();
-    const signature = request.headers.get("x-paystack-signature");
+    const body = request ? await request.text().catch(() => null) : null;
+    const signature = request?.headers?.get?.("x-paystack-signature") || null;
 
     if (!signature) {
       return NextResponse.json(

@@ -11,8 +11,8 @@ export async function POST(request){
         if(!userId){
             // debug: log headers to help identify missing auth
             try{
-                const authHeader = request.headers.get('authorization')
-                const cookieHeader = request.headers.get('cookie')
+                const authHeader = request?.headers?.get?.('authorization') || null
+                const cookieHeader = request?.headers?.get?.('cookie') || null
                 console.warn('POST /api/address: unauthenticated request - authorization:', !!authHeader, 'cookie:', !!cookieHeader)
                 console.debug('authorization header:', authHeader)
                 console.debug('cookie header length:', cookieHeader ? cookieHeader.length : 0)

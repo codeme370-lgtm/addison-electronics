@@ -56,7 +56,7 @@ const ProductCard = ({ product, hideAddToCart = false }) => {
         <Link href={`/product/${product.id}`} className='group max-xl:mx-auto block'>
             <div className='relative'>
                 {/* Product Image */}
-                <div className='bg-gradient-to-br from-slate-100 to-slate-50 h-40 w-full sm:h-68 rounded-lg flex items-center justify-center overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300'>
+                <div className='bg-gradient-to-br from-slate-100 to-slate-50 h-28 sm:h-40 lg:h-68 w-full rounded-lg flex items-center justify-center overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300'>
                     <Image 
                         width={500} 
                         height={500}
@@ -109,20 +109,20 @@ const ProductCard = ({ product, hideAddToCart = false }) => {
             </div>
 
             {/* Product Info */}
-            <div className='w-full pt-3'>
-                <div className='flex flex-col gap-2'>
-                    <p className='font-semibold text-sm line-clamp-2 text-slate-800 leading-tight'>{product.name}</p>
+            <div className='w-full pt-2 sm:pt-3'>
+                <div className='flex flex-col gap-1 sm:gap-2'>
+                    <p className='font-semibold text-xs sm:text-sm line-clamp-2 text-slate-800 leading-tight'>{product.name}</p>
                     <div className='flex items-center gap-1'>
                         <div className='flex'>
                             {Array(5).fill('').map((_, index) => (
-                                <StarIcon key={index} size={12} className='text-transparent' fill={rating >= index + 1 ? "#fbbf24" : "#D1D5DB"} />
+                                <StarIcon key={index} size={11} className='text-transparent' fill={rating >= index + 1 ? "#fbbf24" : "#D1D5DB"} />
                             ))}
                         </div>
-                        <span className='text-xs text-slate-500'>({product.rating?.length || 0})</span>
+                        <span className='text-xs text-slate-500 max-sm:hidden'>({product.rating?.length || 0})</span>
                     </div>
-                    <div className='flex items-baseline gap-2'>
-                        <p className='font-bold text-slate-900 text-sm'>{currency}{product.price}</p>
-                        <p className='text-xs text-slate-400 line-through'>{currency}{product.mrp}</p>
+                    <div className='flex items-baseline gap-1 sm:gap-2'>
+                        <p className='font-bold text-slate-900 text-xs sm:text-sm'>{currency}{product.price}</p>
+                        <p className='text-xs text-slate-400 line-through max-sm:text-xs'>{currency}{product.mrp}</p>
                     </div>
                 </div>
             </div>

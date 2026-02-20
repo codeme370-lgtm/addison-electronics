@@ -11,6 +11,8 @@ const isPublicRoute = createRouteMatcher([
   '/contact',
   '/pricing',
   '/api(.*)',
+  '/store(.*)',
+  '/admin(.*)',
 ]);
 
 export default clerkMiddleware((auth, req) => {
@@ -19,8 +21,15 @@ export default clerkMiddleware((auth, req) => {
     return NextResponse.next();
   }
 
-  // Protect other routes
-  auth().protect();
+  // Protect other routes - redirect to sign-in if not authenticated
+  const { userId } = auth();
+  if (!userId) {
+    const signInUrl = new URL('/sign-in', req.url);
+    signInUrl.searchParams.set('redirect_url', req.url);
+    return NextResponse.redirect(signInUrl);
+  }
+
+  return NextResponse.next();
 });
 
 export const config = {

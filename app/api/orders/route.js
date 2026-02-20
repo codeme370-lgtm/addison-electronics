@@ -8,7 +8,7 @@ import axios from "axios";
 export async function POST(request) {
     try {
         console.log('POST /api/orders incoming')
-        const textBody = await request.text().catch(() => null)
+        const textBody = request ? await request.text().catch(() => null) : null
         if(textBody) console.log('raw body length:', textBody.length)
         //user and has from clerk
         const {userId, has} = getAuth(request)
@@ -163,7 +163,7 @@ for(const [storeId, orderItems] of storeByOrders.entries()){
 if(paymentMethod === PaymentMethod.PAYSTACK){
     //initialize paystack
     // prefer request origin, fallback to env var (useful in non-browser requests)
-    const origin = request.headers.get('origin') || process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null)
+    const origin = request?.headers?.get?.('origin') || process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null)
     try {
         console.log('Initializing Paystack', { origin, totalOrderAmount, orderIds })
         //create a paystack transaction
