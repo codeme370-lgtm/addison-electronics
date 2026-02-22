@@ -9,6 +9,8 @@ import Loading from '@/components/Loading';
 import ProductCard from '@/components/ProductCard';
 import toast from 'react-hot-toast';
 
+export const dynamic = 'force-dynamic';
+
 export default function SellerProfile() {
   const { username } = useParams();
   const [seller, setSeller] = useState(null);

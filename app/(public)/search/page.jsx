@@ -8,6 +8,8 @@ import ProductCard from '@/components/ProductCard';
 import Loading from '@/components/Loading';
 import toast from 'react-hot-toast';
 
+export const dynamic = 'force-dynamic';
+
 export default function SearchPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
