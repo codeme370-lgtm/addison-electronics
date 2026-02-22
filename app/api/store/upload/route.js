@@ -1,6 +1,7 @@
 import { getAuth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import authSeller from "@/middlewares/authSeller";
+import crypto from "crypto";
 
 // Upload image and return URL
 export async function POST(request) {
@@ -42,15 +43,30 @@ export async function POST(request) {
     const base64 = buffer.toString("base64");
     const dataURI = `data:${file.type};base64,${base64}`;
 
-    // Upload to Cloudinary
+    // Generate Cloudinary signature for authenticated upload
+    const timestamp = Math.floor(Date.now() / 1000);
+    const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+    const apiKey = process.env.CLOUDINARY_API_KEY;
+    const apiSecret = process.env.CLOUDINARY_API_SECRET;
+
+    // Create signature string
+    const signatureString = `folder=jeeshop/products&timestamp=${timestamp}${apiSecret}`;
+    const signature = crypto
+      .createHash('sha256')
+      .update(signatureString)
+      .digest('hex');
+
+    // Upload to Cloudinary with authentication
     const cloudinaryFormData = new FormData();
     cloudinaryFormData.append("file", dataURI);
-    cloudinaryFormData.append("upload_preset", process.env.CLOUDINARY_UPLOAD_PRESET || "jeeshop");
+    cloudinaryFormData.append("api_key", apiKey);
+    cloudinaryFormData.append("timestamp", timestamp.toString());
+    cloudinaryFormData.append("signature", signature);
     cloudinaryFormData.append("folder", "jeeshop/products");
 
     try {
       const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`,
+        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
         {
           method: "POST",
           body: cloudinaryFormData,
