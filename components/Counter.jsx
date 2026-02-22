@@ -10,7 +10,6 @@ const Counter = ({ productId }) => {
 
     const dispatch = useDispatch();
     const { user, isLoaded } = useUser()
-    const router = useRouter()
 
     const addToCartHandler = () => {
         if (!isLoaded || !user) {

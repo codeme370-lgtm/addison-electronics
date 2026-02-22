@@ -5,4 +5,9 @@
       "@/*": ["./*"]
     }
   }
+  ,
+  "exclude": [
+    "node_modules",
+    "prisma/migrations"
+  ]
 }

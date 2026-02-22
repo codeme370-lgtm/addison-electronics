@@ -41,7 +41,10 @@ const ProductCard = ({ product, hideAddToCart = false }) => {
             setIsAdding(false)
             setAddedSuccess(true)
             toast.success('Added to cart!')
-            setTimeout(() => setAddedSuccess(false), 2000)
+            setTimeout(() => {
+                setAddedSuccess(false)
+                router.push('/cart')
+            }, 2000)
         }, 600)
     }
 

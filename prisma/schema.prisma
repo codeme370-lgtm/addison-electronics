@@ -30,7 +30,6 @@ model Product {
     mrp         Float
     price       Float
     images      String[]
-    brand       String?
     category    String
     inStock     Boolean  @default(true)
     storeId     String
