@@ -33,7 +33,7 @@ const {openSignIn}=useClerk();
 
     const handleSearch = (e) => {
         e.preventDefault()
-        router.push(`/shop?search=${search}`)
+        router.push(`/search?q=${search}`)
     }
 
     const handleOpenSignIn = () => {

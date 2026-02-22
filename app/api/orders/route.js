@@ -199,20 +199,16 @@ if(paymentMethod === PaymentMethod.PAYSTACK){
                     ))
                 }
                 console.log('Paystack initialized, authorization_url present')
-                return NextResponse.json({authorizationUrl: response.data.data.authorization_url, reference: paystackRef})
+                const authUrl = response.data.data.authorization_url
+                console.log('Paystack full response:', JSON.stringify(response.data.data, null, 2))
+                console.log('Authorization URL:', authUrl)
+                return NextResponse.json({authorizationUrl: authUrl, reference: paystackRef})
     } catch(paystackError) {
         console.error('Paystack error:', paystackError.response?.data || paystackError.message)
         return NextResponse.json({error: paystackError.response?.data?.message || 'Payment initialization failed'}, {status: 400})
     }
 }
-//clear cart data
-await prisma.user.update({
-    where: {id: userId},
-    data: {
-        cart: {}
-}
-})
-//return a response
+//return a response (cart will be cleared after Paystack payment verification)
 return NextResponse.json({message: "Order placed successfully", orderIds, totalOrderAmount}, {status: 201})
 } catch (error) {
     console.error('POST /api/orders failed:', error)

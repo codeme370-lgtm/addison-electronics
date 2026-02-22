@@ -41,18 +41,13 @@ const ProductCard = ({ product, hideAddToCart = false }) => {
             setIsAdding(false)
             setAddedSuccess(true)
             toast.success('Added to cart!')
-            setTimeout(() => {
-                setAddedSuccess(false)
-                router.push('/cart')
-            }, 2000)
         }, 600)
     }
 
-    const viewCartOrProduct = (e) => {
-        if (cart[product.id]) {
-            e.preventDefault()
-            router.push('/cart')
-        }
+    const handleSellerClick = (e, username) => {
+        e.preventDefault()
+        e.stopPropagation()
+        router.push(`/seller/${username}`)
     }
 
     return (
@@ -69,45 +64,26 @@ const ProductCard = ({ product, hideAddToCart = false }) => {
                     />
                 </div>
 
-                {/* Add to Cart Button - Overlay on Hover */}
+                {/* Quick Cart Icon - Top Right */}
                 {!hideAddToCart && (
                     <button
                         onClick={handleAddToCart}
-                        disabled={isAdding}
-                        className={`absolute bottom-0 left-0 right-0 py-3 px-4 font-semibold text-white text-sm flex items-center justify-center gap-2 transition-all duration-300 transform rounded-t-lg ${
+                        disabled={isAdding || addedSuccess}
+                        title="Add to cart"
+                        className={`absolute top-2 right-2 p-2 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 ${
                             addedSuccess
-                                ? 'bg-green-500 translate-y-0'
-                                : 'translate-y-full group-hover:translate-y-0 bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-900 hover:to-black'
-                        } ${isAdding ? 'opacity-90' : ''}`}
+                                ? 'bg-green-500 text-white scale-110'
+                                : 'bg-white text-slate-800 hover:bg-slate-100 border-2 border-slate-200 hover:border-slate-300'
+                        } ${isAdding ? 'scale-95' : ''}`}
                     >
                         {isAdding ? (
-                            <>
-                                <div className='w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin'></div>
-                                Adding...
-                            </>
+                            <div className='w-5 h-5 border-2 border-slate-800 border-t-transparent rounded-full animate-spin'></div>
                         ) : addedSuccess ? (
-                            <>
-                                <Check size={18} className='animate-bounce' />
-                                Added!
-                            </>
+                            <Check size={20} className='text-white' />
                         ) : (
-                            <>
-                                <ShoppingCart size={18} />
-                                {cart[product.id] ? 'View in Cart' : 'Add to Cart'}
-                            </>
+                            <ShoppingCart size={20} />
                         )}
                     </button>
-                )}
-
-                {/* Stock Badge */}
-                {product.inStock ? (
-                    <div className='absolute top-2 right-2 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg animate-pulse'>
-                        In Stock
-                    </div>
-                ) : (
-                    <div className='absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg'>
-                        Out of Stock
-                    </div>
                 )}
             </div>
 
@@ -115,6 +91,18 @@ const ProductCard = ({ product, hideAddToCart = false }) => {
             <div className='w-full pt-2 sm:pt-3'>
                 <div className='flex flex-col gap-1 sm:gap-2'>
                     <p className='font-semibold text-xs sm:text-sm line-clamp-2 text-slate-800 leading-tight'>{product.name}</p>
+                    
+                    {/* Seller Info */}
+                    {product.store && (
+                        <button
+                            onClick={(e) => handleSellerClick(e, product.store.username)}
+                            className='text-xs text-blue-600 hover:underline truncate text-left hover:text-blue-700 transition'
+                        >
+                            {product.store.name}
+                            {product.store.isVerified && ' ✓'}
+                        </button>
+                    )}
+                    
                     <div className='flex items-center gap-1'>
                         <div className='flex'>
                             {Array(5).fill('').map((_, index) => (

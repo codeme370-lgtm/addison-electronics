@@ -91,11 +91,14 @@ const OrderSummary = ({ totalPrice, items }) => {
                                         Authorization: `Bearer ${token}`
                                 }
                         });
+                        console.log('Order API Response:', data);
                         //payment handling: Paystack only
                         if(!data?.authorizationUrl){
+                            console.error('authorizationUrl missing. Response:', data);
                             toast.error(data?.error || 'Payment initialization failed')
                             return;
                         }
+                        console.log('Redirecting to Paystack:', data.authorizationUrl);
                         window.location.href = data.authorizationUrl;
                         return;
         }catch(error){

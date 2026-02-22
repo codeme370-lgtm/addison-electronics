@@ -90,7 +90,7 @@ import { useSelector } from "react-redux"
                 </div>
 
                 <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4 lg:gap-6 mx-auto mb-32">
-                    {filteredProducts.map((product) => <ProductCard key={product.id} product={product} hideAddToCart={true} />)}
+                    {filteredProducts.map((product) => <ProductCard key={product.id} product={product} />)}
                 </div>
             </div>
         </div>

@@ -47,16 +47,6 @@ const FrequentlySearched = () => {
 
     return (
         <div className='pl-4 pr-4 my-8 max-w-7xl mx-auto'>
-            {/* Welcome Banner */}
-            <div className='bg-gradient-to-r from-blue-100 via-blue-50 to-white rounded-lg p-8 mb-8 border border-blue-200'>
-                <h1 className='text-3xl md:text-4xl font-bold text-slate-900 mb-2'>
-                    Welcome to Jeescage
-                </h1>
-                <p className='text-slate-700 text-lg'>
-                    Discover millions of products and find what you're looking for with our personalized shopping experience
-                </p>
-            </div>
-
             {/* Main Layout: Sidebar + Content */}
             <div className='flex gap-6'>
                 {/* Left Sidebar - Categories */}

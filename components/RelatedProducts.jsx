@@ -25,7 +25,7 @@ const RelatedProducts = ({ product }) => {
             <div className='grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4 lg:gap-6'>
                 {relatedProducts.map((relatedProduct, index) => (
                     <div key={index} className='transform transition-all duration-300 hover:scale-105'>
-                        <ProductCard product={relatedProduct} hideAddToCart={true} />
+                        <ProductCard product={relatedProduct} />
                     </div>
                 ))}
             </div>
