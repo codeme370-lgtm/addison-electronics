@@ -1,5 +1,6 @@
 import { Toaster } from "react-hot-toast";
 import StoreProvider from "@/app/StoreProvider";
+import { SidebarProvider } from "@/context/SidebarContext";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 
@@ -18,8 +19,10 @@ export default function RootLayout({ children }) {
         <html lang="en">
             <body className="antialiased" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif' }}>
                 <StoreProvider>
-                    <Toaster />
-                    {children}
+                    <SidebarProvider>
+                        <Toaster />
+                        {children}
+                    </SidebarProvider>
                 </StoreProvider>
             </body>
         </html>

@@ -2,23 +2,36 @@
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { fetchProducts } from "@/lib/features/product/productSlice";
 import { useAuth } from "@clerk/nextjs";
 import { fetchCart,uploadCart } from "@/lib/features/cart/cartSlice";
 import { fetchAddress } from "@/lib/features/address/addressSlice";
 import { fetchUserRatings } from "@/lib/features/rating/ratingSlice";
+import { useSidebar } from "@/context/SidebarContext";
 
 
 export default function PublicLayout({ children }) {
 const dispatch = useDispatch()
+const { sidebarOpen } = useSidebar()
+const [isMobile, setIsMobile] = useState(true)
 //get the user
 const {user} = useAuth()
 //get the token
 const {getToken} = useAuth()
 //get cart items on load
 const {cartItems} = useSelector((state) => state.cart);
+
+useEffect(() => {
+    const handleResize = () => {
+        setIsMobile(window.innerWidth < 768)
+    }
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+}, [])
+
     useEffect(()=>{
 dispatch(fetchProducts({}))
 }, [])
@@ -41,7 +54,9 @@ if(user){
     return (
         <>
             <Navbar />
-            {children}
+            <div className="transition-all duration-300" style={{ marginLeft: !isMobile ? `${sidebarOpen ? '320px' : '80px'}` : '0' }}>
+                {children}
+            </div>
             <Footer />
         </>
     );

@@ -1,11 +1,12 @@
 'use client'
-import { StarIcon, ShoppingCart, Check } from 'lucide-react'
+import { StarIcon, ShoppingCart, Check, Heart } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { assets } from '@/assets/assets'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart } from '@/lib/features/cart/cartSlice'
+import { addToWishlist, removeFromWishlist } from '@/lib/features/wishlist/wishlistSlice'
 import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
@@ -19,6 +20,8 @@ const ProductCard = ({ product, hideAddToCart = false }) => {
     const { user } = useUser()
     const router = useRouter()
     const cart = useSelector(state => state.cart.cartItems)
+    const wishlistItems = useSelector(state => state.wishlist.wishlistItems)
+    const isInWishlist = wishlistItems[product.id]
 
     // calculate the average rating of the product
     const rating = product.rating && product.rating.length > 0 
@@ -44,6 +47,24 @@ const ProductCard = ({ product, hideAddToCart = false }) => {
         }, 600)
     }
 
+    const handleWishlist = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+
+        if (!user) {
+            toast.error('Please sign in to add items to wishlist')
+            return
+        }
+
+        if (isInWishlist) {
+            dispatch(removeFromWishlist({ productId: product.id }))
+            toast.success('Removed from wishlist')
+        } else {
+            dispatch(addToWishlist({ productId: product.id }))
+            toast.success('Added to wishlist')
+        }
+    }
+
     const handleSellerClick = (e, username) => {
         e.preventDefault()
         e.stopPropagation()
@@ -54,11 +75,11 @@ const ProductCard = ({ product, hideAddToCart = false }) => {
         <Link href={`/product/${product.id}`} className='group max-xl:mx-auto block'>
             <div className='relative'>
                 {/* Product Image */}
-                <div className='bg-gradient-to-br from-slate-100 to-slate-50 h-28 sm:h-40 lg:h-68 w-full rounded-lg flex items-center justify-center overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300'>
+                <div className='bg-gradient-to-br from-slate-100 to-slate-50 h-48 sm:h-56 lg:h-68 w-full rounded-lg flex items-center justify-center overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300'>
                     <Image 
                         width={500} 
                         height={500}
-                        className='w-full h-full object-contain group-hover:scale-115 transition duration-300' 
+                        className='w-full h-full object-cover group-hover:scale-115 transition duration-300' 
                         src={product.images?.[0] || '/placeholder.jpg'} 
                         alt={product?.name ? `${product.name} image` : 'Product image'} 
                     />
@@ -85,6 +106,19 @@ const ProductCard = ({ product, hideAddToCart = false }) => {
                         )}
                     </button>
                 )}
+
+                {/* Wishlist Heart Icon - Top Left */}
+                <button
+                    onClick={handleWishlist}
+                    title={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
+                    className={`absolute top-2 left-2 p-2 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 ${
+                        isInWishlist
+                            ? 'bg-red-600 text-white'
+                            : 'bg-white text-slate-800 hover:bg-slate-100 border-2 border-slate-200 hover:border-slate-300'
+                    }`}
+                >
+                    <Heart size={18} className={isInWishlist ? 'fill-white' : ''} />
+                </button>
             </div>
 
             {/* Product Info */}

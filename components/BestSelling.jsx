@@ -11,7 +11,7 @@ const BestSelling = () => {
     return (
         <div className='px-4 my-30 max-w-6xl mx-auto'>
             <Title title='Best Selling' description={`Showing ${products.length < displayQuantity ? products.length : displayQuantity} of ${products.length} products`} href='/shop' />
-            <div className='mt-12 grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4 lg:gap-6'>
+            <div className='mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-6'>
                 {products.slice().sort((a, b) => b.rating.length - a.rating.length).slice(0, displayQuantity).map((product, index) => (
                     <ProductCard key={index} product={product} />
                 ))}
