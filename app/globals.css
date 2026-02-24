@@ -15,8 +15,82 @@
     button {
         cursor: pointer;
     }
+    
+    /* Mobile-first responsive improvements */
+    /* Extra small devices (320px - 374px) */
+    @media (max-width: 374px) {
+        body {
+            font-size: 13px;
+        }
+        
+        h1 {
+            font-size: 1.25rem;
+        }
+        
+        h2 {
+            font-size: 1.125rem;
+        }
+        
+        h3 {
+            @apply text-base;
+        }
+    }
+    
+    /* Small devices optimization (375px - 424px) */
+    @media (min-width: 375px) and (max-width: 424px) {
+        body {
+            font-size: 13.5px;
+        }
+    }
+    
+    /* Container padding adjustments for mobile */
+    @media (max-width: 640px) {
+        /* Reduce padding for very tight spaces */
+        .px-4 {
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
+        
+        .px-6 {
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
+    }
+    
+    @media (max-width: 374px) {
+        /* Extra small screen adjustments */
+        .px-4 {
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+        
+        .gap-4 {
+            gap: 0.5rem;
+        }
+        
+        .gap-6 {
+            gap: 0.75rem;
+        }
+    }
 }
 
 .no-scrollbar::-webkit-scrollbar {
     display: none;
+}
+
+/* Additional responsive utilities */
+@layer utilities {
+    @media (max-width: 320px) {
+        .text-xs {
+            font-size: 0.65rem;
+        }
+        
+        .p-2 {
+            padding: 0.25rem;
+        }
+        
+        .p-3 {
+            padding: 0.5rem;
+        }
+    }
 }

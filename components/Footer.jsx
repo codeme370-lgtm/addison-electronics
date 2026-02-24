@@ -48,33 +48,31 @@ const Footer = () => {
     ]
 
     return (
-        <footer className="mx-6 bg-white">
+        <footer className="mx-2 sm:mx-4 md:mx-6 bg-white">
             <div className="max-w-7xl mx-auto">
-                <div className="flex flex-col md:flex-row items-start justify-between gap-10 py-10 border-b border-slate-500/30 text-slate-500">
-                    <div>
-                        <Link href="/" className="text-4xl font-semibold text-slate-700">
-                            <span className="text-green-600">jees</span>cage<span className="text-green-600 text-5xl leading-0">.</span>
+                <div className="flex flex-col md:flex-row items-start justify-between gap-4 sm:gap-6 md:gap-8 lg:gap-10 py-6 sm:py-8 md:py-10 border-b border-slate-500/30 text-slate-500">
+                    <div className="w-full md:flex-1">
+                        <Link href="/" className="text-2xl sm:text-3xl md:text-4xl font-semibold text-slate-700 inline-block">
+                            <span className="text-green-600">jees</span>cage<span className="text-green-600 text-3xl sm:text-4xl md:text-5xl leading-0">.</span>
                         </Link>
-                        <p className="max-w-[410px] mt-6 text-sm">Welcome to jeescage, your ultimate destination for the latest and smartest gadgets. 
-                            From home appliance and digital tools to essential accessories,
-                             we bring you the best in innovation — all in one place.</p>
-                        <div className="flex items-center gap-3 mt-5">
+                        <p className="max-w-[410px] mt-3 sm:mt-4 md:mt-6 text-xs sm:text-sm line-clamp-3 sm:line-clamp-none">Welcome to jeescage, your ultimate destination for the latest and smartest gadgets.</p>
+                        <div className="flex items-center gap-2 sm:gap-3 mt-3 sm:mt-5">
                             {socialIcons.map((item, i) => (
-                                <Link href={item.link} key={i} className="flex items-center justify-center w-10 h-10 bg-slate-100 hover:scale-105 hover:border border-slate-300 transition rounded-full">
+                                <Link href={item.link} key={i} className="flex items-center justify-center w-8 sm:w-9 h-8 sm:h-9 md:w-10 md:h-10 bg-slate-100 hover:scale-105 hover:border border-slate-300 transition rounded-full flex-shrink-0">
                                     <item.icon />
                                 </Link>
                             ))}
                         </div>
                     </div>
-                    <div className="flex flex-wrap justify-between w-full md:w-[45%] gap-5 text-sm ">
+                    <div className="flex flex-wrap justify-start sm:justify-between w-full md:w-[45%] gap-3 sm:gap-4 md:gap-5 text-xs sm:text-sm">
                         {linkSections.map((section, index) => (
-                            <div key={index}>
-                                <h3 className="font-medium text-slate-700 md:mb-5 mb-3">{section.title}</h3>
-                                <ul className="space-y-2.5">
+                            <div key={index} className="min-w-[140px] sm:flex-1">
+                                <h3 className="font-medium text-slate-700 md:mb-5 mb-2 sm:mb-3 text-xs sm:text-sm">{section.title}</h3>
+                                <ul className="space-y-1.5 sm:space-y-2.5">
                                     {section.links.map((link, i) => (
-                                        <li key={i} className="flex items-center gap-2">
+                                        <li key={i} className="flex items-center gap-1 sm:gap-2">
                                             {link.icon && <link.icon />}
-                                            <Link href={link.path} className="hover:underline transition">{link.text}</Link>
+                                            <Link href={link.path} className="hover:underline transition text-[11px] sm:text-xs md:text-sm truncate">{link.text}</Link>
                                         </li>
                                     ))}
                                 </ul>
@@ -82,7 +80,7 @@ const Footer = () => {
                         ))}
                     </div>
                 </div>
-                <p className="py-4 text-sm text-slate-500">
+                <p className="py-3 sm:py-4 text-xs sm:text-sm text-slate-500 text-center">
                     Copyright 2025 © jeescage All Right Reserved.
                 </p>
             </div>

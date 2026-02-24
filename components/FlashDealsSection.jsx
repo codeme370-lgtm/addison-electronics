@@ -46,15 +46,15 @@ const FlashDealsSection = () => {
     const flashProducts = products.slice(0, 8)
 
     return (
-        <div className='w-full bg-white py-8 px-4 md:px-8'>
+        <div className='w-full bg-white py-6 sm:py-8 px-2 sm:px-4 md:px-8'>
             <div className='max-w-7xl mx-auto'>
                 {/* Header */}
-                <div className='flex items-center justify-between mb-6'>
-                    <div className='flex items-center gap-3 flex-wrap'>
-                        <div className='bg-red-600 text-white px-4 py-2 rounded font-bold text-sm md:text-base shadow-md'>
+                <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 mb-4 sm:mb-6'>
+                    <div className='flex items-center gap-2 sm:gap-3 flex-wrap'>
+                        <div className='bg-red-600 text-white px-2.5 sm:px-4 py-1.5 sm:py-2 rounded font-bold text-xs sm:text-base shadow-md'>
                             Flash Sale
                         </div>
-                        <div className='flex items-center gap-2 bg-gray-900 text-white px-4 py-2 rounded font-mono text-xs md:text-sm shadow-md'>
+                        <div className='flex items-center gap-1.5 sm:gap-2 bg-gray-900 text-white px-2.5 sm:px-4 py-1.5 sm:py-2 rounded font-mono text-[10px] sm:text-xs md:text-sm shadow-md'>
                             <span className='hidden sm:inline'>Ending in:</span>
                             <span className='font-bold'>{String(timeLeft.hours).padStart(2, '0')}</span>
                             <span>:</span>
@@ -63,25 +63,25 @@ const FlashDealsSection = () => {
                             <span className='font-bold'>{String(timeLeft.seconds).padStart(2, '0')}</span>
                         </div>
                     </div>
-                    <Link href='/shop?section=flash' className='text-red-600 hover:text-red-700 font-semibold text-sm md:text-base transition-colors'>
+                    <Link href='/shop?section=flash' className='text-red-600 hover:text-red-700 font-semibold text-xs sm:text-base transition-colors'>
                         View All →
                     </Link>
                 </div>
 
                 {/* Grid layout for flash deals - responsive */}
-                <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3 md:gap-4'>
+                <div className='grid grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4'>
                     {flashProducts.map((product, idx) => (
                         <div key={product.id || idx} className='group relative'>
                             {/* Discount badge */}
                             {product.mrp && product.price && (
-                                <div className='absolute top-2 left-2 bg-red-600 text-white px-2 py-1 rounded text-xs font-bold z-10 shadow-md'>
+                                <div className='absolute top-1 left-1 sm:top-2 sm:left-2 bg-red-600 text-white px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-[9px] sm:text-xs font-bold z-10 shadow-md'>
                                     {Math.round(((product.mrp - product.price) / product.mrp) * 100)}% OFF
                                 </div>
                             )}
                             
                             {/* Sold count badge (if available) */}
                             {product.sold && (
-                                <div className='absolute bottom-2 right-2 bg-gray-800 text-white text-xs px-2 py-1 rounded z-10 opacity-80'>
+                                <div className='absolute bottom-1 right-1 sm:bottom-2 sm:right-2 bg-gray-800 text-white text-[8px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded z-10 opacity-80'>
                                     {product.sold > 1000 ? (product.sold / 1000).toFixed(1) : product.sold}k sold
                                 </div>
                             )}

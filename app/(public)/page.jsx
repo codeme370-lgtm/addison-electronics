@@ -12,7 +12,7 @@ export default function Home() {
     return (
         <div className='min-h-screen'>
             {/* Mega Sale Banner - Full width white background */}
-            <div className='bg-white px-4 md:px-8 py-6 md:py-8'>
+            <div className='bg-white px-2 sm:px-4 md:px-8 py-4 sm:py-6 md:py-8'>
                 <div className='max-w-7xl mx-auto'>
                     <MegaSaleBanner />
                 </div>
@@ -38,3 +38,4 @@ export default function Home() {
         </div>
     );
 }
+
