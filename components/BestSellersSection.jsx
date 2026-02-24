@@ -4,8 +4,10 @@ import { useSelector } from 'react-redux'
 import ProductCard from './ProductCard'
 import Link from 'next/link'
 import { ChevronRight, Flame } from 'lucide-react'
+import { useSidebar } from '@/context/SidebarContext'
 
 const BestSellersSection = () => {
+    const { sidebarOpen } = useSidebar()
     const products = useSelector(state => state.product.list)
     
     // Sort by some criteria (you can adjust based on your data)
@@ -29,7 +31,7 @@ const BestSellersSection = () => {
                     </Link>
                 </div>
 
-                <div className='grid grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4'>
+                <div className={`grid gap-2 sm:gap-3 md:gap-4 ${sidebarOpen ? 'grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4' : 'grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-5'}`}>
                     {bestSellers.map((product, idx) => (
                         <div key={product.id || idx} className='group relative'>
                             {/* Special badges */}

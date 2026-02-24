@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { fetchProducts } from "@/lib/features/product/productSlice";
+import { fetchCategories } from "@/lib/features/category/categorySlice";
 import { useAuth } from "@clerk/nextjs";
 import { fetchCart,uploadCart } from "@/lib/features/cart/cartSlice";
 import { fetchAddress } from "@/lib/features/address/addressSlice";
@@ -34,6 +35,7 @@ useEffect(() => {
 
     useEffect(()=>{
 dispatch(fetchProducts({}))
+dispatch(fetchCategories())
 }, [])
 
  useEffect(()=>{

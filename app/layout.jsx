@@ -15,7 +15,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
     return (
-        <ClerkProvider>
+        <ClerkProvider afterSignInUrl="/" afterSignUpUrl="/">
         <html lang="en">
             <body className="antialiased" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif' }}>
                 <StoreProvider>

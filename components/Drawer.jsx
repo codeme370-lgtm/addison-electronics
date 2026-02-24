@@ -2,25 +2,58 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { X, ShoppingCart, Zap, Flame, TrendingUp, Sparkles, UtensilsCrossed, Heart, Smartphone, Shirt, Home, Dumbbell, ShoppingBag, Baby, Car, BookOpen, Grid, ChevronLeft } from 'lucide-react'
+import { X, ShoppingCart, Zap, Flame, TrendingUp, Sparkles, UtensilsCrossed, Heart, Smartphone, Shirt, Home, Dumbbell, ShoppingBag, Baby, Car, BookOpen, Grid, ChevronLeft, Package } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import logo from '@/app/logo.jpg'
 
 const Drawer = ({ open, onClose, isSidebarMode = false, isSidebarOpen = true, onSidebarToggle = () => {} }) => {
     const cartCount = useSelector(state => state.cart.total)
+    const dbCategories = useSelector(state => state.category.list)
 
-    const categories = [
-        { name: 'Electronics', icon: Smartphone, href: '/shop?category=Electronics' },
-        { name: 'Fashion', icon: Shirt, href: '/shop?category=Fashion' },
-        { name: 'Home & Kitchen', icon: Home, href: '/shop?category=Home' },
-        { name: 'Beauty & Health', icon: Heart, href: '/shop?category=Beauty' },
-        { name: 'Mobiles & Tablets', icon: Smartphone, href: '/shop?category=Mobiles' },
-        { name: 'Sports & Outdoors', icon: Dumbbell, href: '/shop?category=Sports' },
-        { name: 'Groceries', icon: ShoppingBag, href: '/shop?category=Groceries' },
-        { name: 'Baby & Toys', icon: Baby, href: '/shop?category=Baby' },
-        { name: 'Automotive', icon: Car, href: '/shop?category=Automotive' },
-        { name: 'Books & More', icon: BookOpen, href: '/shop?category=Books' },
+    // Default categories if db is empty
+    const defaultCategories = [
+        { name: 'Electronics', icon: Smartphone },
+        { name: 'Fashion', icon: Shirt },
+        { name: 'Home & Kitchen', icon: Home },
+        { name: 'Beauty & Health', icon: Heart },
     ]
+
+    // Build categories from database with icons
+    const categoryIcons = {
+        'electronics': Smartphone,
+        'fashion': Shirt,
+        'home': Home,
+        'kitchen': Home,
+        'health': Heart,
+        'beauty': Heart,
+        'sports': Dumbbell,
+        'outdoors': Dumbbell,
+        'groceries': ShoppingBag,
+        'baby': Baby,
+        'toys': Baby,
+        'automotive': Car,
+        'car': Car,
+        'books': BookOpen,
+    }
+
+    const getIconForCategory = (categoryName) => {
+        const lowerName = categoryName.toLowerCase()
+        for (const [key, icon] of Object.entries(categoryIcons)) {
+            if (lowerName.includes(key)) return icon
+        }
+        return Smartphone // default icon
+    }
+
+    const categories = dbCategories && dbCategories.length > 0 
+        ? dbCategories.map(cat => ({
+            name: cat.name,
+            icon: getIconForCategory(cat.name),
+            href: `/category`
+          }))
+        : defaultCategories.map(cat => ({
+            ...cat,
+            href: `/category`
+          }))
 
     const quickLinks = [
         { name: 'Browse All Categories', icon: Grid, href: '/category' },
@@ -55,8 +88,8 @@ const Drawer = ({ open, onClose, isSidebarMode = false, isSidebarOpen = true, on
                                 <Image src={logo} alt="jeescage" width={40} height={40} className="object-cover w-full h-full" />
                             </div>
                             {isSidebarOpen && (
-                                <div className="text-sm font-bold text-gray-900 whitespace-nowrap">
-                                    <span className="text-red-600">jees</span><span className="text-orange-600">cage</span>
+                                <div className="text-lg md:text-2xl font-bold text-black whitespace-nowrap">
+                                    jees<span className="text-amber-700">cage</span>
                                 </div>
                             )}
                         </div>
@@ -112,6 +145,17 @@ const Drawer = ({ open, onClose, isSidebarMode = false, isSidebarOpen = true, on
 }
 
 function DrawerContent({ onClose, categories, quickLinks, isSidebar = false }) {
+    const cartCount = useSelector(state => state.cart.total)
+    const wishlistCount = useSelector(state => state.wishlist.total)
+    
+    // Navigation items for mobile (Home, Orders, Wishlist, Cart)
+    const mobileNav = [
+        { name: 'Home', icon: Home, href: '/', color: 'green' },
+        { name: 'Orders', icon: Package, href: '/orders', color: 'blue' },
+        { name: 'Wishlist', icon: Heart, href: '/wishlist', color: 'red', badge: wishlistCount > 0 ? wishlistCount : null },
+        { name: 'Cart', icon: ShoppingCart, href: '/cart', color: 'orange', badge: cartCount > 0 ? cartCount : null },
+    ]
+    
     return (
         <div className={`p-4 h-full flex flex-col overflow-y-auto ${isSidebar ? 'pt-6' : ''}`}>
             {/* Header with logo and close button */}
@@ -122,13 +166,38 @@ function DrawerContent({ onClose, categories, quickLinks, isSidebar = false }) {
                             <Image src={logo} alt="jeescage" width={40} height={40} className="object-cover w-full h-full" />
                         </div>
                         <div>
-                            <div className="text-sm font-bold text-gray-900">jees<span className="text-red-600">cage</span></div>
+                            <div className="text-base md:text-lg font-bold text-black">jees<span className="text-amber-700">cage</span></div>
                             <div className="text-xs text-gray-600">Shop Smarter</div>
                         </div>
                     </div>
                     <button onClick={onClose} aria-label="Close menu" className="p-2 rounded-md hover:bg-gray-100 text-gray-700">
                         <X size={24} />
                     </button>
+                </div>
+            )}
+
+            {/* Mobile Navigation Section - Only visible on mobile drawer */}
+            {!isSidebar && (
+                <div className="mb-6">
+                    <div className="grid grid-cols-4 gap-2">
+                        {mobileNav.map((item, idx) => {
+                            const Icon = item.icon
+                            const bgColorClass = `hover:bg-${item.color}-600`
+                            return (
+                                <Link key={idx} href={item.href} onClick={onClose}>
+                                    <div className={`relative flex flex-col items-center justify-center p-3 rounded-lg bg-gray-50 hover:bg-${item.color}-600 hover:text-white transition-all text-gray-700`}>
+                                        <Icon size={20} className="mb-1" />
+                                        <span className="text-[10px] font-semibold text-center leading-tight">{item.name}</span>
+                                        {item.badge && (
+                                            <span className="absolute -top-2 -right-2 text-[8px] bg-red-600 text-white w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-lg">
+                                                {item.badge}
+                                            </span>
+                                        )}
+                                    </div>
+                                </Link>
+                            )
+                        })}
+                    </div>
                 </div>
             )}
 
@@ -146,7 +215,7 @@ function DrawerContent({ onClose, categories, quickLinks, isSidebar = false }) {
                     {categories.map((category, idx) => {
                         const Icon = category.icon
                         return (
-                            <Link key={idx} href={category.href} onClick={onClose}>
+                            <Link key={idx} href={`/category?category=${encodeURIComponent(category.name)}`} onClick={onClose} title={category.name}>
                                 <div className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition text-gray-800 font-medium">
                                     <div className="flex items-center gap-3">
                                         <Icon size={20} className="text-gray-700" />

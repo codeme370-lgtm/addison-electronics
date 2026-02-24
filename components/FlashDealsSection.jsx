@@ -1,14 +1,35 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { useUser } from '@clerk/nextjs'
 import ProductCard from './ProductCard'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
+import { useSidebar } from '@/context/SidebarContext'
 
 const FlashDealsSection = () => {
+    const { sidebarOpen } = useSidebar()
+    const { user } = useUser()
     const products = useSelector(state => state.product.list)
     const [timeLeft, setTimeLeft] = useState({ hours: 2, minutes: 15, seconds: 22 })
     const [scrollPos, setScrollPos] = useState(0)
+    const [greeting, setGreeting] = useState('')
+
+    // Get greeting based on time of day
+    useEffect(() => {
+        const hour = new Date().getHours()
+        let greetingText = ''
+        
+        if (hour < 12) {
+            greetingText = 'Good Morning'
+        } else if (hour < 17) {
+            greetingText = 'Good Afternoon'
+        } else {
+            greetingText = 'Good Evening'
+        }
+        
+        setGreeting(greetingText)
+    }, [])
 
     // Countdown timer effect
     useEffect(() => {
@@ -48,28 +69,36 @@ const FlashDealsSection = () => {
     return (
         <div className='w-full bg-white py-6 sm:py-8 px-2 sm:px-4 md:px-8'>
             <div className='max-w-7xl mx-auto'>
-                {/* Header */}
-                <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 mb-4 sm:mb-6'>
-                    <div className='flex items-center gap-2 sm:gap-3 flex-wrap'>
-                        <div className='bg-red-600 text-white px-2.5 sm:px-4 py-1.5 sm:py-2 rounded font-bold text-xs sm:text-base shadow-md'>
-                            Flash Sale
-                        </div>
-                        <div className='flex items-center gap-1.5 sm:gap-2 bg-gray-900 text-white px-2.5 sm:px-4 py-1.5 sm:py-2 rounded font-mono text-[10px] sm:text-xs md:text-sm shadow-md'>
-                            <span className='hidden sm:inline'>Ending in:</span>
-                            <span className='font-bold'>{String(timeLeft.hours).padStart(2, '0')}</span>
-                            <span>:</span>
-                            <span className='font-bold'>{String(timeLeft.minutes).padStart(2, '0')}</span>
-                            <span>:</span>
-                            <span className='font-bold'>{String(timeLeft.seconds).padStart(2, '0')}</span>
-                        </div>
+                {/* Header - All in one line */}
+                <div className='flex flex-wrap items-center justify-between gap-1 sm:gap-1.5 mb-2 sm:mb-3'>
+                    {/* Greeting */}
+                    <div className='text-xs sm:text-sm md:text-base font-semibold text-gray-700'>
+                        {greeting} {user?.firstName && <span className='text-amber-700 font-bold'>{user.firstName}</span>}
                     </div>
-                    <Link href='/shop?section=flash' className='text-red-600 hover:text-red-700 font-semibold text-xs sm:text-base transition-colors'>
+
+                    {/* Flash Sale Badge */}
+                    <div className='bg-red-600 text-white px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 rounded font-bold text-[10px] sm:text-xs md:text-sm shadow-md'>
+                        Flash Sale
+                    </div>
+
+                    {/* Timer */}
+                    <div className='flex items-center gap-1 sm:gap-1.5 bg-gray-900 text-white px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 rounded font-mono text-[9px] sm:text-[10px] md:text-xs shadow-md'>
+                        <span className='hidden sm:inline text-[8px] sm:text-[10px]'>Ending in:</span>
+                        <span className='font-bold'>{String(timeLeft.hours).padStart(2, '0')}</span>
+                        <span>:</span>
+                        <span className='font-bold'>{String(timeLeft.minutes).padStart(2, '0')}</span>
+                        <span>:</span>
+                        <span className='font-bold'>{String(timeLeft.seconds).padStart(2, '0')}</span>
+                    </div>
+
+                    {/* View All Link */}
+                    <Link href='/shop?section=flash' className='text-red-600 hover:text-red-700 font-semibold text-[10px] sm:text-xs md:text-sm transition-colors whitespace-nowrap'>
                         View All →
                     </Link>
                 </div>
 
                 {/* Grid layout for flash deals - responsive */}
-                <div className='grid grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4'>
+                <div className={`grid gap-2 sm:gap-3 md:gap-4 ${sidebarOpen ? 'grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4' : 'grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-5'}`}>
                     {flashProducts.map((product, idx) => (
                         <div key={product.id || idx} className='group relative'>
                             {/* Discount badge */}

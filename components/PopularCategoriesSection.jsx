@@ -7,8 +7,9 @@ import { ChevronRight } from 'lucide-react'
 
 const PopularCategoriesSection = () => {
     const products = useSelector(state => state.product.list)
+    const dbCategories = useSelector(state => state.category.list)
     
-    // Get unique categories from products
+    // Build category data from products, but ordered by database categories
     const categoriesData = {}
     products.forEach(product => {
         if (!categoriesData[product.category]) {
@@ -24,7 +25,11 @@ const PopularCategoriesSection = () => {
         }
     })
 
-    const categories = Object.values(categoriesData).slice(0, 6)
+    // Order categories by database order
+    const categories = dbCategories
+        .filter(cat => categoriesData[cat.name])
+        .map(cat => categoriesData[cat.name])
+        .slice(0, 6)
 
     // Enhanced color palette for categories with gradients
     const colors = [
@@ -52,7 +57,7 @@ const PopularCategoriesSection = () => {
                         const productImage = category.products?.[0]?.images?.[0]
                         
                         return (
-                            <Link key={idx} href={`/shop?category=${encodeURIComponent(category.name)}`}>
+                            <Link key={idx} href={`/category?search=${encodeURIComponent(category.name)}`}>
                                 <div className={`relative bg-gradient-to-br ${color.gradient} rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transform hover:scale-105 transition-all duration-200 h-28 sm:h-40 md:h-48 flex flex-col items-center justify-center`}>
                                     {/* Background product image with overlay */}
                                     {productImage && (

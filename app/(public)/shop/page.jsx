@@ -4,11 +4,13 @@ import ProductCard from "@/components/ProductCard"
 import { MoveLeftIcon } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useSelector } from "react-redux"
+import { useSidebar } from "@/context/SidebarContext"
 
  function ShopContent() {
 
     // get query params ?search=abc
     const searchParams = useSearchParams()
+    const { sidebarOpen } = useSidebar()
     const search = searchParams.get('search')
     const router = useRouter()
 
@@ -89,7 +91,7 @@ import { useSelector } from "react-redux"
                     </div>
                 </div>
 
-                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4 lg:gap-6 mx-auto mb-32">
+                <div className={`grid gap-2 sm:gap-4 lg:gap-6 grid-cols-4 ${sidebarOpen ? 'md:grid-cols-5 lg:grid-cols-5' : 'md:grid-cols-6 lg:grid-cols-6'} mx-auto mb-32`}>
                     {filteredProducts.map((product) => <ProductCard key={product.id} product={product} />)}
                 </div>
             </div>

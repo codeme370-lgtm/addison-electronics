@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useClerk, UserButton, useUser, Protect } from "@clerk/nextjs";
+import { useClerk, UserButton, useUser } from "@clerk/nextjs";
 import { useSidebar } from "@/context/SidebarContext";
 import logo from "@/app/logo.jpg";
 import Drawer from './Drawer'
@@ -20,14 +20,17 @@ const Navbar = () => {
 
     const [search, setSearch] = useState('')
     const [cartPulse, setCartPulse] = useState(false)
-    const [searchExpanded, setSearchExpanded] = useState(false)
     const [isMobile, setIsMobile] = useState(true)
     const cartCount = useSelector(state => state.cart.total)
+    const wishlistCount = useSelector(state => state.wishlist.total)
     const [drawerOpen, setDrawerOpen] = useState(false)
     const [showLocationDropdown, setShowLocationDropdown] = useState(false)
 
     useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth < 768)
+        const handleResize = () => {
+            const mobile = window.innerWidth < 768
+            setIsMobile(mobile)
+        }
         handleResize()
         window.addEventListener('resize', handleResize)
         return () => window.removeEventListener('resize', handleResize)
@@ -79,77 +82,31 @@ const Navbar = () => {
                                     className="w-full h-full object-cover"
                                 />
                             </div>
-                            <span className="font-bold text-gray-900 text-base sm:text-lg md:text-xl whitespace-nowrap">
-                                <span className="text-red-600">jees</span><span className="text-orange-600">cage</span>
+                            <span className="font-bold text-black text-base sm:text-2xl md:text-3xl whitespace-nowrap">
+                                jees<span className="text-amber-700">cage</span>
                             </span>
                         </Link>
                     </div>
-
-                    {/* Center: Search Bar - Responsive */}
-                    {searchExpanded ? (
-                        // Expanded search on mobile
-                        <div className="flex-1 min-w-0">
-                            <form onSubmit={handleSearch} className="flex items-center gap-1 sm:gap-2 bg-white border-2 border-gray-200 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 hover:border-orange-400 focus-within:border-orange-500 transition-all">
-                                <input 
-                                    className="flex-1 bg-transparent outline-none placeholder-gray-500 text-gray-700 text-xs sm:text-sm" 
-                                    type="text" 
-                                    placeholder="Search..." 
-                                    value={search} 
-                                    onChange={(e) => setSearch(e.target.value)}
-                                    autoFocus
-                                />
-                                <button 
-                                    type="submit"
-                                    className="bg-orange-500 hover:bg-orange-600 text-white px-2 sm:px-3 py-1 rounded-md flex-shrink-0 transition-all"
-                                >
-                                    <Search size={16} className="sm:w-5 sm:h-5" />
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setSearchExpanded(false)
-                                        setSearch('')
-                                    }}
-                                    className="text-gray-500 hover:text-gray-700 px-1 flex-shrink-0"
-                                >
-                                    ✕
-                                </button>
-                            </form>
-                        </div>
-                    ) : (
-                        <>
-                            {/* Compact search on small screens or full search on larger screens */}
-                            <div className="hidden sm:block flex-1 min-w-0 transition-all duration-300" style={{
-                                maxWidth: sidebarOpen ? 'calc(100% - 360px)' : 'calc(100% - 200px)'
-                            }}>
-                                <form onSubmit={handleSearch} className="flex items-center gap-1.5 sm:gap-2 bg-white border-2 border-gray-200 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 hover:border-orange-400 focus-within:border-orange-500 transition-all w-full">
-                                    <Search size={16} className="text-gray-400 flex-shrink-0 sm:w-5 sm:h-5" />
-                                    <input 
-                                        className="flex-1 bg-transparent outline-none placeholder-gray-500 text-gray-700 text-xs sm:text-sm min-w-0" 
-                                        type="text" 
-                                        placeholder="Search..." 
-                                        value={search} 
-                                        onChange={(e) => setSearch(e.target.value)}
-                                    />
-                                    <button 
-                                        type="submit"
-                                        className="bg-orange-500 hover:bg-orange-600 text-white px-2 sm:px-3 py-1 rounded-md flex-shrink-0 transition-all"
-                                    >
-                                        <Search size={16} className="sm:w-5 sm:h-5" />
-                                    </button>
-                                </form>
-                            </div>
-
-                            {/* Search icon button on mobile */}
+                    {/* Center: Search Bar - Always expanded on mobile, responsive on larger screens */}
+                    <div className="flex-1 min-w-0 md:max-w-sm md:ml-auto">
+                        <form onSubmit={handleSearch} className="flex items-center gap-1 sm:gap-2 bg-white border-2 border-gray-200 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 hover:border-orange-400 focus-within:border-orange-500 transition-all">
+                            <Search size={16} className="text-gray-400 flex-shrink-0 sm:w-5 sm:h-5 hidden sm:block" />
+                            <input 
+                                className="flex-1 bg-transparent outline-none placeholder-gray-500 text-gray-700 text-xs sm:text-sm" 
+                                type="text" 
+                                placeholder="Search..." 
+                                value={search} 
+                                onChange={(e) => setSearch(e.target.value)}
+                                autoFocus={isMobile}
+                            />
                             <button 
-                                onClick={() => setSearchExpanded(true)}
-                                className="sm:hidden p-1.5 bg-red-600 text-white rounded-lg hover:bg-red-700 shadow-md hover:shadow-lg transform hover:scale-110 active:scale-95 transition-all duration-200 flex-shrink-0"
-                                aria-label="Search"
+                                type="submit"
+                                className="bg-orange-500 hover:bg-orange-600 text-white px-2 sm:px-3 py-1 rounded-md flex-shrink-0 transition-all"
                             >
-                                <Search size={18} />
+                                <Search size={16} className="sm:w-5 sm:h-5" />
                             </button>
-                        </>
-                    )}
+                        </form>
+                    </div>
 
 
                     {/* Right: Location + Orders + Wishlist + Cart + User */}
@@ -179,10 +136,10 @@ const Navbar = () => {
                             )}
                         </div>
 
-                        {/* Home */}
+                        {/* Home - hidden on mobile */}
                         <Link 
                             href="/"
-                            className={`${searchExpanded ? 'hidden sm:flex' : 'flex'} flex-col items-center justify-center text-gray-700 hover:text-white hover:bg-green-600 bg-gray-50 rounded-lg px-1.5 sm:px-2 py-1.5 sm:py-2 text-xs transition-all duration-200 transform hover:scale-110 hover:shadow-md active:scale-95 flex-shrink-0`}
+                            className="hidden sm:flex flex-col items-center justify-center text-gray-700 hover:text-white hover:bg-green-600 bg-gray-50 rounded-lg px-1.5 sm:px-2 py-1.5 sm:py-2 text-xs transition-all duration-200 transform hover:scale-110 hover:shadow-md active:scale-95 flex-shrink-0"
                             title="Home"
                         >
                             <Home size={18} className="sm:w-5 sm:h-5" />
@@ -199,10 +156,10 @@ const Navbar = () => {
                             <span className="font-semibold text-[10px] md:text-xs mt-0.5">Categories</span>
                         </Link>
 
-                        {/* Orders - hidden on mobile when search expanded */}
+                        {/* Orders - hidden on mobile */}
                         <Link 
                             href="/orders"
-                            className={`${searchExpanded ? 'hidden sm:flex' : 'flex'} flex-col items-center justify-center text-gray-700 hover:text-white hover:bg-blue-600 bg-gray-50 rounded-lg px-1.5 sm:px-2 py-1.5 sm:py-2 text-xs transition-all duration-200 transform hover:scale-110 hover:shadow-md active:scale-95 flex-shrink-0`}
+                            className="hidden sm:flex flex-col items-center justify-center text-gray-700 hover:text-white hover:bg-blue-600 bg-gray-50 rounded-lg px-1.5 sm:px-2 py-1.5 sm:py-2 text-xs transition-all duration-200 transform hover:scale-110 hover:shadow-md active:scale-95 flex-shrink-0"
                             title="Orders"
                         >
                             <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -211,20 +168,25 @@ const Navbar = () => {
                             <span className="font-semibold text-[10px] sm:text-xs mt-0.5">Orders</span>
                         </Link>
 
-                        {/* Wishlist - hidden on mobile when search expanded */}
+                        {/* Wishlist - hidden on mobile */}
                         <Link 
                             href="/wishlist"
-                            className={`${searchExpanded ? 'hidden sm:flex' : 'flex'} flex-col items-center justify-center text-gray-700 hover:text-white hover:bg-red-600 bg-gray-50 rounded-lg px-1.5 sm:px-2 py-1.5 sm:py-2 text-xs transition-all duration-200 transform hover:scale-110 hover:shadow-md active:scale-95 flex-shrink-0`}
+                            className="relative hidden sm:flex flex-col items-center justify-center text-gray-700 hover:text-white hover:bg-red-600 bg-gray-50 rounded-lg px-1.5 sm:px-2 py-1.5 sm:py-2 text-xs transition-all duration-200 transform hover:scale-110 hover:shadow-md active:scale-95 flex-shrink-0"
                             title="Wishlist"
                         >
                             <Heart size={18} className="sm:w-5 sm:h-5" />
                             <span className="font-semibold text-[10px] sm:text-xs mt-0.5">Wishlist</span>
+                            {wishlistCount > 0 && (
+                                <span className={`absolute -top-1 -right-1 text-[8px] sm:text-[10px] text-white bg-red-600 w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center font-bold shadow-lg`}>
+                                    {wishlistCount}
+                                </span>
+                            )}
                         </Link>
 
-                        {/* Cart */}
+                        {/* Cart - hidden on mobile */}
                         <Link 
                             href="/cart"
-                            className="relative flex flex-col items-center justify-center text-gray-700 hover:text-white hover:bg-orange-600 bg-gray-50 rounded-lg px-1.5 sm:px-2 py-1.5 sm:py-2 text-xs transition-all duration-200 transform hover:scale-110 hover:shadow-md active:scale-95 flex-shrink-0"
+                            className="relative hidden sm:flex flex-col items-center justify-center text-gray-700 hover:text-white hover:bg-orange-600 bg-gray-50 rounded-lg px-1.5 sm:px-2 py-1.5 sm:py-2 text-xs transition-all duration-200 transform hover:scale-110 hover:shadow-md active:scale-95 flex-shrink-0"
                             title="Cart"
                         >
                             <ShoppingCart size={18} className="sm:w-5 sm:h-5" />

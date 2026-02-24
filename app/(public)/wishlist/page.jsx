@@ -38,10 +38,6 @@ export default function Wishlist() {
     }
 
     const handleAddToCart = (productId) => {
-        if (!user) {
-            toast.error('Please sign in to add items to cart')
-            return
-        }
         setLoadingItems(prev => new Set(prev).add(productId))
         dispatch(addToCart({ productId }))
         setTimeout(() => {
@@ -73,7 +69,7 @@ export default function Wishlist() {
                 </div>
 
                 {/* Wishlist Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6">
                     {wishlistArray.map((product, index) => (
                         <div key={index} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 group">
                             {/* Product Image */}
@@ -84,7 +80,7 @@ export default function Wishlist() {
                                         alt={product?.name || 'Product'}
                                         width={200}
                                         height={200}
-                                        className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                                     />
                                     {/* Wishlist Badge */}
                                     <button
