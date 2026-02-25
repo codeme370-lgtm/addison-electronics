@@ -59,8 +59,8 @@ const FrequentlySearched = () => {
                             {uniqueCategories.map((category, idx) => (
                                 <Link
                                     key={idx}
-                                    href={`/shop?category=${encodeURIComponent(category)}`}
-                                    className='block px-4 py-3 hover:bg-green-50 text-slate-700 hover:text-green-600 transition-colors text-sm font-medium'
+                                    href={`/category/${encodeURIComponent(category)}`}
+                                    className='block px-4 py-3 hover:bg-red-50 text-slate-700 hover:text-red-600 transition-colors text-sm font-medium'
                                 >
                                     {category}
                                 </Link>
@@ -76,7 +76,7 @@ const FrequentlySearched = () => {
                         {randomProducts.length > 0 && (
                             <div className='bg-white rounded-lg p-6 border border-slate-200'>
                                 <div className='flex items-center gap-3 mb-6'>
-                                    <div className='h-6 w-1 bg-gradient-to-b from-green-600 to-green-400 rounded-full'></div>
+                                    <div className='h-6 w-1 bg-gradient-to-b from-red-600 to-red-400 rounded-full'></div>
                                     <h3 className='text-lg font-bold text-slate-900'>
                                         Frequently searched
                                     </h3>
@@ -99,7 +99,7 @@ const FrequentlySearched = () => {
                                                     <div className='w-full h-full bg-gradient-to-br from-slate-300 to-slate-400' />
                                                 )}
                                             </div>
-                                            <p className='text-sm font-medium text-slate-700 text-center line-clamp-2 w-full hover:text-green-600'>
+                                            <p className='text-sm font-medium text-slate-700 text-center line-clamp-2 w-full hover:text-red-600'>
                                                 {product.name}
                                             </p>
                                         </Link>

@@ -57,7 +57,7 @@ const PopularCategoriesSection = () => {
                         const productImage = category.products?.[0]?.images?.[0]
                         
                         return (
-                            <Link key={idx} href={`/category?search=${encodeURIComponent(category.name)}`}>
+                            <Link key={idx} href={`/category/${encodeURIComponent(category.name)}`}>
                                 <div className={`relative bg-gradient-to-br ${color.gradient} rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transform hover:scale-105 transition-all duration-200 h-28 sm:h-40 md:h-48 flex flex-col items-center justify-center`}>
                                     {/* Background product image with overlay */}
                                     {productImage && (

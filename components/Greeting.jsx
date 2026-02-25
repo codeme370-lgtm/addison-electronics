@@ -47,7 +47,7 @@ const Greeting = () => {
                             <p className='text-2xl sm:text-3xl font-bold text-slate-800'>
                                 {greeting}
                                 {user && (
-                                    <span className='text-green-600'>, {user.firstName || user.username}!</span>
+                                    <span className='text-red-600'>, {user.firstName || user.username}!</span>
                                 )}
                             </p>
                             <p className='text-sm sm:text-base text-slate-600 mt-1'>

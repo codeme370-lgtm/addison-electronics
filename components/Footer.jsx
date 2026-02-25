@@ -53,7 +53,7 @@ const Footer = () => {
                 <div className="flex flex-col md:flex-row items-start justify-between gap-4 sm:gap-6 md:gap-8 lg:gap-10 py-6 sm:py-8 md:py-10 border-b border-slate-500/30 text-slate-500">
                     <div className="w-full md:flex-1">
                         <Link href="/" className="text-2xl sm:text-3xl md:text-4xl font-semibold text-slate-700 inline-block">
-                            <span className="text-green-600">jees</span>cage<span className="text-green-600 text-3xl sm:text-4xl md:text-5xl leading-0">.</span>
+                            <span className="text-red-600">jees</span>cage<span className="text-red-600 text-3xl sm:text-4xl md:text-5xl leading-0">.</span>
                         </Link>
                         <p className="max-w-[410px] mt-3 sm:mt-4 md:mt-6 text-xs sm:text-sm line-clamp-3 sm:line-clamp-none">Welcome to jeescage, your ultimate destination for the latest and smartest gadgets.</p>
                         <div className="flex items-center gap-2 sm:gap-3 mt-3 sm:mt-5">

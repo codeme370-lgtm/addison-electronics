@@ -171,8 +171,8 @@ const ProductDetails = ({ product }) => {
                 {/* Trust Badges */}
                 <div className="bg-gradient-to-r from-slate-50 to-slate-100 rounded-lg p-4 space-y-3 border border-slate-200">
                     <div className="flex gap-3 items-center text-slate-700 font-medium"> 
-                        <div className="bg-green-100 p-2 rounded-full">
-                            <EarthIcon className="text-green-600" size={18} />
+                        <div className="bg-red-100 p-2 rounded-full">
+                            <EarthIcon className="text-red-600" size={18} />
                         </div>
                         Free delivery worldwide
                     </div>
