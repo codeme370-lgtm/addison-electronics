@@ -163,7 +163,7 @@ export default function Dashboard() {
                         <tbody className="divide-y divide-gray-100">
                             {orders.slice(0, 8).map((order, i) => (
                                 <tr key={order.id} className="hover:bg-gray-50">
-                                    <td className="pl-6 text-green-600">{i + 1}</td>
+                                    <td className="pl-6 text-red-600">{i + 1}</td>
                                     <td className="px-4 py-3">{order.user?.name || '—'}</td>
                                     <td className="px-4 py-3 font-medium text-slate-800">{currency} {order.total}</td>
                                     <td className="px-4 py-3">{order.status}</td>

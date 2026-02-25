@@ -24,14 +24,14 @@ const StoreDrawer = ({ open, onClose, storeInfo }) => {
 
             {/* Drawer panel (left side) */}
             <aside 
-                className={`fixed top-0 left-0 h-full w-80 sm:w-96 bg-blue-100/75 shadow-2xl transform transition-transform duration-300 backdrop-blur-sm ${open ? 'translate-x-0' : '-translate-x-full'}`} 
+                className={`fixed top-0 left-0 h-full w-80 sm:w-96 bg-white shadow-2xl transform transition-transform duration-300 backdrop-blur-sm ${open ? 'translate-x-0' : '-translate-x-full'}`} 
                 aria-hidden={!open} 
                 style={{ zIndex: 50 }}
             >
                 <div className="p-4 h-full flex flex-col">
                     <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-blue-600 shadow">
+                            <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-red-600 shadow">
                                 <Image 
                                     src={storeInfo?.logo || '/favicon.ico'} 
                                     alt={storeInfo?.name || 'Store'} 
@@ -41,26 +41,26 @@ const StoreDrawer = ({ open, onClose, storeInfo }) => {
                                 />
                             </div>
                             <div>
-                                <div className="text-sm font-semibold text-blue-900">{storeInfo?.name || 'Store'}</div>
-                                <div className="text-xs text-blue-700">Store Dashboard</div>
+                                <div className="text-sm font-semibold text-slate-700">{storeInfo?.name || 'Store'}</div>
+                                <div className="text-xs text-slate-500">Store Dashboard</div>
                             </div>
                         </div>
                         <button 
                             onClick={onClose} 
                             aria-label="Close menu" 
-                            className="p-2 rounded-md hover:bg-blue-200/80 text-blue-900"
+                            className="p-2 rounded-md hover:bg-slate-100 text-slate-700"
                         >
                             <X />
                         </button>
                     </div>
 
-                    <nav className="flex-1 overflow-auto">
-                        <ul className="space-y-2">
+                    <nav className="flex-1 overflow-auto border-t border-slate-200">
+                        <ul className="space-y-2 pt-4">
                             {drawerLinks.map((link, index) => (
                                 <li key={index}>
                                     <Link 
                                         href={link.href} 
-                                        className="flex items-center gap-3 p-3 rounded-md hover:bg-blue-200/60 text-blue-900 font-medium transition"
+                                        className="flex items-center gap-3 p-3 rounded-md hover:bg-slate-100 text-slate-700 font-medium transition"
                                         onClick={onClose}
                                     >
                                         <link.icon size={20} /> 
@@ -74,7 +74,7 @@ const StoreDrawer = ({ open, onClose, storeInfo }) => {
                     <div className="mt-4 space-y-2">
                         <Link 
                             href="/" 
-                            className="block w-full text-center px-4 py-2 bg-blue-200/80 text-blue-900 rounded-md font-semibold hover:bg-blue-300/80 transition"
+                            className="block w-full text-center px-4 py-2 bg-red-600 text-white rounded-md font-semibold hover:bg-red-700 transition"
                         >
                             Go to Homepage
                         </Link>

@@ -100,7 +100,7 @@ export default function StoreOrders() {
                                     className="hover:bg-gray-50 transition-colors duration-150 cursor-pointer"
                                     onClick={() => openModal(order)}
                                 >
-                                    <td className="pl-6 text-green-600" >
+                                    <td className="pl-6 text-red-600" >
                                         {index + 1}
                                     </td>
                                     <td className="px-4 py-3">{order.user?.name}</td>
@@ -108,7 +108,7 @@ export default function StoreOrders() {
                                     <td className="px-4 py-3">{order.paymentMethod}</td>
                                     <td className="px-4 py-3">
                                         {order.isCouponUsed ? (
-                                            <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">
+                                            <span className="bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full">
                                                 {order.coupon?.code}
                                             </span>
                                         ) : (
@@ -148,11 +148,11 @@ export default function StoreOrders() {
                         {/* Customer Details */}
                         <div className="mb-4">
                             <h3 className="font-semibold mb-2">Customer Details</h3>
-                            <p><span className="text-green-700">Name:</span> {selectedOrder.user?.name}</p>
-                            <p><span className="text-green-700">Email:</span> {selectedOrder.user?.email}</p>
-                                <p><span className="text-green-700">Phone:</span> {selectedOrder.address?.phone}</p>
+                            <p><span className="text-red-600">Name:</span> {selectedOrder.user?.name}</p>
+                            <p><span className="text-red-600">Email:</span> {selectedOrder.user?.email}</p>
+                                <p><span className="text-red-600">Phone:</span> {selectedOrder.address?.phone}</p>
                                 <p className="flex items-center gap-2">
-                                    <span className="text-green-700">Address:</span>
+                                    <span className="text-red-600">Address:</span>
                                     <span className="text-slate-700">{`${selectedOrder.address?.street || ''}${selectedOrder.address?.street ? ', ' : ''}${selectedOrder.address?.city || ''}${selectedOrder.address?.city ? ', ' : ''}${selectedOrder.address?.state || ''}`.slice(0, 80)}{(selectedOrder.address && (`${selectedOrder.address.street || ''}` + `${selectedOrder.address.city || ''}`).length > 80) ? '...' : ''}</span>
                                     <button onClick={() => setShowAddrModal(true)} className="text-xs text-slate-500 hover:underline">View</button>
                                 </p>
@@ -181,13 +181,13 @@ export default function StoreOrders() {
 
                         {/* Payment & Status */}
                         <div className="mb-4">
-                            <p><span className="text-green-700">Payment Method:</span> {selectedOrder.paymentMethod}</p>
-                            <p><span className="text-green-700">Paid:</span> {selectedOrder.isPaid ? "Yes" : "No"}</p>
+                            <p><span className="text-red-600">Payment Method:</span> {selectedOrder.paymentMethod}</p>
+                            <p><span className="text-red-600">Paid:</span> {selectedOrder.isPaid ? "Yes" : "No"}</p>
                             {selectedOrder.isCouponUsed && (
-                                <p><span className="text-green-700">Coupon:</span> {selectedOrder.coupon.code} ({selectedOrder.coupon.discount}% off)</p>
+                                <p><span className="text-red-600">Coupon:</span> {selectedOrder.coupon.code} ({selectedOrder.coupon.discount}% off)</p>
                             )}
-                            <p><span className="text-green-700">Status:</span> {selectedOrder.status}</p>
-                            <p><span className="text-green-700">Order Date:</span> {new Date(selectedOrder.createdAt).toLocaleString()}</p>
+                            <p><span className="text-red-600">Status:</span> {selectedOrder.status}</p>
+                            <p><span className="text-red-600">Order Date:</span> {new Date(selectedOrder.createdAt).toLocaleString()}</p>
                         </div>
 
                         {/* Actions */}
