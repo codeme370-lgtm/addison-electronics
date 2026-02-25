@@ -82,13 +82,13 @@ const Navbar = () => {
                                     className="w-full h-full object-cover"
                                 />
                             </div>
-                            <span className="font-bold text-black text-base sm:text-2xl md:text-3xl whitespace-nowrap">
+                            <span className="font-bold text-black text-lg sm:text-3xl md:text-4xl whitespace-nowrap">
                                 jees<span className="text-amber-700">cage</span>
                             </span>
                         </Link>
                     </div>
                     {/* Center: Search Bar - Always expanded on mobile, responsive on larger screens */}
-                    <div className="flex-1 min-w-0 md:max-w-sm md:ml-auto">
+                    <div className="flex-1 min-w-0 max-w-xs mx-auto md:max-w-sm md:ml-auto">
                         <form onSubmit={handleSearch} className="flex items-center gap-1 sm:gap-2 bg-white border-2 border-gray-200 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 hover:border-orange-400 focus-within:border-orange-500 transition-all">
                             <Search size={16} className="text-gray-400 flex-shrink-0 sm:w-5 sm:h-5 hidden sm:block" />
                             <input 

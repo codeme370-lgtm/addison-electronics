@@ -7,13 +7,13 @@ import { useState } from "react";
 import RatingModal from "./RatingModal";
 import AddressViewModal from "./AddressViewModal";
 
-const OrderItem = ({ order }) => {
+const OrderItem = ({ order, onAddressUpdated }) => {
 
     const currency = process.env.NEXT_PUBLIC_CURRENCY_SYMBOL || 'GHS';
     const [ratingModal, setRatingModal] = useState(null);
 
     const { ratings } = useSelector(state => state.rating);
-    const addr = order.address || {};
+    const [addr, setAddr] = useState(order.address || {});
     const [showAddrModal, setShowAddrModal] = useState(false);
 
     return (
@@ -104,7 +104,16 @@ const OrderItem = ({ order }) => {
                     </div>
                 </td>
             </tr>
-            {showAddrModal && <AddressViewModal address={addr} onClose={() => setShowAddrModal(false)} />}
+            {showAddrModal && <AddressViewModal 
+                address={addr} 
+                onClose={() => setShowAddrModal(false)} 
+                orderId={order.id}
+                orderStatus={order.status}
+                onAddressUpdated={(updatedOrder) => {
+                    setAddr(updatedOrder.address)
+                    onAddressUpdated?.(updatedOrder)
+                }}
+            />}
             <tr>
                 <td colSpan={4}>
                     <div className="border-b border-slate-300 w-6/7 mx-auto" />

@@ -6,10 +6,13 @@ import AddressViewModal from "@/components/AddressViewModal"
 import { useAuth } from "@clerk/nextjs"
 import axios from "axios"
 import toast from "react-hot-toast"
+import { X, AlertCircle, CheckCircle } from "lucide-react"
+import Link from "next/link"
 
 
 export default function StoreOrders() {
     const [orders, setOrders] = useState([])
+    const [alerts, setAlerts] = useState([])
     const [loading, setLoading] = useState(true)
     const [selectedOrder, setSelectedOrder] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -38,6 +41,57 @@ export default function StoreOrders() {
        }finally {
         setLoading(false)
        }
+    }
+
+    const fetchAddressAlerts = async () => {
+        try {
+            let token
+            try {
+                token = await getToken()
+            } catch (tErr) {
+                console.warn('getToken failed in fetchAddressAlerts', tErr?.message)
+            }
+            if (!token) {
+                // Not authenticated - clear alerts and return
+                setAlerts([])
+                return
+            }
+
+            const { data } = await axios.get("/api/store/address-alerts?unreadOnly=true", {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            setAlerts(data.alerts || [])
+        } catch (error) {
+            // Handle 404 (no route or no store) gracefully
+            const status = error?.response?.status
+            if (status === 404) {
+                setAlerts([])
+                console.warn('Address alerts endpoint returned 404')
+                return
+            }
+            console.error("Error fetching address alerts:", error)
+            setAlerts([])
+        }
+    }
+
+    const markAlertAsRead = async (alertId) => {
+        try {
+            const token = await getToken()
+            if (!token) return
+
+            await axios.patch("/api/store/address-alerts", { alertId }, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            setAlerts(prevAlerts => prevAlerts.filter(alert => alert.id !== alertId))
+            toast.success("Alert marked as checked")
+        } catch (error) {
+            console.error("Error marking alert as read:", error)
+            toast.error("Failed to dismiss alert")
+        }
+    }
+
+    const getAlertForOrder = (orderId) => {
+        return alerts.find(alert => alert.orderId === orderId)
     }
 
     const updateOrderStatus = async (orderId, status) => {
@@ -74,13 +128,71 @@ export default function StoreOrders() {
 
     useEffect(() => {
         fetchOrders()
+        fetchAddressAlerts()
+        // Refresh alerts every 10 seconds
+        const interval = setInterval(fetchAddressAlerts, 10000)
+        return () => clearInterval(interval)
     }, [])
 
     if (loading) return <Loading />
 
     return (
         <>
-            <h1 className="text-2xl text-slate-500 mb-5">Store <span className="text-slate-800 font-medium">Orders</span></h1>
+            <div className="flex items-center gap-3 mb-5">
+                <h1 className="text-2xl text-slate-500">Store <span className="text-slate-800 font-medium">Orders</span></h1>
+                {alerts.length > 0 && (
+                    <span className="bg-red-500 text-white text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center">
+                        {alerts.length}
+                    </span>
+                )}
+                {alerts.length > 0 && (
+                    <Link href="/store/address-changes" className="text-xs bg-blue-100 text-blue-700 hover:bg-blue-200 px-3 py-1 rounded-full transition">
+                        View All Changes
+                    </Link>
+                )}
+            </div>
+
+            {/* Address Change Alerts */}
+            {alerts.length > 0 && (
+                <div className="mb-6 space-y-3">
+                    {alerts.map((alert) => (
+                        <div key={alert.id} className="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-4 relative">
+                            <div className="flex items-start gap-3">
+                                <AlertCircle className="text-blue-600 mt-0.5 flex-shrink-0" size={20} />
+                                <div className="flex-1">
+                                    <h4 className="font-semibold text-blue-900 mb-1">Customer Changed Delivery Address</h4>
+                                    <p className="text-sm text-blue-800 mb-2">
+                                        <strong>{alert.user?.name}</strong> updated their delivery address for order <strong>#{alert.order?.id?.slice(0, 8)}</strong>
+                                    </p>
+                                    <div className="grid grid-cols-2 gap-3 text-xs text-blue-700 mt-2">
+                                        <div className="bg-white bg-opacity-50 p-2 rounded">
+                                            <p className="font-medium text-blue-900 mb-1">Old Address:</p>
+                                            <p>{alert.oldAddress?.street}</p>
+                                            <p>{alert.oldAddress?.city}, {alert.oldAddress?.state}</p>
+                                        </div>
+                                        <div className="bg-white bg-opacity-50 p-2 rounded border-2 border-blue-400">
+                                            <p className="font-medium text-blue-900 mb-1">New Address:</p>
+                                            <p>{alert.newAddress?.street}</p>
+                                            <p>{alert.newAddress?.city}, {alert.newAddress?.state}</p>
+                                        </div>
+                                    </div>
+                                    <p className="text-xs text-blue-600 mt-2">
+                                        {new Date(alert.createdAt).toLocaleString()}
+                                    </p>
+                                </div>
+                                <button
+                                    onClick={() => markAlertAsRead(alert.id)}
+                                    className="text-blue-600 hover:text-blue-800 flex-shrink-0 mt-1"
+                                    title="Dismiss alert"
+                                >
+                                    <X size={20} />
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+
             {orders.length === 0 ? (
                 <p>No orders found</p>
             ) : (
@@ -88,22 +200,44 @@ export default function StoreOrders() {
                     <table className="w-full text-sm text-left text-gray-600">
                         <thead className="bg-gray-50 text-gray-700 text-xs uppercase tracking-wider">
                             <tr>
-                                {["Sr. No.", "Customer", "Total", "Payment", "Coupon", "Status", "Date"].map((heading, i) => (
+                                {["Sr. No.", "Customer", "Address", "Total", "Payment", "Coupon", "Status", "Date"].map((heading, i) => (
                                     <th key={i} className="px-4 py-3">{heading}</th>
                                 ))}
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100">
-                            {orders.map((order, index) => (
+                            {orders.map((order, index) => {
+                                const orderAlert = getAlertForOrder(order.id)
+                                const hasUnreadChange = !!orderAlert
+                                return (
                                 <tr
                                     key={order.id}
-                                    className="hover:bg-gray-50 transition-colors duration-150 cursor-pointer"
-                                    onClick={() => openModal(order)}
+                                    className={`transition-colors duration-150 cursor-pointer ${hasUnreadChange ? 'bg-yellow-50 hover:bg-yellow-100' : 'hover:bg-gray-50'}`}
+                                    onClick={() => {
+                                        openModal(order)
+                                        if (hasUnreadChange) {
+                                            markAlertAsRead(orderAlert.id)
+                                        }
+                                    }}
                                 >
-                                    <td className="pl-6 text-red-600" >
-                                        {index + 1}
+                                    <td className="pl-6 text-red-600 relative" >
+                                        <div className="flex items-center gap-2">
+                                            <span>{index + 1}</span>
+                                            {hasUnreadChange && (
+                                                <span className="inline-flex items-center gap-1 text-xs bg-yellow-200 text-yellow-800 px-2 py-1 rounded-full font-medium" title="Address changed">
+                                                    <AlertCircle size={12} />
+                                                    Changed
+                                                </span>
+                                            )}
+                                        </div>
                                     </td>
                                     <td className="px-4 py-3">{order.user?.name}</td>
+                                    <td className="px-4 py-3 text-sm">
+                                        <div className="flex items-center gap-2">
+                                            <span>{`${order.address?.street || ''}, ${order.address?.city || ''}, ${order.address?.state || ''}`.slice(0, 40)}{(`${order.address?.street || ''}${order.address?.city || ''}${order.address?.state || ''}`).length > 40 ? '...' : ''}</span>
+                                            <button onClick={(e) => { e.stopPropagation(); setSelectedOrder(order); setShowAddrModal(true); if (orderAlert) markAlertAsRead(orderAlert.id); }} className="text-xs text-blue-500 hover:underline whitespace-nowrap">View</button>
+                                        </div>
+                                    </td>
                                     <td className="px-4 py-3 font-medium text-slate-800">GHS {order.total}</td>
                                     <td className="px-4 py-3">{order.paymentMethod}</td>
                                     <td className="px-4 py-3">
@@ -131,7 +265,8 @@ export default function StoreOrders() {
                                         {new Date(order.createdAt).toLocaleString()}
                                     </td>
                                 </tr>
-                            ))}
+                                )
+                            })}
                         </tbody>
                     </table>
                 </div>
@@ -200,7 +335,7 @@ export default function StoreOrders() {
                 </div>
             )}
             {showAddrModal && selectedOrder && (
-                <AddressViewModal address={selectedOrder.address} onClose={() => setShowAddrModal(false)} />
+                <AddressViewModal address={selectedOrder.address} onClose={() => setShowAddrModal(false)} orderId={selectedOrder.id} orderStatus={selectedOrder.status} />
             )}
         </>
     )

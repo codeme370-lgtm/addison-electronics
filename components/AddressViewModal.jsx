@@ -2,9 +2,11 @@
 import { XIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import { createPortal } from "react-dom"
+import AddressEditModal from "./AddressEditModal"
 
-const AddressViewModal = ({ address, onClose }) => {
+const AddressViewModal = ({ address, onClose, orderId, orderStatus, onAddressUpdated }) => {
     const [mounted, setMounted] = useState(false)
+    const [showEditModal, setShowEditModal] = useState(false)
 
     useEffect(() => {
         setMounted(true)
@@ -13,6 +15,8 @@ const AddressViewModal = ({ address, onClose }) => {
 
     if (!address) return null
     if (!mounted) return null
+
+    const canEditAddress = orderStatus !== "SHIPPED" && orderStatus !== "DELIVERED"
 
     const modal = (
         <div onClick={onClose} className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center">
@@ -32,11 +36,37 @@ const AddressViewModal = ({ address, onClose }) => {
                     <p><span className="font-medium">Country:</span> {address?.country || '—'}</p>
                     <p><span className="font-medium">Phone:</span> {address?.phone || '—'}</p>
                 </div>
+
+                {canEditAddress && (
+                    <button
+                        onClick={() => setShowEditModal(true)}
+                        className="mt-4 w-full bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition font-medium"
+                    >
+                        Edit Address
+                    </button>
+                )}
             </div>
         </div>
     )
 
-    return createPortal(modal, document.body)
+    return (
+        <>
+            {createPortal(modal, document.body)}
+            {showEditModal && (
+                <AddressEditModal
+                    address={address}
+                    orderId={orderId}
+                    orderStatus={orderStatus}
+                    onClose={() => setShowEditModal(false)}
+                    onAddressUpdated={(updatedOrder) => {
+                        onAddressUpdated?.(updatedOrder)
+                        setShowEditModal(false)
+                        onClose()
+                    }}
+                />
+            )}
+        </>
+    )
 }
 
 export default AddressViewModal

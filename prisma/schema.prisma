@@ -16,11 +16,12 @@ model User {
     cart  Json   @default("{}")
 
     // Relations
-    ratings        Rating[]
-    Address        Address[]
-    store          Store?
-    buyerOrders    Order[]   @relation("BuyerRelation")
-    sellerReviews  SellerReview[]
+    ratings              Rating[]
+    Address              Address[]
+    store                Store?
+    buyerOrders          Order[]   @relation("BuyerRelation")
+    sellerReviews        SellerReview[]
+    addressChangeAlerts  AddressChangeAlert[]
 }
 
 // Required for creating a Product: name, description, mrp, price, images, category, storeId
@@ -79,6 +80,7 @@ model Order {
     coupon          Json          @default("{}")
     orderItems      OrderItem[]
     ratings         Rating[]
+    addressChangeAlerts AddressChangeAlert[]
 
     // Relations
     user    User    @relation("BuyerRelation", fields: [userId], references: [id])
@@ -179,6 +181,7 @@ model Store {
     sellerReviews       SellerReview[]
     followers           StoreFollower[]
     searchOptimization  SearchOptimization?
+    addressChangeAlerts AddressChangeAlert[]
 }
 
 // Seller-specific reviews (separate from product reviews)
@@ -229,4 +232,20 @@ model Category {
     name      String   @unique
     slug      String   @unique
     createdAt DateTime @default(now())
+}
+// Address Change Alerts for Store Owners
+model AddressChangeAlert {
+    id          String   @id @default(cuid())
+    orderId     String
+    storeId     String
+    userId      String
+    oldAddress  Json     // Store the old address as JSON
+    newAddress  Json     // Store the new address as JSON
+    isRead      Boolean  @default(false)
+    createdAt   DateTime @default(now())
+    
+    // Relations
+    order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+    store       Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+    user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

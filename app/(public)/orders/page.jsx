@@ -16,22 +16,33 @@ const {user, isLoaded}=useUser();
     const [loading, setLoading] = useState(true);
 
     const router = useRouter();
-    useEffect(() => {
-       const fetchOrders = async () => {
+    
+    const fetchOrders = async () => {
         try{
-              //when the user is logged in
-              const token = await getToken();
-             const {data} = await axios.get('/api/orders', {
+            //when the user is logged in
+            const token = await getToken();
+            const {data} = await axios.get('/api/orders', {
                 headers: {
                   Authorization: `Bearer ${token}`
                 }
-              });
-              setOrders(data.orders);
-              setLoading(false);
+            });
+            setOrders(data.orders);
+            setLoading(false);
         }catch(error){
             console.log("Error fetching orders:", error);
         }
-       } 
+    }
+
+    const handleAddressUpdated = (updatedOrder) => {
+        // Update the order in the state
+        setOrders(prevOrders => 
+            prevOrders.map(order => 
+                order.id === updatedOrder.id ? updatedOrder : order
+            )
+        )
+    }
+
+    useEffect(() => {
        if(isLoaded){
        //when the user is logged in
        if(user){
@@ -65,7 +76,11 @@ const {user, isLoaded}=useUser();
                             </thead>
                             <tbody>
                                 {orders.map((order) => (
-                                    <OrderItem order={order} key={order.id} />
+                                    <OrderItem 
+                                        order={order} 
+                                        key={order.id} 
+                                        onAddressUpdated={handleAddressUpdated}
+                                    />
                                 ))}
                             </tbody>
                         </table>
