@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromWishlist } from "@/lib/features/wishlist/wishlistSlice";
 import { addToCart } from "@/lib/features/cart/cartSlice";
+import { fetchProducts } from "@/lib/features/product/productSlice";
 import { useUser } from "@clerk/nextjs";
 import toast from "react-hot-toast";
+import ProductCard from "@/components/ProductCard";
 
 export default function Wishlist() {
     const currency = process.env.NEXT_PUBLIC_CURRENCY_SYMBOL || 'GHS';
@@ -20,6 +22,7 @@ export default function Wishlist() {
 
     const [wishlistArray, setWishlistArray] = useState([]);
     const [loadingItems, setLoadingItems] = useState(new Set());
+    const [suggestedProducts, setSuggestedProducts] = useState([]);
 
     const createWishlistArray = () => {
         const wishlistArray = [];
@@ -53,8 +56,13 @@ export default function Wishlist() {
     useEffect(() => {
         if (products.length > 0) {
             createWishlistArray();
+            setSuggestedProducts(products.slice(0, 20));
         }
     }, [wishlistItems, products]);
+
+    useEffect(() => {
+        dispatch(fetchProducts({}));
+    }, [dispatch]);
 
     return wishlistArray.length > 0 ? (
         <div className="min-h-screen bg-white">
@@ -151,18 +159,37 @@ export default function Wishlist() {
             </div>
         </div>
     ) : (
-        <div className="min-h-[80vh] flex flex-col items-center justify-center bg-white">
-            <Heart size={64} className="text-gray-300 mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Your Wishlist is Empty</h2>
-            <p className="text-gray-600 text-center mb-6">
-                Add items to your wishlist to save them for later
-            </p>
-            <Link 
-                href="/shop"
-                className="bg-orange-600 hover:bg-orange-700 text-white font-semibold px-6 py-3 rounded-lg transition-all"
-            >
-                Continue Shopping
-            </Link>
+        <div className="min-h-screen bg-white">
+            <div className="max-w-7xl mx-auto px-4 md:px-8 py-12">
+                {/* Empty State */}
+                <div className="min-h-[40vh] flex flex-col items-center justify-center mb-12">
+                    <Heart size={64} className="text-gray-300 mb-4" />
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">Your Wishlist is Empty</h2>
+                    <p className="text-gray-600 text-center mb-6">
+                        Add items to your wishlist to save them for later
+                    </p>
+                    <Link 
+                        href="/shop"
+                        className="bg-orange-600 hover:bg-orange-700 text-white font-semibold px-6 py-3 rounded-lg transition-all"
+                    >
+                        Continue Shopping
+                    </Link>
+                </div>
+
+                {/* Suggested Products */}
+                {suggestedProducts.length > 0 && (
+                    <div className="py-12">
+                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">
+                            <span className="text-red-600">Suggested</span> Products
+                        </h2>
+                        <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">
+                            {suggestedProducts.map((product) => (
+                                <ProductCard key={product.id} product={product} />
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     )
 }

@@ -2,11 +2,13 @@
 import Counter from "@/components/Counter";
 import OrderSummary from "@/components/OrderSummary";
 import PageTitle from "@/components/PageTitle";
+import ProductCard from "@/components/ProductCard";
 import { deleteItemFromCart } from "@/lib/features/cart/cartSlice";
 import { Trash2Icon } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "@/lib/features/product/productSlice";
 
 export default function Cart() {
 
@@ -19,6 +21,7 @@ export default function Cart() {
 
     const [cartArray, setCartArray] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [suggestedProducts, setSuggestedProducts] = useState([]);
 
     const createCartArray = () => {
         setTotalPrice(0);
@@ -43,8 +46,13 @@ export default function Cart() {
     useEffect(() => {
         if (products.length > 0) {
             createCartArray();
+            setSuggestedProducts(products.slice(0, 20));
         }
     }, [cartItems, products]);
+
+    useEffect(() => {
+        dispatch(fetchProducts({}));
+    }, [dispatch]);
 
     return cartArray.length > 0 ? (
         <div className="min-h-screen mx-6 text-slate-800">
@@ -97,8 +105,26 @@ export default function Cart() {
             </div>
         </div>
     ) : (
-        <div className="min-h-[80vh] mx-6 flex items-center justify-center text-slate-400">
-            <h1 className="text-2xl sm:text-4xl font-semibold">Your cart is empty</h1>
+        <div className="min-h-screen mx-6">
+            <div className="max-w-7xl mx-auto">
+                <div className="min-h-[40vh] flex items-center justify-center text-slate-400 mb-8">
+                    <h1 className="text-2xl sm:text-4xl font-semibold">Your cart is empty</h1>
+                </div>
+
+                {/* Suggested Products */}
+                {suggestedProducts.length > 0 && (
+                    <div className="py-12">
+                        <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-8">
+                            <span className="text-red-600">Suggested</span> Products
+                        </h2>
+                        <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                            {suggestedProducts.map((product) => (
+                                <ProductCard key={product.id} product={product} />
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     )
 }
