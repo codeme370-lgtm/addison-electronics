@@ -4,6 +4,11 @@ import ban2 from "./ban2.jpg"
 import ban3 from "./ban3.jpg"
 import ban4 from "./ban4.jpg"
 import ban5 from "./ban5.jpg"
+// responsive banner variations
+import ba1 from "./ba1.jpeg"
+import ba2 from "./ba2.jpeg"
+import ba3 from "./ba3.jpeg"
+import ba4 from "./ba4.jpeg"
 import { ClockFadingIcon, HeadsetIcon, SendIcon } from "lucide-react";
 
 // Many image assets referenced across the app are not present in the repo.
@@ -40,6 +45,8 @@ export const assets = {
     product_img1, product_img2, product_img3, product_img4, product_img5, product_img6,
     product_img7, product_img8, product_img9, product_img10, product_img11, product_img12,
     ban1, ban2, ban3, ban4, ban5,
+    // added responsive banner assets
+    ba1, ba2, ba3, ba4,
 }
 
 export const categories = ["Headphones", "Speakers", "Watch", "Earbuds", "Mouse", "Decoration"];

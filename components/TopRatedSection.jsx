@@ -32,7 +32,7 @@ const TopRatedSection = () => {
                         See All <ChevronRight size={16} className='sm:w-5 sm:h-5' />
                     </Link>
                 </div>
-                <div className={`grid gap-2 sm:gap-3 md:gap-4 ${sidebarOpen ? 'grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4' : 'grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-5'}`}>
+                <div className={`grid gap-2 sm:gap-3 md:gap-4 ${sidebarOpen ? 'grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4' : 'grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5'}`}>
                     {topRated.map((product, idx) => (
                         <div key={product.id || idx} className='group'>
                             <ProductCard product={product} />

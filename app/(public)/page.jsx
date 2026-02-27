@@ -1,6 +1,6 @@
 'use client'
 
-import MegaSaleBanner from "@/components/MegaSaleBanner";
+import Hero from "@/components/Hero";
 import QuickLinks from "@/components/QuickLinks";
 import FlashDealsSection from "@/components/FlashDealsSection";
 import PopularCategoriesSection from "@/components/PopularCategoriesSection";
@@ -14,7 +14,7 @@ export default function Home() {
             {/* Mega Sale Banner - Full width white background */}
             <div className='bg-white px-2 sm:px-4 md:px-8 py-4 sm:py-6 md:py-8'>
                 <div className='max-w-7xl mx-auto'>
-                    <MegaSaleBanner />
+                    <Hero />
                 </div>
             </div>
 
