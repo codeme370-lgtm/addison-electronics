@@ -1,6 +1,7 @@
 import { getAuth } from "@clerk/nextjs/server"
 import { NextResponse } from "next/server"
 import prisma from "@/lib/prisma"
+import { inngest } from '@/lib/inngest'
 
 export async function POST(request) {
     try {
@@ -66,15 +67,33 @@ export async function POST(request) {
 
         // Create an alert for the store owner
         try {
-            await prisma.addressChangeAlert.create({
+            const createdAlert = await prisma.addressChangeAlert.create({
                 data: {
                     orderId,
                     storeId: order.storeId,
                     userId,
                     oldAddress: oldAddress,
                     newAddress: newAddress
+                },
+                include: {
+                    order: {
+                        include: {
+                            user: true,
+                            orderItems: { include: { product: true } }
+                        }
+                    },
+                    user: true
                 }
             })
+            // Send an Inngest event for any background processing
+            try {
+                await inngest.send({
+                    name: 'app/address.change',
+                    data: createdAlert
+                })
+            } catch (ie) {
+                console.warn('Failed to send inngest event for address change:', ie.message)
+            }
         } catch (alertError) {
             console.warn("Warning: Failed to create address change alert:", alertError.message)
             // Continue anyway - address was updated successfully

@@ -1,6 +1,7 @@
 'use client'
 import { XIcon } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { createPortal } from "react-dom"
 import { toast } from "react-hot-toast"
 import { useAuth } from "@clerk/nextjs"
 import { useDispatch } from "react-redux"
@@ -9,10 +10,11 @@ import { addAddress } from "@/lib/features/address/addressSlice"
 
 
 
-const AddressModal = ({ setShowAddressModal }) => {
-//address state
-const {getToken} = useAuth()
-const dispatch = useDispatch()
+const AddressModal = ({ setShowAddressModal, onSuccess }) => {
+    //address state
+    const {getToken} = useAuth()
+    const dispatch = useDispatch()
+    const [mounted, setMounted] = useState(false)
     const [address, setAddress] = useState({
         name: '',
         email: '',
@@ -23,6 +25,11 @@ const dispatch = useDispatch()
         country: '',
         phone: ''
     })
+
+    useEffect(() => {
+        setMounted(true)
+        return () => setMounted(false)
+    }, [])
 
     const handleAddressChange = (e) => {
         setAddress({
@@ -48,6 +55,7 @@ const dispatch = useDispatch()
                 }
             })
             dispatch(addAddress(data.newAddress))
+            if (onSuccess) onSuccess(data.newAddress)
             toast.success(data.message)
             setShowAddressModal(false)
         } catch (error) {
@@ -56,9 +64,11 @@ const dispatch = useDispatch()
         }
     }
 
-    return (
-        <form onSubmit={e => toast.promise(handleSubmit(e), { loading: 'Adding Address...' })} className="fixed inset-0 z-50 bg-white/60 backdrop-blur h-screen flex items-center justify-center">
-            <div className="flex flex-col gap-5 text-slate-700 w-full max-w-sm mx-6">
+    if (!mounted) return null
+
+    const modal = (
+        <div onClick={() => setShowAddressModal(false)} className="fixed inset-0 z-50 bg-white/60 backdrop-blur h-screen flex items-center justify-center">
+            <form onSubmit={e => toast.promise(handleSubmit(e), { loading: 'Adding Address...' })} onClick={e => e.stopPropagation()} className="flex flex-col gap-5 text-slate-700 w-full max-w-sm mx-6">
                 <h2 className="text-3xl ">Add New <span className="font-semibold">Address</span></h2>
                 <input name="name" onChange={handleAddressChange} value={address.name} className="p-2 px-4 outline-none border border-slate-200 rounded w-full" type="text" placeholder="Enter your name" required />
                 <input name="email" onChange={handleAddressChange} value={address.email} className="p-2 px-4 outline-none border border-slate-200 rounded w-full" type="email" placeholder="Email address" required />
@@ -73,10 +83,12 @@ const dispatch = useDispatch()
                 </div>
                 <input name="phone" onChange={handleAddressChange} value={address.phone} className="p-2 px-4 outline-none border border-slate-200 rounded w-full" type="text" placeholder="Phone" required />
                 <button className="bg-slate-800 text-white text-sm font-medium py-2.5 rounded-md hover:bg-slate-900 active:scale-95 transition-all">SAVE ADDRESS</button>
-            </div>
+            </form>
             <XIcon size={30} className="absolute top-5 right-5 text-slate-500 hover:text-slate-700 cursor-pointer" onClick={() => setShowAddressModal(false)} />
-        </form>
+        </div>
     )
+
+    return createPortal(modal, document.body)
 }
 
 export default AddressModal

@@ -3,6 +3,7 @@ import { XIcon, Loader } from "lucide-react"
 import { useEffect, useState } from "react"
 import { createPortal } from "react-dom"
 import axios from "axios"
+import AddressModal from "./AddressModal"
 import { useAuth } from "@clerk/nextjs"
 import toast from "react-hot-toast"
 
@@ -12,6 +13,7 @@ const AddressEditModal = ({ address, orderId, orderStatus, onClose, onAddressUpd
     const [selectedAddressId, setSelectedAddressId] = useState(address?.id || '')
     const [loading, setLoading] = useState(false)
     const [isLoadingAddresses, setIsLoadingAddresses] = useState(true)
+    const [showNewAddressModal, setShowNewAddressModal] = useState(false)
     const { getToken } = useAuth()
 
     // Check if order can be edited
@@ -80,6 +82,11 @@ const AddressEditModal = ({ address, orderId, orderStatus, onClose, onAddressUpd
     if (!mounted) return null
     if (!address) return null
 
+    const handleAddressAdded = (newAddr) => {
+        setUserAddresses(prev => [newAddr, ...prev])
+        setSelectedAddressId(newAddr.id)
+    }
+
     const displayAddress = userAddresses.find(addr => addr.id === selectedAddressId) || address
 
     const modal = (
@@ -112,9 +119,18 @@ const AddressEditModal = ({ address, orderId, orderStatus, onClose, onAddressUpd
                         </div>
 
                         <div className="space-y-2">
-                            <label className="block text-sm font-medium text-slate-700">Select New Address</label>
+                            <div className="flex justify-between items-center">
+                                <label className="block text-sm font-medium text-slate-700">Select New Address</label>
+                                <button
+                                    type="button"
+                                    onClick={() => setShowNewAddressModal(true)}
+                                    className="text-sm text-orange-500 hover:underline"
+                                >
+                                    + Add New
+                                </button>
+                            </div>
                             {isLoadingAddresses ? (
-                                <div className="flex items-center justify-center py-4">
+                                <div className="flex items:center justify-center py-4">
                                     <Loader size={20} className="animate-spin text-orange-500" />
                                 </div>
                             ) : userAddresses.length > 0 ? (
@@ -143,7 +159,16 @@ const AddressEditModal = ({ address, orderId, orderStatus, onClose, onAddressUpd
                                     ))}
                                 </div>
                             ) : (
-                                <p className="text-sm text-slate-500">No addresses found</p>
+                                <div className="flex flex-col items-start gap-2">
+                                    <p className="text-sm text-slate-500">No addresses found</p>
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowNewAddressModal(true)}
+                                        className="text-sm text-orange-500 hover:underline"
+                                    >
+                                        Add Address
+                                    </button>
+                                </div>
                             )}
                         </div>
 
@@ -181,7 +206,17 @@ const AddressEditModal = ({ address, orderId, orderStatus, onClose, onAddressUpd
         </div>
     )
 
-    return createPortal(modal, document.body)
+    return (
+        <>
+            {createPortal(modal, document.body)}
+            {showNewAddressModal && (
+                <AddressModal
+                    setShowAddressModal={setShowNewAddressModal}
+                    onSuccess={handleAddressAdded}
+                />
+            )}
+        </>
+    )
 }
 
 export default AddressEditModal

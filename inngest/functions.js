@@ -55,3 +55,20 @@ export const deleteExpiredCoupons = inngest.createFunction(
         return deleteExpiredCoupons(data, step);
     }
 )
+
+// push address-change notifications via Pusher
+import pusher from '../lib/pusher.js'
+
+export const pushAddressChange = inngest.createFunction(
+    {id:'push-address-change'},
+    {event:'app/address.change'},
+    async({event})=>{
+        const alert = event.data
+        if(!alert || !alert.storeId) return
+        try{
+            await pusher.trigger(`private-store-${alert.storeId}`, 'addressChange', alert)
+        }catch(e){
+            console.error('Pusher trigger failed', e)
+        }
+    }
+)

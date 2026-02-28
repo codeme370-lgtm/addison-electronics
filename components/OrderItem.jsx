@@ -51,17 +51,7 @@ const OrderItem = ({ order, onAddressUpdated }) => {
                 <td className="text-center max-md:hidden">{currency}{order.total}</td>
 
                 <td className="text-left max-md:hidden">
-                    <p className="flex items-center gap-2">
-                        <span>{addr.name || '—'}</span>
-                        <button onClick={() => setShowAddrModal(true)} className="text-xs text-slate-500 hover:underline">View</button>
-                    </p>
-                    <div className="text-sm text-slate-700">
-                        <p>{addr.street || '—'}</p>
-                        <p>{addr.city || '—'}</p>
-                        <p>{addr.state || '—'}</p>
-                        <p>{addr.zip || ''} {addr.country || ''}</p>
-                    </div>
-                    <p>{addr.phone || '—'}</p>
+                    <button onClick={() => setShowAddrModal(true)} className="text-xs text-slate-500 hover:underline">View</button>
                 </td>
 
                 <td className="text-left space-y-2 text-sm max-md:hidden">
@@ -82,16 +72,7 @@ const OrderItem = ({ order, onAddressUpdated }) => {
             <tr className="md:hidden">
                 <td colSpan={5}>
                     <div className="flex items-center justify-between">
-                        <div>
-                            <p className="font-medium">{addr.name || '—'}</p>
-                            <div className="text-sm text-slate-700">
-                                <p>{addr.street || '—'}</p>
-                                <p>{addr.city || '—'}</p>
-                                <p>{addr.state || '—'}</p>
-                                <p>{addr.zip || ''} {addr.country || ''}</p>
-                            </div>
-                            <p>{addr.phone || '—'}</p>
-                        </div>
+                        <div />
                         <div>
                             <button onClick={() => setShowAddrModal(true)} className="text-sm text-slate-500 hover:underline">View Address</button>
                         </div>
