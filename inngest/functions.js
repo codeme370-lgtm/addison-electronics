@@ -72,3 +72,18 @@ export const pushAddressChange = inngest.createFunction(
         }
     }
 )
+
+// push delivery-report notifications via Pusher
+export const pushDeliveryReport = inngest.createFunction(
+    {id: 'push-delivery-report'},
+    {event: 'app/delivery.report'},
+    async ({event}) => {
+        const report = event.data
+        if (!report || !report.storeId) return
+        try {
+            await pusher.trigger(`private-store-${report.storeId}`, 'deliveryReport', report)
+        } catch (e) {
+            console.error('Pusher trigger for delivery report failed', e)
+        }
+    }
+)

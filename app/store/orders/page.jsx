@@ -17,6 +17,9 @@ export default function StoreOrders() {
     const [selectedOrder, setSelectedOrder] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [showAddrModal, setShowAddrModal] = useState(false)
+    const [deliveryHours, setDeliveryHours] = useState(24)
+    const [deliveryMessage, setDeliveryMessage] = useState('')
+    const [sendingSms, setSendingSms] = useState(false)
 
     const {getToken} = useAuth()
 
@@ -118,6 +121,10 @@ export default function StoreOrders() {
 
     const openModal = (order) => {
         setSelectedOrder(order)
+        // prefill a friendly message template
+        const shortId = order?.id?.slice(0,8)
+        const previewProducts = (order?.orderItems || []).map(i => i.product?.name).filter(Boolean).slice(0,3).join(', ')
+        setDeliveryMessage(`Hello ${order.user?.name || ''}, thanks for buying ${previewProducts || 'your items'}. Your order #${shortId} will be delivered within the next ${deliveryHours} hours. — ${process.env.NEXT_PUBLIC_SITE_NAME || 'Jeeshop'}`)
         setIsModalOpen(true)
     }
 
@@ -325,7 +332,42 @@ export default function StoreOrders() {
                             <p><span className="text-red-600">Order Date:</span> {new Date(selectedOrder.createdAt).toLocaleString()}</p>
                         </div>
 
-                        {/* Actions */}
+                        {/* Delivery ETA controls */}
+                        <div className="mb-4">
+                            <h4 className="font-semibold mb-2">Send Delivery ETA</h4>
+                            <div className="flex items-center gap-3 mb-2">
+                                <label className="text-sm text-slate-600">Delivery window:</label>
+                                <select value={deliveryHours} onChange={e => setDeliveryHours(Number(e.target.value))} className="border border-gray-300 rounded px-2 py-1">
+                                    <option value={24}>24 hours</option>
+                                    <option value={48}>48 hours</option>
+                                    <option value={72}>72 hours</option>
+                                </select>
+                            </div>
+                            <textarea rows={3} value={deliveryMessage} onChange={e => setDeliveryMessage(e.target.value)} className="w-full border border-gray-200 rounded p-2 text-sm" />
+                            <div className="flex items-center justify-end gap-3 mt-2">
+                                <button
+                                    onClick={async (e) => { e.stopPropagation(); if (!selectedOrder) return; if (!selectedOrder.address?.phone) { toast.error('Customer phone number is missing'); return };
+                                        try {
+                                            setSendingSms(true)
+                                            const token = await getToken()
+                                            if (!token) { toast.error('Authentication required'); setSendingSms(false); return }
+                                            await axios.post('/api/store/send-delivery-sms', { orderId: selectedOrder.id, hours: deliveryHours, message: deliveryMessage }, { headers: { Authorization: `Bearer ${token}` } })
+                                            toast.success('Delivery ETA SMS sent')
+                                        } catch (err) {
+                                            console.error('send SMS error', err)
+                                            toast.error(err?.response?.data?.error || 'Failed to send SMS')
+                                        } finally {
+                                            setSendingSms(false)
+                                        }
+                                    }}
+                                    disabled={sendingSms}
+                                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-60"
+                                >
+                                    {sendingSms ? 'Sending…' : 'Send ETA'}
+                                </button>
+                            </div>
+                        </div>
+
                         <div className="flex justify-end">
                             <button onClick={closeModal} className="px-4 py-2 bg-slate-200 rounded hover:bg-slate-300" >
                                 Close
