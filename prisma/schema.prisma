@@ -6,42 +6,199 @@ datasource db {
   provider = "postgresql"
 }
 
-// Required for creating a User: id, name, email, image, cart (optional JSON string)
 model User {
-  id    String @id
-  name  String
-  email String
-  image String
-  cart  Json   @default("{}")
-
-  // Relations
-  ratings             Rating[]
+  id                  String               @id
+  name                String
+  email               String
+  image               String
+  cart                Json                 @default("{}")
   Address             Address[]
-  store               Store?
-  buyerOrders         Order[]              @relation("BuyerRelation")
-  sellerReviews       SellerReview[]
   addressChangeAlerts AddressChangeAlert[]
-  deliveryReports     DeliveryReport[]
+  buyerOrders         Order[]              @relation("BuyerRelation")
+  ratings             Rating[]
+  sellerReviews       SellerReview[]
+  store               Store?
 }
 
-// Required for creating a Product: name, description, mrp, price, images, category, storeId
 model Product {
-  id          String   @id @default(cuid())
+  id          String      @id @default(cuid())
   name        String
   description String
   mrp         Float
   price       Float
   images      String[]
   category    String
-  inStock     Boolean  @default(true)
+  inStock     Boolean     @default(true)
   storeId     String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  orderItems  OrderItem[]
+  store       Store       @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  rating      Rating[]
+}
 
-  // Relations
-  store      Store       @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  orderItems OrderItem[]
-  rating     Rating[]
+model Order {
+  id                  String               @id @default(cuid())
+  total               Float
+  status              OrderStatus          @default(ORDER_PLACED)
+  userId              String
+  storeId             String
+  addressId           String
+  isPaid              Boolean              @default(false)
+  paymentMethod       PaymentMethod
+  paymentStatus       PaymentStatus        @default(PENDING)
+  paystackReference   String?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  isCouponUsed        Boolean              @default(false)
+  coupon              Json                 @default("{}")
+  addressChangeAlerts AddressChangeAlert[]
+  address             Address              @relation(fields: [addressId], references: [id])
+  store               Store                @relation(fields: [storeId], references: [id])
+  user                User                 @relation("BuyerRelation", fields: [userId], references: [id])
+  orderItems          OrderItem[]
+  ratings             Rating[]
+}
+
+model OrderItem {
+  orderId   String
+  productId String
+  quantity  Int
+  price     Float
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@id([orderId, productId])
+}
+
+model Rating {
+  id        String   @id @default(cuid())
+  rating    Int
+  review    String
+  userId    String
+  productId String
+  orderId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId, orderId])
+}
+
+model Address {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  email     String
+  street    String
+  city      String
+  state     String
+  zip       String
+  country   String
+  phone     String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Order     Order[]
+}
+
+model Coupon {
+  code        String   @id
+  description String
+  discount    Float
+  forNewUser  Boolean
+  forMember   Boolean  @default(false)
+  isPublic    Boolean
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+}
+
+model Store {
+  id                  String               @id @default(cuid())
+  userId              String               @unique
+  name                String
+  description         String
+  username            String               @unique
+  address             String
+  status              String               @default("pending")
+  isActive            Boolean              @default(false)
+  logo                String
+  email               String
+  contact             String
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  averageRating       Float                @default(0)
+  avgResponseTime     Int                  @default(24)
+  isVerified          Boolean              @default(false)
+  productsSold        Int                  @default(0)
+  returnRate          Float                @default(0)
+  totalFollowers      Int                  @default(0)
+  totalReviews        Int                  @default(0)
+  addressChangeAlerts AddressChangeAlert[]
+  Order               Order[]
+  Product             Product[]
+  searchOptimization  SearchOptimization?
+  sellerReviews       SellerReview[]
+  user                User                 @relation(fields: [userId], references: [id])
+  followers           StoreFollower[]
+}
+
+model SellerReview {
+  id                  String   @id @default(cuid())
+  rating              Int
+  review              String
+  userId              String
+  storeId             String
+  orderId             String
+  communicationRating Int      @default(3)
+  shippingRating      Int      @default(3)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  store               Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, storeId, orderId])
+}
+
+model StoreFollower {
+  id        String   @id @default(cuid())
+  userId    String
+  storeId   String
+  createdAt DateTime @default(now())
+  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, storeId])
+}
+
+model SearchOptimization {
+  id             String   @id @default(cuid())
+  storeId        String   @unique
+  searchKeywords String[]
+  searchCount    Int      @default(0)
+  lastIndexed    DateTime @updatedAt
+  store          Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  createdAt DateTime @default(now())
+}
+
+model AddressChangeAlert {
+  id         String   @id @default(cuid())
+  orderId    String
+  storeId    String
+  userId     String
+  oldAddress Json
+  newAddress Json
+  isRead     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  store      Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum OrderStatus {
@@ -60,214 +217,4 @@ enum PaymentStatus {
   PENDING
   AUTHORIZED
   FAILED
-}
-
-// Required for creating an Order: total, userId, storeId, addressId, isPaid, paymentMethod, isCouponUsed, coupon (JSON), orderItems (nested)
-model Order {
-  id                  String               @id @default(cuid())
-  total               Float
-  status              OrderStatus          @default(ORDER_PLACED)
-  userId              String
-  storeId             String
-  addressId           String
-  isPaid              Boolean              @default(false)
-  paymentMethod       PaymentMethod
-  paymentStatus       PaymentStatus        @default(PENDING)
-  paystackReference   String?
-  createdAt           DateTime             @default(now())
-  updatedAt           DateTime             @updatedAt
-  isCouponUsed        Boolean              @default(false)
-  coupon              Json                 @default("{}")
-  orderItems          OrderItem[]
-  ratings             Rating[]
-  addressChangeAlerts AddressChangeAlert[]
-
-  // Delivery tracking
-  deliveryWindowHours Int?
-  deliveryDeadline    DateTime?
-  deliveryConfirmed   Boolean          @default(false)
-  deliveryReports     DeliveryReport[]
-
-  // Relations
-  user    User    @relation("BuyerRelation", fields: [userId], references: [id])
-  store   Store   @relation(fields: [storeId], references: [id])
-  address Address @relation(fields: [addressId], references: [id])
-}
-
-// Required for creating an OrderItem: orderId, productId, quantity, price
-model OrderItem {
-  orderId   String
-  productId String
-  quantity  Int
-  price     Float
-
-  // Relations
-  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product Product @relation(fields: [productId], references: [id])
-
-  @@id([orderId, productId])
-}
-
-// Required for creating a Rating: rating, review, userId, productId
-model Rating {
-  id        String   @id @default(cuid())
-  rating    Int
-  review    String
-  userId    String
-  productId String
-  orderId   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relations
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, productId, orderId])
-}
-
-// Required for creating an Address: userId, name, email, street, city, state, zip, country, phone
-model Address {
-  id        String   @id @default(cuid())
-  userId    String
-  name      String
-  email     String
-  street    String
-  city      String
-  state     String
-  zip       String
-  country   String
-  phone     String
-  createdAt DateTime @default(now())
-
-  // Relations
-  Order Order[]
-  user  User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-// Required for creating a Coupon: code, description, discount, forNewUser, isPublic, expiresAt
-model Coupon {
-  code        String   @id
-  description String
-  discount    Float
-  forNewUser  Boolean
-  forMember   Boolean  @default(false)
-  isPublic    Boolean
-  expiresAt   DateTime
-  createdAt   DateTime @default(now())
-}
-
-// Required for creating a Store: userId, name, username, email, contact, logo, description, address (optional: , status, isActive)
-model Store {
-  id              String   @id @default(cuid())
-  userId          String   @unique
-  name            String
-  description     String
-  username        String   @unique
-  address         String
-  status          String   @default("pending")
-  isActive        Boolean  @default(false)
-  logo            String
-  email           String
-  contact         String
-  isVerified      Boolean  @default(false)
-  averageRating   Float    @default(0)
-  totalReviews    Int      @default(0)
-  totalFollowers  Int      @default(0)
-  productsSold    Int      @default(0)
-  avgResponseTime Int      @default(24) // in hours
-  returnRate      Float    @default(0) // percentage
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-
-  Product             Product[]
-  Order               Order[]
-  user                User                 @relation(fields: [userId], references: [id])
-  sellerReviews       SellerReview[]
-  followers           StoreFollower[]
-  searchOptimization  SearchOptimization?
-  addressChangeAlerts AddressChangeAlert[]
-  deliveryReports     DeliveryReport[]
-}
-
-// Seller-specific reviews (separate from product reviews)
-model SellerReview {
-  id                  String   @id @default(cuid())
-  rating              Int // 1-5
-  review              String
-  userId              String
-  storeId             String
-  orderId             String
-  communicationRating Int      @default(3) // 1-5
-  shippingRating      Int      @default(3) // 1-5
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
-
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, storeId, orderId])
-}
-
-// Store followers for recommendations
-model StoreFollower {
-  id        String   @id @default(cuid())
-  userId    String
-  storeId   String
-  createdAt DateTime @default(now())
-
-  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, storeId])
-}
-
-// Search optimization for autocomplete
-model SearchOptimization {
-  id             String   @id @default(cuid())
-  storeId        String   @unique
-  searchKeywords String[] // Popular search terms that led to this store
-  searchCount    Int      @default(0)
-  lastIndexed    DateTime @updatedAt
-
-  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
-}
-
-// Categories for products (optional separate table)
-model Category {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  slug      String   @unique
-  createdAt DateTime @default(now())
-}
-
-// Address Change Alerts for Store Owners
-model AddressChangeAlert {
-  id         String   @id @default(cuid())
-  orderId    String
-  storeId    String
-  userId     String
-  oldAddress Json // Store the old address as JSON
-  newAddress Json // Store the new address as JSON
-  isRead     Boolean  @default(false)
-  createdAt  DateTime @default(now())
-
-  // Relations
-  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-// Reports from customers about delivery status (received / not received)
-model DeliveryReport {
-  id        String   @id @default(cuid())
-  orderId   String
-  storeId   String
-  userId    String
-  status    String // RECEIVED | NOT_RECEIVED
-  createdAt DateTime @default(now())
-
-  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

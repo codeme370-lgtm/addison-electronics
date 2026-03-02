@@ -60,7 +60,7 @@ const ContactPage = () => {
     return (
         <div className="w-full">
             {/* Hero Section */}
-            <section className="bg-gradient-to-r from-green-600 to-green-800 text-white py-20 px-6">
+            <section className="bg-gradient-to-r from-[#CD7F32] to-[#8C5A2D] text-white py-20 px-6">
                 <div className="max-w-7xl mx-auto text-center">
                     <h1 className="text-5xl font-bold mb-6">Get In Touch</h1>
                     <p className="text-xl max-w-2xl mx-auto">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
@@ -76,7 +76,7 @@ const ContactPage = () => {
                             return (
                                 <div key={index} className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition">
                                     <div className="flex justify-center mb-4">
-                                        <Icon size={32} className="text-green-600" />
+                                        <Icon size={32} className="text-[#CD7F32]" />
                                     </div>
                                     <h3 className="text-lg font-semibold text-slate-800 text-center mb-2">{info.title}</h3>
                                     <p className="text-slate-800 font-medium text-center mb-1">{info.details}</p>
@@ -105,7 +105,7 @@ const ContactPage = () => {
                                         value={formData.name}
                                         onChange={handleChange}
                                         required
-                                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent outline-none transition"
+                                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#CD7F32] focus:border-transparent outline-none transition"
                                         placeholder="Jee Ma"
                                     />
                                 </div>
@@ -118,7 +118,7 @@ const ContactPage = () => {
                                         value={formData.email}
                                         onChange={handleChange}
                                         required
-                                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent outline-none transition"
+                                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#CD7F32] focus:border-transparent outline-none transition"
                                         placeholder="jeescage@example.com"
                                     />
                                 </div>
@@ -131,7 +131,7 @@ const ContactPage = () => {
                                         value={formData.subject}
                                         onChange={handleChange}
                                         required
-                                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent outline-none transition"
+                                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#CD7F32] focus:border-transparent outline-none transition"
                                         placeholder="How can we help?"
                                     />
                                 </div>
@@ -144,19 +144,19 @@ const ContactPage = () => {
                                         onChange={handleChange}
                                         required
                                         rows="5"
-                                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent outline-none transition resize-none"
+                                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#CD7F32] focus:border-transparent outline-none transition resize-none"
                                         placeholder="Tell us more about your inquiry..."
                                     ></textarea>
                                 </div>
                                 <button
                                     type="submit"
-                                    className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition flex items-center justify-center gap-2"
+                                    className="w-full bg-[#CD7F32] text-white py-3 rounded-lg font-semibold hover:bg-[#B36F2C] transition flex items-center justify-center gap-2"
                                 >
                                     <Send size={18} />
                                     Send Message
                                 </button>
                                 {submitted && (
-                                    <div className="bg-green-100 text-green-800 p-4 rounded-lg text-center">
+                                        <div className="bg-[#FFF1E6] text-[#8C5A2D] p-4 rounded-lg text-center">
                                         Thank you! We'll get back to you soon.
                                     </div>
                                 )}
@@ -164,22 +164,22 @@ const ContactPage = () => {
                         </div>
 
                         {/* Map or Additional Info */}
-                        <div className="bg-white rounded-lg p-8 shadow-md">
+                            <div className="bg-white rounded-lg p-8 shadow-md">
                             <h3 className="text-2xl font-bold text-slate-800 mb-6">Why Contact Us?</h3>
                             <div className="space-y-4">
-                                <div className="border-l-4 border-green-600 pl-4">
+                                <div className="border-l-4 border-[#CD7F32] pl-4">
                                     <h4 className="font-semibold text-slate-800 mb-1">Product Inquiries</h4>
                                     <p className="text-slate-600">Have questions about our products? We're here to help you find the perfect gadget.</p>
                                 </div>
-                                <div className="border-l-4 border-green-600 pl-4">
+                                <div className="border-l-4 border-[#CD7F32] pl-4">
                                     <h4 className="font-semibold text-slate-800 mb-1">Order Support</h4>
                                     <p className="text-slate-600">Need help with your order? Our support team is ready to assist you.</p>
                                 </div>
-                                <div className="border-l-4 border-green-600 pl-4">
+                                <div className="border-l-4 border-[#CD7F32] pl-4">
                                     <h4 className="font-semibold text-slate-800 mb-1">Partnership Opportunities</h4>
                                     <p className="text-slate-600">Interested in partnering with us? Let's discuss how we can work together.</p>
                                 </div>
-                                <div className="border-l-4 border-green-600 pl-4">
+                                <div className="border-l-4 border-[#CD7F32] pl-4">
                                     <h4 className="font-semibold text-slate-800 mb-1">Feedback & Suggestions</h4>
                                     <p className="text-slate-600">Your feedback helps us improve. Share your thoughts with us anytime.</p>
                                 </div>
@@ -197,28 +197,28 @@ const ContactPage = () => {
                         <details className="bg-slate-50 rounded-lg p-6 cursor-pointer hover:bg-slate-100 transition">
                             <summary className="font-semibold text-slate-800 flex items-center justify-between">
                                 How long does delivery take?
-                                <span className="text-green-600">+</span>
+                                <span className="text-[#CD7F32]">+</span>
                             </summary>
                             <p className="text-slate-600 mt-4">Standard delivery takes 3-5 business days. Express delivery options are also available for faster service.</p>
                         </details>
                         <details className="bg-slate-50 rounded-lg p-6 cursor-pointer hover:bg-slate-100 transition">
-                            <summary className="font-semibold text-slate-800 flex items-center justify-between">
+                                <summary className="font-semibold text-slate-800 flex items-center justify-between">
                                 What is your return policy?
-                                <span className="text-green-600">+</span>
+                                <span className="text-[#CD7F32]">+</span>
                             </summary>
                             <p className="text-slate-600 mt-4">We offer a 30-day return policy on most products. Items must be in original condition with all packaging.</p>
                         </details>
                         <details className="bg-slate-50 rounded-lg p-6 cursor-pointer hover:bg-slate-100 transition">
-                            <summary className="font-semibold text-slate-800 flex items-center justify-between">
+                                <summary className="font-semibold text-slate-800 flex items-center justify-between">
                                 Do you have a warranty?
-                                <span className="text-green-600">+</span>
+                                <span className="text-[#CD7F32]">+</span>
                             </summary>
                             <p className="text-slate-600 mt-4">Yes, all products come with manufacturer warranty. Extended warranty options are available for select items.</p>
                         </details>
                         <details className="bg-slate-50 rounded-lg p-6 cursor-pointer hover:bg-slate-100 transition">
-                            <summary className="font-semibold text-slate-800 flex items-center justify-between">
+                                <summary className="font-semibold text-slate-800 flex items-center justify-between">
                                 What payment methods do you accept?
-                                <span className="text-green-600">+</span>
+                                <span className="text-[#CD7F32]">+</span>
                             </summary>
                             <p className="text-slate-600 mt-4">We accept credit cards, debit cards, and Paystack payments. All transactions are secure and encrypted.</p>
                         </details>

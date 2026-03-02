@@ -53,7 +53,7 @@ const AboutPage = () => {
     return (
         <div className="w-full">
             {/* Hero Section */}
-            <section className="bg-gradient-to-r from-green-600 to-green-800 text-white py-20 px-6">
+            <section className="bg-gradient-to-r from-[#CD7F32] to-[#8C5A2D] text-white py-20 px-6">
                 <div className="max-w-7xl mx-auto text-center">
                     <h1 className="text-5xl font-bold mb-6">About jeescage</h1>
                     <p className="text-xl max-w-2xl mx-auto">Your trusted destination for the latest gadgets and innovative tech products</p>
@@ -76,9 +76,9 @@ const AboutPage = () => {
                                 Today, jeescage is the go-to marketplace for gadgets across multiple categories, from smartphones and laptops to home appliances and accessories.
                             </p>
                         </div>
-                        <div className="bg-gradient-to-br from-green-100 to-blue-100 rounded-xl p-12 h-96 flex items-center justify-center">
+                        <div className="bg-gradient-to-br from-[#FFF4E6] to-[#F0E6D8] rounded-xl p-12 h-96 flex items-center justify-center">
                             <div className="text-center">
-                                <div className="text-6xl font-bold text-green-600 mb-4">5K+</div>
+                                <div className="text-6xl font-bold text-[#CD7F32] mb-4">5K+</div>
                                 <p className="text-slate-700 text-xl">Happy Customers</p>
                             </div>
                         </div>
@@ -96,7 +96,7 @@ const AboutPage = () => {
                             return (
                                 <div key={index} className="bg-white rounded-lg p-8 text-center hover:shadow-lg transition">
                                     <div className="flex justify-center mb-4">
-                                        <Icon size={40} className="text-green-600" />
+                                        <Icon size={40} className="text-[#CD7F32]" />
                                     </div>
                                     <h3 className="text-lg font-semibold text-slate-800 mb-2">{feature.title}</h3>
                                     <p className="text-slate-600">{feature.description}</p>
@@ -117,9 +117,9 @@ const AboutPage = () => {
                                 <div className="h-64 bg-slate-200 overflow-hidden">
                                     <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
                                 </div>
-                                <div className="p-6 text-center">
+                                    <div className="p-6 text-center">
                                     <h3 className="text-lg font-semibold text-slate-800">{member.name}</h3>
-                                    <p className="text-green-600 text-sm">{member.role}</p>
+                                    <p className="text-[#CD7F32] text-sm">{member.role}</p>
                                 </div>
                             </div>
                         ))}
@@ -131,11 +131,11 @@ const AboutPage = () => {
             
 
             {/* CTA Section */}
-            <section className="bg-gradient-to-r from-green-600 to-green-800 text-white py-16 px-6">
+            <section className="bg-gradient-to-r from-[#CD7F32] to-[#8C5A2D] text-white py-16 px-6">
                 <div className="max-w-7xl mx-auto text-center">
                     <h2 className="text-4xl font-bold mb-6">Ready to Explore?</h2>
                     <p className="text-lg mb-8 max-w-2xl mx-auto">Discover our wide selection of gadgets and find exactly what you need</p>
-                    <Link href="/shop" className="inline-block bg-white text-green-600 px-8 py-3 rounded-full font-semibold hover:bg-slate-100 transition">
+                    <Link href="/shop" className="inline-block bg-white text-[#CD7F32] px-8 py-3 rounded-full font-semibold hover:bg-slate-100 transition">
                         Shop Now
                     </Link>
                 </div>

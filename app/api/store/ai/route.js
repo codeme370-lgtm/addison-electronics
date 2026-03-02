@@ -41,6 +41,13 @@ Schema:
     messages,
   });
 
+  if (!response || !response.choices || response.choices.length === 0) {
+    const err = new Error('OpenAI returned no choices');
+    // attach response for debugging
+    err.response = response;
+    throw err;
+  }
+
   const raw = response.choices[0].message.content;
   const cleaned = raw.replace(/```json|```/g, "").trim();
 
@@ -65,7 +72,19 @@ export async function POST(request) {
 
     const { base64Image, mimeType } = await request.json();
 
-    const result = await main(base64Image, mimeType);
+    let result
+    try {
+      result = await main(base64Image, mimeType);
+    } catch (aiErr) {
+      // Log detailed OpenAI error info when available
+      console.error('OpenAI error:', aiErr?.message || aiErr);
+      if (aiErr.response) console.error('OpenAI response:', aiErr.response);
+      // If the OpenAI SDK returned an HTTP error object, surface status and body if present
+      if (aiErr?.cause?.status) {
+        console.error('OpenAI HTTP status:', aiErr.cause.status);
+      }
+      return NextResponse.json({ error: 'AI service error. Check server logs.' }, { status: 502 });
+    }
 
     return NextResponse.json(result);
   } catch (error) {

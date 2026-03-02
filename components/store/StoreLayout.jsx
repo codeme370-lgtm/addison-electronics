@@ -27,6 +27,11 @@ const {getToken} = useAuth()
        try {
         //get the token
         const token = await getToken()
+        if(!token){
+            // not authenticated
+            setIsSeller(false)
+            return
+        }
         const {data}= await axios.get("/api/store/is-seller", {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -36,7 +41,12 @@ const {getToken} = useAuth()
         setStoreInfo(data.storeInfo)
         
        } catch (error) {
-        console.error(error)
+        // treat 401 as not-a-seller (expected for non-sellers)
+        if (error?.response?.status === 401) {
+            setIsSeller(false)
+        } else {
+            console.error(error)
+        }
        }finally {
         setLoading(false)
        }
