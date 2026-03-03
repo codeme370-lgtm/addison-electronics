@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { getAuth } from "@clerk/nextjs/server"
 import prisma from "@/lib/prisma"
 import authSeller from "@/middlewares/authSeller"
+import pusher from '@/lib/pusher'
 
 export async function POST(request) {
   try {
@@ -30,20 +31,29 @@ export async function POST(request) {
     const defaultMessage = `Hello ${order.user?.name || ''}, thanks for buying ${previewList || 'your items'} from ${siteName}. Your order #${shortId} will be delivered within the next ${hours} hours. We'll notify you if anything changes — ${siteName}`
     const smsBody = (message && message.trim().length > 0) ? message : defaultMessage
 
-    // persist delivery window and deadline on the order
+    // persist delivery window and deadline on the order and return updated order
+    let updatedOrder = null
     try {
       const deadline = new Date(Date.now() + Number(hours) * 3600 * 1000)
-      await prisma.order.update({ where: { id: orderId }, data: { deliveryWindowHours: Number(hours), deliveryDeadline: deadline, deliveryConfirmed: false } })
+      updatedOrder = await prisma.order.update({
+        where: { id: orderId },
+        data: { deliveryWindowHours: Number(hours), deliveryDeadline: deadline, deliveryConfirmed: false },
+        include: { address: true, orderItems: { include: { product: true } }, user: true }
+      })
+
+      // notify user and store via Pusher so clients can react in real-time
+      try {
+        if (updatedOrder?.userId) {
+          await pusher.trigger(`private-user-${updatedOrder.userId}`, 'orderUpdated', { orderId: updatedOrder.id, deliveryDeadline: updatedOrder.deliveryDeadline })
+        }
+        if (updatedOrder?.storeId) {
+          await pusher.trigger(`private-store-${updatedOrder.storeId}`, 'orderUpdated', { orderId: updatedOrder.id, deliveryDeadline: updatedOrder.deliveryDeadline })
+        }
+      } catch (pErr) {
+        console.warn('Pusher notify failed', pErr?.message || pErr)
+      }
     } catch (uErr) {
       console.error('Failed to persist delivery deadline', uErr)
-    }
-
-    // Update order with delivery window and deadline
-    try {
-      const deadline = new Date(Date.now() + Number(hours) * 3600 * 1000)
-      await prisma.order.update({ where: { id: order.id }, data: { deliveryWindowHours: Number(hours), deliveryDeadline: deadline } })
-    } catch (updErr) {
-      console.error('Failed to update order delivery fields', updErr)
     }
 
     // Try Vonage (Nexmo) first if configured, then Textbelt as a last-resort fallback.
@@ -123,7 +133,7 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Failed to send SMS via all providers' }, { status: 500 })
     }
 
-    return NextResponse.json({ message: 'SMS queued/sent', phone }, { status: 200 })
+    return NextResponse.json({ message: 'SMS queued/sent', phone, order: updatedOrder }, { status: 200 })
   } catch (error) {
     console.error('send-delivery-sms error', error)
     return NextResponse.json({ error: error.message || 'Unknown error' }, { status: 500 })

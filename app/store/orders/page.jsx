@@ -60,10 +60,28 @@ export default function StoreOrders() {
                 return
             }
 
-            const { data } = await axios.get("/api/store/address-alerts?unreadOnly=true", {
-                headers: { Authorization: `Bearer ${token}` }
-            })
-            setAlerts(data.alerts || [])
+            // use fetch instead of axios to avoid Axios throwing on 401 and spamming console
+            try {
+                const resp = await fetch('/api/store/address-alerts?unreadOnly=true', {
+                    headers: { Authorization: `Bearer ${token}` }
+                })
+                if (resp.status === 200) {
+                    const body = await resp.json()
+                    setAlerts(body.alerts || [])
+                } else if (resp.status === 401) {
+                    // token expired or unauthorized - clear alerts silently
+                    console.warn('Address alerts unauthorized (401) — clearing alerts')
+                    setAlerts([])
+                } else if (resp.status === 404) {
+                    setAlerts([])
+                } else {
+                    console.error('Unexpected status fetching address alerts', resp.status)
+                    setAlerts([])
+                }
+            } catch (fetchErr) {
+                console.error('Network error fetching address alerts', fetchErr)
+                setAlerts([])
+            }
         } catch (error) {
             // Handle 404 (no route or no store) gracefully
             const status = error?.response?.status
@@ -351,7 +369,12 @@ export default function StoreOrders() {
                                             setSendingSms(true)
                                             const token = await getToken()
                                             if (!token) { toast.error('Authentication required'); setSendingSms(false); return }
-                                            await axios.post('/api/store/send-delivery-sms', { orderId: selectedOrder.id, hours: deliveryHours, message: deliveryMessage }, { headers: { Authorization: `Bearer ${token}` } })
+                                            const { data: resp } = await axios.post('/api/store/send-delivery-sms', { orderId: selectedOrder.id, hours: deliveryHours, message: deliveryMessage }, { headers: { Authorization: `Bearer ${token}` } })
+                                            // if API returned updated order, update UI immediately
+                                            if (resp?.order) {
+                                                setOrders(prev => prev.map(o => o.id === resp.order.id ? resp.order : o))
+                                                setSelectedOrder(resp.order)
+                                            }
                                             toast.success('Delivery ETA SMS sent')
                                         } catch (err) {
                                             console.error('send SMS error', err)

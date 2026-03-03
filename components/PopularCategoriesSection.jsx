@@ -1,13 +1,26 @@
-'use client'
-import React from 'react'
+ 'use client'
+import React, { useEffect } from 'react'
 import Link from 'next/link'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import Image from 'next/image'
 import { ChevronRight } from 'lucide-react'
+import { fetchProducts } from '@/lib/features/product/productSlice'
+import { fetchCategories } from '@/lib/features/category/categorySlice'
 
 const PopularCategoriesSection = () => {
     const products = useSelector(state => state.product.list)
     const dbCategories = useSelector(state => state.category.list)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        // If categories or products are missing, fetch them
+        if ((!dbCategories || dbCategories.length === 0)) {
+            dispatch(fetchCategories())
+        }
+        if ((!products || products.length === 0)) {
+            dispatch(fetchProducts({}))
+        }
+    }, [dbCategories.length, products.length, dispatch])
     
     // Build category data from products, but ordered by database categories
     const categoriesData = {}

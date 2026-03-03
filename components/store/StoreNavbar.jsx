@@ -14,6 +14,7 @@ const StoreNavbar = ({ onMenuClick }) => {
     const { user } = useUser()
     const { getToken } = useAuth()
     const [unreadCount, setUnreadCount] = useState(0)
+    const [deliveryReportCount, setDeliveryReportCount] = useState(0)
     const [showDropdown, setShowDropdown] = useState(false)
     const [recentAlerts, setRecentAlerts] = useState([])
     const router = useRouter()
@@ -32,6 +33,13 @@ const StoreNavbar = ({ onMenuClick }) => {
             const alerts = (data.alerts || [])
             setRecentAlerts(alerts.slice(0, 5))
             setUnreadCount(alerts.filter(a => !a.isRead).length)
+            // fetch delivery report count too
+            try {
+                const dr = await axios.get('/api/store/delivery-reports', { headers: { Authorization: `Bearer ${token}` } })
+                setDeliveryReportCount((dr.data.reports || []).length)
+            } catch (e) {
+                console.warn('Failed to fetch delivery reports', e)
+            }
             return alerts[0]?.storeId || null
         } catch (err) {
             console.warn('Failed to fetch recent alerts', err)
@@ -54,15 +62,36 @@ const StoreNavbar = ({ onMenuClick }) => {
                 })
                 setPusherClient(p)
                 channel = p.subscribe(`private-store-${storeId}`)
-                channel.bind('addressChange', (payload) => {
-                    setRecentAlerts(prev => {
-                        const next = [payload, ...prev.filter(a => a.id !== payload.id)].slice(0, 5)
-                        return next
+                    channel.bind('addressChange', (payload) => {
+                        setRecentAlerts(prev => {
+                            const next = [payload, ...prev.filter(a => a.id !== payload.id)].slice(0, 5)
+                            return next
+                        })
+                        setUnreadCount(c => c + 1)
+                        setPulse(true)
+                        setTimeout(() => setPulse(false), 2000)
                     })
-                    setUnreadCount(c => c + 1)
-                    setPulse(true)
-                    setTimeout(() => setPulse(false), 2000)
-                })
+                    // Listen for delivery report events and show them in the same alerts dropdown
+                    channel.bind('deliveryReport', (payload) => {
+                        const reportAlert = {
+                            id: payload.id || `dr-${Date.now()}`,
+                            storeId: payload.storeId,
+                            isRead: false,
+                            createdAt: payload.createdAt || new Date().toISOString(),
+                            user: payload.user ? { name: payload.user.name || payload.userId } : { name: 'Customer' },
+                            order: { id: payload.orderId },
+                            type: 'deliveryReport',
+                            status: payload.status
+                        }
+                        setRecentAlerts(prev => {
+                            const next = [reportAlert, ...prev.filter(a => a.id !== reportAlert.id)].slice(0, 5)
+                            return next
+                        })
+                        setUnreadCount(c => c + 1)
+                        setPulse(true)
+                        setTimeout(() => setPulse(false), 2000)
+                        toast.success('Delivery report received')
+                    })
             }
         }
         init()
@@ -110,8 +139,13 @@ const StoreNavbar = ({ onMenuClick }) => {
                     >
                         <Bell size={20} />
                         {unreadCount > 0 && (
-                            <span className={`absolute -top-1 -right-1 inline-flex items-center justify-center px-2 py-0.5 rounded-full text-xs font-semibold bg-red-600 text-white ${pulse ? 'animate-pulse' : ''}`}>
-                                {unreadCount}
+                                <span className={`absolute -top-1 -right-1 inline-flex items-center justify-center px-2 py-0.5 rounded-full text-xs font-semibold bg-red-600 text-white ${pulse ? 'animate-pulse' : ''}`}>
+                                    {unreadCount}
+                                </span>
+                            )}
+                        {deliveryReportCount > 0 && (
+                            <span className="absolute -bottom-1 -right-1 inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-semibold bg-amber-600 text-white">
+                                {deliveryReportCount}
                             </span>
                         )}
                     </button>

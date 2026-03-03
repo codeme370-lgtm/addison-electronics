@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server"
-import { getAuth } from "@clerk/nextjs/server"
-import prisma from "@/lib/prisma"
-import authSeller from "@/middlewares/authSeller"
+import { NextResponse } from 'next/server'
+import { getAuth } from '@clerk/nextjs/server'
+import prisma from '@/lib/prisma'
+import authSeller from '@/middlewares/authSeller'
 
 export async function GET(request) {
   try {
@@ -12,7 +12,8 @@ export async function GET(request) {
     const reports = await prisma.deliveryReport.findMany({
       where: { storeId },
       include: { order: { include: { orderItems: { include: { product: true } }, user: true } }, user: true },
-      orderBy: { createdAt: 'desc' }
+      orderBy: { createdAt: 'desc' },
+      take: 50
     })
 
     return NextResponse.json({ reports }, { status: 200 })

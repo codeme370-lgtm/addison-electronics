@@ -15,6 +15,7 @@ model User {
   Address             Address[]
   addressChangeAlerts AddressChangeAlert[]
   buyerOrders         Order[]              @relation("BuyerRelation")
+  deliveryReports     DeliveryReport[]
   ratings             Rating[]
   sellerReviews       SellerReview[]
   store               Store?
@@ -58,6 +59,10 @@ model Order {
   user                User                 @relation("BuyerRelation", fields: [userId], references: [id])
   orderItems          OrderItem[]
   ratings             Rating[]
+  deliveryReports     DeliveryReport[]
+  deliveryDeadline    DateTime?
+  deliveryWindowHours Int?
+  deliveryConfirmed   Boolean              @default(false)
 }
 
 model OrderItem {
@@ -142,6 +147,20 @@ model Store {
   sellerReviews       SellerReview[]
   user                User                 @relation(fields: [userId], references: [id])
   followers           StoreFollower[]
+  deliveryReports     DeliveryReport[]
+}
+
+model DeliveryReport {
+  id        String   @id @default(cuid())
+  orderId   String
+  storeId   String
+  userId    String
+  status    String
+  createdAt DateTime @default(now())
+
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model SellerReview {

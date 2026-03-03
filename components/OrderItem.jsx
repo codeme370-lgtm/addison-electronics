@@ -89,45 +89,50 @@ const OrderItem = ({ order, onAddressUpdated }) => {
                         {order.status.split('_').join(' ').toLowerCase()}
                     </div>
                     {/* Delivery countdown & report buttons */}
-                    {order.deliveryDeadline && (
-                        <div className="mt-2 text-xs text-slate-500">
-                            <div>Delivery ETA: <strong>{new Date(order.deliveryDeadline).toLocaleString()}</strong></div>
-                            <div className="mt-1 text-sm">
-                                {timeLeft !== null ? (
-                                    timeLeft > 0 ? (
-                                        <span>Time left: {Math.floor(timeLeft/3600)}h {Math.floor((timeLeft%3600)/60)}m {timeLeft%60}s</span>
-                                    ) : (
-                                        <span className="text-red-600">Delivery window elapsed</span>
-                                    )
-                                ) : null}
-                            </div>
-                            <div className="mt-2 flex items-center gap-2">
-                                <button onClick={async () => {
-                                    try {
-                                        setReporting(true)
-                                        await axios.post('/api/orders/report-delivery', { orderId: order.id, status: 'RECEIVED' })
-                                        toast.success('Reported as received — the store has been notified')
-                                    } catch (err) {
-                                        console.error(err)
-                                        toast.error(err?.response?.data?.error || 'Failed to report')
-                                    } finally { setReporting(false) }
-                                }} disabled={reporting} className="px-3 py-1 text-sm bg-blue-600 text-white rounded">Mark Received</button>
+                    <div className="mt-2 text-xs text-slate-500">
+                        {order.deliveryDeadline ? (
+                            <>
+                                <div>Delivery ETA: <strong>{new Date(order.deliveryDeadline).toLocaleString()}</strong></div>
+                                <div className="mt-1 text-sm">
+                                    {timeLeft !== null ? (
+                                        timeLeft > 0 ? (
+                                            <span>Time left: {Math.floor(timeLeft/3600)}h {Math.floor((timeLeft%3600)/60)}m {timeLeft%60}s</span>
+                                        ) : (
+                                            <span className="text-red-600">Delivery window elapsed</span>
+                                        )
+                                    ) : null}
+                                </div>
+                            </>
+                        ) : (
+                            <div className="text-sm text-slate-500">Delivery ETA not provided</div>
+                        )}
 
-                                <button onClick={async () => {
-                                    try {
-                                        setReporting(true)
-                                        await axios.post('/api/orders/report-delivery', { orderId: order.id, status: 'NOT_RECEIVED' })
-                                        toast.success('Reported as not received — the store has been notified')
-                                    } catch (err) {
-                                        console.error(err)
-                                        toast.error(err?.response?.data?.error || 'Failed to report')
-                                    } finally { setReporting(false) }
-                                }} disabled={reporting || (timeLeft !== null && timeLeft > 0)} className={`px-3 py-1 text-sm rounded ${ (timeLeft !== null && timeLeft > 0) ? 'bg-gray-300 text-gray-600' : 'bg-red-600 text-white' }`}>
-                                    Report Not Received
-                                </button>
-                            </div>
+                        <div className="mt-2 flex items-center gap-2">
+                            <button onClick={async () => {
+                                try {
+                                    setReporting(true)
+                                    await axios.post('/api/orders/report-delivery', { orderId: order.id, status: 'RECEIVED' })
+                                    toast.success('Reported as received — the store has been notified')
+                                } catch (err) {
+                                    console.error(err)
+                                    toast.error(err?.response?.data?.error || 'Failed to report')
+                                } finally { setReporting(false) }
+                            }} disabled={reporting} className="px-3 py-1 text-sm bg-blue-600 text-white rounded">Mark Received</button>
+
+                            <button onClick={async () => {
+                                try {
+                                    setReporting(true)
+                                    await axios.post('/api/orders/report-delivery', { orderId: order.id, status: 'NOT_RECEIVED' })
+                                    toast.success('Reported as not received — the store has been notified')
+                                } catch (err) {
+                                    console.error(err)
+                                    toast.error(err?.response?.data?.error || 'Failed to report')
+                                } finally { setReporting(false) }
+                            }} disabled={reporting || (timeLeft !== null && timeLeft > 0)} className={`px-3 py-1 text-sm rounded ${ (timeLeft !== null && timeLeft > 0) ? 'bg-gray-300 text-gray-600' : 'bg-red-600 text-white' }`}>
+                                Report Not Received
+                            </button>
                         </div>
-                    )}
+                    </div>
                 </td>
             </tr>
             {/* Mobile */}
@@ -140,26 +145,33 @@ const OrderItem = ({ order, onAddressUpdated }) => {
                         </div>
                     </div>
                     <br />
-                    {order.deliveryDeadline && (
-                        <div className="text-center text-sm text-slate-600 mb-2">
-                            <div>Delivery ETA: {new Date(order.deliveryDeadline).toLocaleString()}</div>
-                            <div className="mt-1">
-                                {timeLeft !== null ? (timeLeft > 0 ? (
-                                    <div>Time left: {Math.floor(timeLeft/3600)}h {Math.floor((timeLeft%3600)/60)}m</div>
-                                ) : (
-                                    <div className="text-red-600">Delivery window elapsed</div>
-                                )) : null}
-                            </div>
-                            <div className="mt-2 flex items-center gap-2 justify-center">
-                                <button onClick={async () => {
-                                    try { setReporting(true); await axios.post('/api/orders/report-delivery', { orderId: order.id, status: 'RECEIVED' }); toast.success('Reported as received') } catch (err) { console.error(err); toast.error('Failed') } finally { setReporting(false) }
-                                }} disabled={reporting} className="px-3 py-1 text-sm bg-blue-600 text-white rounded">Mark Received</button>
-                                <button onClick={async () => {
-                                    try { setReporting(true); await axios.post('/api/orders/report-delivery', { orderId: order.id, status: 'NOT_RECEIVED' }); toast.success('Reported as not received') } catch (err) { console.error(err); toast.error('Failed') } finally { setReporting(false) }
-                                }} disabled={reporting || (timeLeft !== null && timeLeft > 0)} className={`px-3 py-1 text-sm rounded ${ (timeLeft !== null && timeLeft > 0) ? 'bg-gray-300 text-gray-600' : 'bg-red-600 text-white' }`}>Report Not Received</button>
-                            </div>
+                    <div className="text-center text-sm text-slate-600 mb-2">
+                        {order.deliveryDeadline ? (
+                            <>
+                                <div>Delivery ETA: {new Date(order.deliveryDeadline).toLocaleString()}</div>
+                                <div className="mt-1">
+                                    {timeLeft !== null ? (timeLeft > 0 ? (
+                                        <div>Time left: {Math.floor(timeLeft/3600)}h {Math.floor((timeLeft%3600)/60)}m</div>
+                                    ) : (
+                                        <div className="text-red-600">Delivery window elapsed</div>
+                                    )) : null}
+                                </div>
+                            </>
+                        ) : (
+                            <div className="text-sm text-slate-500">Delivery ETA not provided</div>
+                        )}
+
+                        <div className="mt-2 flex items-center gap-2 justify-center">
+                            <button onClick={async () => {
+                                try { setReporting(true); await axios.post('/api/orders/report-delivery', { orderId: order.id, status: 'RECEIVED' }); toast.success('Reported as received — store notified') } catch (err) { console.error(err); toast.error(err?.response?.data?.error || 'Failed') } finally { setReporting(false) }
+                            }} disabled={reporting || order.deliveryConfirmed} className={`px-3 py-1 text-sm rounded ${order.deliveryConfirmed ? 'bg-gray-200 text-gray-600' : 'bg-blue-600 text-white'}`}>
+                                {order.deliveryConfirmed ? 'Marked Received' : 'Mark Received'}
+                            </button>
+                            <button onClick={async () => {
+                                try { setReporting(true); await axios.post('/api/orders/report-delivery', { orderId: order.id, status: 'NOT_RECEIVED' }); toast.success('Reported as not received — store notified') } catch (err) { console.error(err); toast.error(err?.response?.data?.error || 'Failed') } finally { setReporting(false) }
+                            }} disabled={reporting || (timeLeft !== null && timeLeft > 0)} className={`px-3 py-1 text-sm rounded ${ (timeLeft !== null && timeLeft > 0) ? 'bg-gray-300 text-gray-600' : 'bg-red-600 text-white' }`}>Report Not Received</button>
                         </div>
-                    )}
+                    </div>
                     <div className="flex items-center">
                         <span className='text-center mx-auto px-6 py-1.5 rounded bg-green-100 text-green-700' >
                             {order.status.replace(/_/g, ' ').toLowerCase()}

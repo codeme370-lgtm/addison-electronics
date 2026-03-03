@@ -12,7 +12,7 @@ import Drawer from './Drawer'
 import "./Navbar.css";
 
 const Navbar = () => {
-    const { user } = useUser();
+    const { user, isLoaded } = useUser();
     const { openSignIn } = useClerk();
     const router = useRouter();
     const pathname = usePathname();
@@ -199,22 +199,24 @@ const Navbar = () => {
                         </Link>
 
                         {/* User Profile / Login */}
-                        {user ? (
-                            <div className="flex items-center gap-1 ml-1 px-1.5 sm:px-2 py-1.5 sm:py-2">
-                                <UserButton />
-                                <div className="hidden sm:block text-left">
-                                    <div className="text-xs text-gray-600">Hello,</div>
-                                    <div className="font-semibold text-gray-900 text-xs">{user.firstName?.substring(0, 8)}</div>
-                                </div>
-                            </div>
-                        ) : (
-                            <button 
-                                onClick={handleOpenSignIn}
-                                className="bg-orange-500 hover:bg-orange-600 text-white px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg font-semibold text-xs sm:text-sm transition-all flex-shrink-0 whitespace-nowrap"
-                            >
-                                Login
-                            </button>
-                        )}
+                        <div className="flex items-center gap-1 ml-1 px-1.5 sm:px-2 py-1.5 sm:py-2">
+                            {user ? (
+                                <>
+                                    <UserButton />
+                                    <div className="hidden sm:block text-left">
+                                        <div className="text-xs text-gray-600">Hello,</div>
+                                        <div className="font-semibold text-gray-900 text-xs">{user.firstName?.substring(0, 8)}</div>
+                                    </div>
+                                </>
+                            ) : (
+                                <button 
+                                    onClick={handleOpenSignIn}
+                                    className="bg-orange-500 hover:bg-orange-600 text-white px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg font-semibold text-xs sm:text-sm transition-all flex-shrink-0 whitespace-nowrap"
+                                >
+                                    Login
+                                </button>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
