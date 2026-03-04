@@ -17,7 +17,7 @@ export async function GET(request) {
         user: {
           select: { name: true, email: true, image: true }
         },
-        product: {
+        Product: {
           select: { id: true, name: true, price: true, images: true, rating: true }
         },
         sellerReviews: {
@@ -63,10 +63,11 @@ export async function GET(request) {
         productsSold: store.productsSold,
         avgResponseTime: store.avgResponseTime,
         returnRate: store.returnRate,
-        totalProducts: store.product.length,
+        totalProducts: store.Product.length,
+        categories: Array.from(new Set(store.Product.map(p => p.category).filter(Boolean))),
         createdAt: store.createdAt
       },
-      products: store.product.slice(0, 12), // Show latest 12 products
+      products: store.Product.slice(0, 12), // Show latest 12 products
       reviews: store.sellerReviews
     }, { status: 200 });
   } catch (error) {

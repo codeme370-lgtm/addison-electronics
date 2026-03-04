@@ -133,6 +133,17 @@ export default function SellerProfile() {
                   </div>
                 )}
               </div>
+              {/* Categories */}
+              {seller.categories && seller.categories.length > 0 && (
+                <div className="mt-4">
+                  <p className="text-slate-500 text-sm mb-2">Categories</p>
+                  <div className="flex flex-wrap gap-2">
+                    {seller.categories.map((c) => (
+                      <span key={c} className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">{c}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

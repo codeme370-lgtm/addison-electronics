@@ -11,7 +11,7 @@ const QuickLinks = () => {
         },
         {
             label: 'Top Sellers',
-            href: '/shop?sort=trending',
+            href: '/seller',
             bgColor: 'bg-gradient-to-br from-cyan-500 to-cyan-600'
         },
         {
