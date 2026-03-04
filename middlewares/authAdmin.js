@@ -9,7 +9,10 @@ const authAdmin =async (userId) => {
         const client = await clerkClient()
         const user = await client.users.getUser(userId)
 
-        return process.env.ADMIN_EMAIL.split(',').includes(user.emailAddresses[0].emailAddress);
+        const raw = process.env.ADMIN_EMAIL || '';
+        const list = raw.replace(/['"]/g, '').split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
+        const userEmail = (user.emailAddresses?.[0]?.emailAddress || '').toLowerCase();
+        return list.includes(userEmail);
     } catch (error) {
         console.error(error)
         return false

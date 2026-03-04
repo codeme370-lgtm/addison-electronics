@@ -41,11 +41,13 @@ const {getToken} = useAuth()
         setStoreInfo(data.storeInfo)
         
        } catch (error) {
-        // treat 401 as not-a-seller (expected for non-sellers)
-        if (error?.response?.status === 401) {
+        // treat 401 and 404 as not-a-seller (expected for non-sellers or missing route)
+        const status = error?.response?.status
+        if (status === 401 || status === 404) {
             setIsSeller(false)
         } else {
-            console.error(error)
+            // log server response body when available for easier debugging
+            console.error('fetchIsSeller error', status, error?.response?.data || error?.message || error)
         }
        }finally {
         setLoading(false)
