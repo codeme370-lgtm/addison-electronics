@@ -37,7 +37,7 @@ Schema:
   ];
 
   const response = await openai.chat.completions.create({
-    model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+    model: process.env.OPENAI_MODEL,
     messages,
   });
 

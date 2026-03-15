@@ -8,6 +8,11 @@ import { getAuth } from "@clerk/nextjs/server";
 export async function GET(request){
     try{
         const {userId}=getAuth(request); // this get the user ID
+        if(!userId){
+            console.warn('is-seller: request without userId')
+            return NextResponse.json({error:'Not authenticated'}, {status:401})
+        }
+
         const isSeller = await authSeller(userId);
 
         //if the user is not a seller

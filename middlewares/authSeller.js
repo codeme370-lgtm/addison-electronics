@@ -5,6 +5,11 @@ import prisma from "@/lib/prisma";
 
 const authSeller = async (userId)=>{
    try{
+    if (!userId) {
+      console.warn('authSeller called without userId')
+      return false
+    }
+
     const user = await prisma.user.findUnique(
         {
             where:{id:userId},

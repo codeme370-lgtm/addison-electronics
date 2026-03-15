@@ -6,5 +6,5 @@ if (!process.env.OPENAI_API_KEY) {
 
 export const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
-    baseURL: process.env.OPENAI_BASE_URL || undefined,
+    baseURL: process.env.OPENAI_BASE_URL
 });
