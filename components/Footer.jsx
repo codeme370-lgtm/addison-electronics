@@ -35,10 +35,10 @@ const Footer = () => {
     ];
 
     const socialIcons = [
-        { icon: WhatsappIcon, link: "https://wa.me/233256866043", color: '#25D366' },
-        { icon: TikTokIcon, link: "https://www.tiktok.com", color: '#69C9D0' },
-        { icon: InstagramIcon, link: "https://www.instagram.com", color: '#E1306C' },
-        { icon: FacebookIcon, link: "https://www.facebook.com", color: '#1877F2' },
+        { icon: WhatsappIcon, link: "https://wa.me/233248608602", color: '#25D366' },
+        { icon: TikTokIcon, link: "https://www.tiktok.com/@best_shop_jeescage", color: '#69C9D0' },
+        { icon: InstagramIcon, link: "https://www.instagram.com/jc_shopping_mall", color: '#E1306C' },
+        { icon: FacebookIcon, link: "https://www.facebook.com/100021363870050/posts/pdfid028SgA9fPoWVH7GXj86LLsUWq4RE9efqX5DozN9VBD3NJA89399ozsvWTwSUMvDB6I/?_rdc=1^_rdr#", color: '#1877F2' },
     ]
 
     return (
@@ -56,8 +56,7 @@ const Footer = () => {
                                         <MapPinIcon />
                                     </div>
                                     <div>
-                                        <div className="text-base font-semibold text-white">KNUST</div>
-                                        <div className="text-slate-300">Kumasi, Ghana</div>
+                                        <div className="text-base font-semibold text-white">Accra, Ghana</div>
                                     </div>
                                 </div>
 
