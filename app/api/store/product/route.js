@@ -25,6 +25,7 @@ export async function POST(request) {
     const price = Number(formData.get("price"));
     const category = formData.get("category");
     const mrp = Number(formData.get("mrp"));
+    const quantity = Number(formData.get("quantity"));
     const imageUrls = formData.getAll("imageUrls");
 
     if (
@@ -33,6 +34,7 @@ export async function POST(request) {
       isNaN(price) ||
       !category ||
       isNaN(mrp) ||
+      isNaN(quantity) ||
       imageUrls.length < 1
     ) {
       return NextResponse.json(
@@ -44,7 +46,7 @@ export async function POST(request) {
     // Use the uploaded image URLs directly
     const imagesUrl = imageUrls;
 
-    await prisma.product.create({
+    const product = await prisma.product.create({
       data: {
         name,
         description,
@@ -52,13 +54,67 @@ export async function POST(request) {
         price,
         category,
         images: imagesUrl,
+        quantity,
         storeId,
       },
     });
 
-    return NextResponse.json({ message: "product added successfully" });
+    return NextResponse.json({ message: "product added successfully", product });
   } catch (error) {
     console.error("product:create error:", error);
+    return NextResponse.json(
+      { error: error?.message || "Server error" },
+      { status: 500 }
+    );
+  }
+}
+
+// Update existing product (store owner)
+export async function PATCH(request) {
+  try {
+    const { userId } = getAuth(request);
+    if (!userId) {
+      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+    }
+
+    const storeId = await authSeller(userId);
+    if (!storeId) {
+      return NextResponse.json(
+        { error: "you are not authorized to perform this action" },
+        { status: 401 }
+      );
+    }
+
+    const { productId, name, price, mrp, description, category, quantity } = await request.json();
+
+    if (!productId) {
+      return NextResponse.json({ error: "productId is required" }, { status: 400 });
+    }
+
+    const existing = await prisma.product.findFirst({
+      where: { id: productId, storeId },
+    });
+
+    if (!existing) {
+      return NextResponse.json({ error: "Product not found or not authorized" }, { status: 404 });
+    }
+
+    const updated = await prisma.product.update({
+      where: { id: productId },
+      data: {
+        name: name ?? existing.name,
+        price: typeof price === 'number' ? price : existing.price,
+        mrp: typeof mrp === 'number' ? mrp : existing.mrp,
+        description: description ?? existing.description,
+        category: category ?? existing.category,
+        quantity: typeof quantity === 'number' ? quantity : existing.quantity,
+        inStock: typeof quantity === 'number' ? quantity > 0 : existing.inStock,
+      },
+    });
+
+    return NextResponse.json({ message: "product updated successfully", product: updated }, { status: 200 });
+  } catch (error) {
+    console.error("product:update error:", error);
     return NextResponse.json(
       { error: error?.message || "Server error" },
       { status: 500 }
@@ -94,6 +150,7 @@ export async function GET(request) {
         description: true,
         images: true,
         inStock: true,
+        quantity: true,
         createdAt: true,
         rating: true,
       },
@@ -103,6 +160,58 @@ export async function GET(request) {
     return NextResponse.json({ products }, { status: 200 });
   } catch (error) {
     console.error("product:get error:", error);
+    return NextResponse.json(
+      { error: error?.message || "Server error" },
+      { status: 500 }
+    );
+  }
+}
+
+//Delete a product
+export async function DELETE(request) {
+  try {
+    const { userId } = getAuth(request);
+    if (!userId) {
+      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+    }
+
+    const storeId = await authSeller(userId);
+    if (!storeId) {
+      return NextResponse.json(
+        { error: "you are not authorized to perform this action" },
+        { status: 401 }
+      );
+    }
+
+    const { productId } = await request.json();
+
+    if (!productId) {
+      return NextResponse.json(
+        { error: "productId is required" },
+        { status: 400 }
+      );
+    }
+
+    // Check if the product belongs to the store
+    const product = await prisma.product.findFirst({
+      where: { id: productId, storeId },
+    });
+
+    if (!product) {
+      return NextResponse.json(
+        { error: "Product not found or not authorized" },
+        { status: 404 }
+      );
+    }
+
+    // Delete the product
+    await prisma.product.delete({
+      where: { id: productId },
+    });
+
+    return NextResponse.json({ message: "Product deleted successfully" });
+  } catch (error) {
+    console.error("product:delete error:", error);
     return NextResponse.json(
       { error: error?.message || "Server error" },
       { status: 500 }

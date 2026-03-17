@@ -154,6 +154,22 @@ for(const [storeId, orderItems] of storeByOrders.entries()){
             })
             console.log('created order id:', newOrder.id)
             orderIds.push(newOrder.id)
+
+            // Reduce product quantities
+            for (const item of orderItems) {
+                const product = await prisma.product.findUnique({
+                    where: { id: item.productId },
+                    select: { quantity: true }
+                })
+                const newQuantity = product.quantity - item.quantity
+                await prisma.product.update({
+                    where: { id: item.productId },
+                    data: {
+                        quantity: newQuantity,
+                        inStock: newQuantity > 0
+                    }
+                })
+            }
         } catch (createErr) {
             console.error('Error creating order for storeId', storeId, 'items:', orderItems, createErr?.message ?? createErr)
             throw createErr

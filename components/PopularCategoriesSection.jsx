@@ -78,7 +78,7 @@ const PopularCategoriesSection = () => {
                                             src={productImage}
                                             alt={category.name}
                                             fill
-                                            className='object-cover opacity-20 absolute inset-0'
+                                            className='object-cover opacity-10 absolute inset-0'
                                         />
                                     )}
                                     

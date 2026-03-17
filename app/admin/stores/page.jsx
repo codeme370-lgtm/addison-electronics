@@ -42,11 +42,10 @@ export default function AdminStores() {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            //update the stores list
-            await fetchStores();
+            // Update the store in local state based on the server response
             setStores((prevStores) =>
                 prevStores.map((store) =>
-                    store.id === storeId ? { ...store, isActive: !store.isActive } : store
+                    store.id === storeId ? { ...store, isActive: data.store.isActive } : store
                 )
             );
             toast.success(data.message);

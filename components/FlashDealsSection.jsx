@@ -64,7 +64,23 @@ const FlashDealsSection = () => {
         }
     }
 
-    const flashProducts = products.slice(0, 8)
+    const flashProducts = (() => {
+        // Only show one product per category, selecting the latest product per category.
+        const latestByCategory = {}
+        const sorted = [...products].sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        )
+
+        for (const product of sorted) {
+            if (!product.category) continue
+            if (!latestByCategory[product.category]) {
+                latestByCategory[product.category] = product
+            }
+            if (Object.keys(latestByCategory).length >= 8) break
+        }
+
+        return Object.values(latestByCategory)
+    })()
 
     return (
         <div className='w-full bg-white py-6 sm:py-8 px-2 sm:px-4 md:px-8'>

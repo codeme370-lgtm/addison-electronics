@@ -22,6 +22,7 @@ export async function GET(request) {
           description: true,
           images: true,
           inStock: true,
+          quantity: true,
           rating: true,
           store: {
             select: {
@@ -45,6 +46,7 @@ export async function GET(request) {
           description: true,
           images: true,
           inStock: true,
+          quantity: true,
           rating: true,
           store: {
             select: {

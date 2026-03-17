@@ -28,6 +28,8 @@ const ProductCard = ({ product, hideAddToCart = false }) => {
         ? Math.round(product.rating.reduce((acc, curr) => acc + curr.rating, 0) / product.rating.length)
         : 0;
 
+    const isOutOfStock = product.quantity <= 0
+
     const handleAddToCart = (e) => {
         e.preventDefault()
         e.stopPropagation()
@@ -75,7 +77,7 @@ const ProductCard = ({ product, hideAddToCart = false }) => {
         <Link href={`/product/${product.id}`} className='group max-xl:mx-auto block'>
             <div className='relative'>
                 {/* Product Image */}
-                <div className='bg-gradient-to-br from-slate-100 to-slate-50 h-32 sm:h-44 md:h-56 lg:h-64 w-full rounded-lg flex items-center justify-center overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300'>
+                <div className='bg-gradient-to-br from-slate-100 to-slate-50 h-32 sm:h-44 md:h-56 lg:h-64 w-full rounded-lg flex items-center justify-center overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300 relative'>
                     <Image 
                         width={500} 
                         height={500}
@@ -83,17 +85,24 @@ const ProductCard = ({ product, hideAddToCart = false }) => {
                         src={product.images?.[0] || '/placeholder.jpg'} 
                         alt={product?.name ? `${product.name} image` : 'Product image'} 
                     />
+                    {isOutOfStock && (
+                        <div className='absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center'>
+                            <span className='text-white font-bold text-sm sm:text-lg'>Out of Stock</span>
+                        </div>
+                    )}
                 </div>
 
                 {/* Quick Cart Icon - Top Right */}
                 {!hideAddToCart && (
                     <button
                         onClick={handleAddToCart}
-                        disabled={isAdding || addedSuccess}
-                        title="Add to cart"
+                        disabled={isAdding || addedSuccess || isOutOfStock}
+                        title={isOutOfStock ? "Out of stock" : "Add to cart"}
                         className={`absolute top-1 right-1 sm:top-2 sm:right-2 p-1.5 sm:p-2 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 ${
                             addedSuccess
                                 ? 'bg-green-500 text-white scale-110'
+                                : isOutOfStock
+                                ? 'bg-gray-400 text-white cursor-not-allowed'
                                 : 'bg-white text-slate-800 hover:bg-slate-100 border-2 border-slate-200 hover:border-slate-300'
                         } ${isAdding ? 'scale-95' : ''}`}
                     >

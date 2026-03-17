@@ -5,7 +5,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata = {
-    title: "jeescagemall. - Shop smarter",
+    title: "eescagemall. - Shop smarter",
     description: "Online retail store offering High quality home furniture’s ,trendy items ,kitchen appliances and all fashion items",
     icons: [
         { rel: 'icon', url: '/favicon.ico' },

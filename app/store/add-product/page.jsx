@@ -8,6 +8,8 @@ import { useAuth } from "@clerk/nextjs"
 import axios from "axios"
 import React from "react"
 import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { addProduct } from '@/lib/features/product/productSlice'
 
 
 
@@ -24,12 +26,14 @@ export default function StoreAddProduct() {
         mrp: 0,
         price: 0,
         category: "",
+        quantity: 0,
     })
     const [loading, setLoading] = useState(false)
      const [aiUsed, setAiUsed] = useState(false)
 
 
     const {getToken} = useAuth()
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const fetchCats = async () => {
@@ -128,6 +132,7 @@ export default function StoreAddProduct() {
             formData.append("mrp", productInfo.mrp)
             formData.append("price", productInfo.price)
             formData.append("category", productInfo.category)
+            formData.append("quantity", productInfo.quantity)
 
             //adding image URLs to form data instead of files
             imageUrls.forEach((url) => {
@@ -135,12 +140,16 @@ export default function StoreAddProduct() {
             })
 
             //send the form data to the api
-            await axios.post("/api/store/product", formData, {
+            const response = await axios.post("/api/store/product", formData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
             toast.success("Product added successfully")
+            // Add the new product to the Redux store
+            if (response.data.product) {
+                dispatch(addProduct(response.data.product))
+            }
             //reset the form
             setProductInfo({
                 name: "",
@@ -148,6 +157,7 @@ export default function StoreAddProduct() {
                 mrp: 0,
                 price: 0,
                 category: "",
+                quantity: 0,
             })
             //reset images
             setImages({ 1: null, 2: null, 3: null, 4: null })
@@ -194,6 +204,10 @@ export default function StoreAddProduct() {
                 <label htmlFor="" className="flex flex-col gap-2 ">
                     Offer Price (GHS)
                     <input type="number" name="price" onChange={onChangeHandler} value={productInfo.price} placeholder="0" rows={5} className="w-full max-w-45 p-2 px-4 outline-none border border-slate-200 rounded resize-none" required />
+                </label>
+                <label htmlFor="" className="flex flex-col gap-2 ">
+                    Quantity
+                    <input type="number" name="quantity" onChange={onChangeHandler} value={productInfo.quantity} placeholder="0" min="0" className="w-full max-w-45 p-2 px-4 outline-none border border-slate-200 rounded resize-none" required />
                 </label>
             </div>
 
