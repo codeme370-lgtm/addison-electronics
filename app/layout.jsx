@@ -6,7 +6,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata = {
     title: "JeesCage. - Shop smarter",
-    description: "JeesCage. - Shop smarter",
+    description: "Online retail store offering High quality home furniture’s ,trendy items ,kitchen appliances and all fashion items",
     icons: [
         { rel: 'icon', url: '/favicon.ico' },
         { rel: 'icon', url: '/favicon.svg', type: 'image/svg+xml' }
