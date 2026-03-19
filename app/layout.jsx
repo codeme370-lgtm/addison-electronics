@@ -5,6 +5,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata = {
+    metadataBase: new URL("https://www.jeescagemall.com"), // Replace with your live URL
     title: "Jeescagemall - Shop Smarter",
     description: "Online retail store offering high-quality home furniture, trendy items, kitchen appliances, and all fashion items. Discover the best deals on furniture and fashion.",
     keywords: ["furniture", "fashion", "kitchen appliances", "home decor", "trendy items", "online shopping", "retail store"],
@@ -15,14 +16,15 @@ export const metadata = {
     openGraph: {
         title: "Jeescage - Shop Smarter",
         description: "Discover high-quality home furniture, trendy fashion items, and kitchen appliances at JeeShop. Shop smarter today!",
-        url: "https://www.jeescagemall.com", // Replace with your actual URL
+        url: "/",
         siteName: "Jeescagemall",
         images: [
             {
                 url: "/favicon.ico", // Use favicon as og-image
                 width: 32,
                 height: 32,
-                alt: "Jeescage - Online Retail Store"
+                alt: "Jeescage - Online Retail Store",
+                type: "image/x-icon"
             }
         ],
         locale: "en_US",
@@ -33,8 +35,12 @@ export const metadata = {
         title: "Jeescage - Shop Smarter",
         description: "Discover high-quality home furniture, trendy fashion items, and kitchen appliances at JeeShop. Shop smarter today!",
         images: ["/favicon.ico"] // Use favicon as twitter image
-    },
-    viewport: "width=device-width, initial-scale=1" // Add viewport for responsive design
+    }
+};
+
+export const viewport = {
+    width: 'device-width',
+    initialScale: 1
 };
 
 export default function RootLayout({ children }) {
