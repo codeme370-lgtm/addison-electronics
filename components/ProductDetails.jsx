@@ -1,7 +1,7 @@
 'use client'
 
 import { addToCart } from "@/lib/features/cart/cartSlice";
-import { StarIcon, TagIcon, EarthIcon, CreditCardIcon, UserIcon, Check, Loader } from "lucide-react";
+import { StarIcon, TagIcon, EarthIcon, CreditCardIcon, UserIcon, Check, Loader, Share2, Facebook, Twitter, MessageCircle, Copy } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 import Counter from "./Counter";
@@ -59,6 +59,44 @@ const ProductDetails = ({ product }) => {
     }
 
     const averageRating = product?.rating && product.rating.length > 0 ? product.rating.reduce((acc, item) => acc + item.rating, 0) / product.rating.length : 0;
+
+    const shareProduct = async (platform) => {
+        const url = window.location.href;
+        const title = product.name;
+        const text = `Check out this product: ${title} - ${currency}${product.price}`;
+
+        if (navigator.share && platform === 'native') {
+            try {
+                await navigator.share({
+                    title,
+                    text,
+                    url
+                });
+            } catch (err) {
+                console.log('Error sharing:', err);
+            }
+        } else {
+            let shareUrl = '';
+            switch (platform) {
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+                    break;
+                case 'whatsapp':
+                    shareUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
+                    break;
+                case 'copy':
+                    navigator.clipboard.writeText(url);
+                    toast.success('Link copied to clipboard!');
+                    return;
+                default:
+                    return;
+            }
+            window.open(shareUrl, '_blank');
+        }
+    };
     
     return (
         <div className="flex max-lg:flex-col gap-12">
@@ -69,14 +107,13 @@ const ProductDetails = ({ product }) => {
                         <div 
                             key={index} 
                             onClick={() => image && setMainImage(image)} 
-                            className={`bg-slate-100 flex items-center justify-center size-26 rounded-lg group cursor-pointer border-2 transition-all duration-200 ${mainImage === image ? 'border-green-500 shadow-lg' : 'border-transparent hover:border-slate-300'}`}
+                            className={`bg-slate-100 flex items-center justify-center size-26 rounded-lg group cursor-pointer border-2 transition-all duration-200 overflow-hidden ${mainImage === image ? 'border-green-500 shadow-lg' : 'border-transparent hover:border-slate-300'}`}
                         >
                             <Image 
                                 src={image || assets.product_placeholder} 
-                                className="group-hover:scale-110 group-active:scale-95 transition duration-300" 
+                                className="object-cover w-full h-full group-hover:scale-110 group-active:scale-95 transition duration-300" 
                                 alt={product?.name ? `${product.name} thumbnail ${index + 1}` : 'Product thumbnail'} 
-                                width={45} 
-                                height={45} 
+                                fill
                             />
                         </div>
                     ))}
@@ -187,6 +224,53 @@ const ProductDetails = ({ product }) => {
                             <UserIcon className="text-purple-600" size={18} />
                         </div>
                         Trusted by thousands
+                    </div>
+                </div>
+                
+                {/* Share Options */}
+                <div className="mt-6">
+                    <h3 className="text-lg font-semibold text-slate-800 mb-3 flex items-center gap-2">
+                        <Share2 size={20} />
+                        Share this product
+                    </h3>
+                    <div className="flex gap-3">
+                        {navigator.share && (
+                            <button
+                                onClick={() => shareProduct('native')}
+                                className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg transition-colors"
+                            >
+                                <Share2 size={16} />
+                                Share
+                            </button>
+                        )}
+                        <button
+                            onClick={() => shareProduct('facebook')}
+                            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+                        >
+                            <Facebook size={16} />
+                            Facebook
+                        </button>
+                        <button
+                            onClick={() => shareProduct('twitter')}
+                            className="flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-lg transition-colors"
+                        >
+                            <Twitter size={16} />
+                            Twitter
+                        </button>
+                        <button
+                            onClick={() => shareProduct('whatsapp')}
+                            className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors"
+                        >
+                            <MessageCircle size={16} />
+                            WhatsApp
+                        </button>
+                        <button
+                            onClick={() => shareProduct('copy')}
+                            className="flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors"
+                        >
+                            <Copy size={16} />
+                            Copy Link
+                        </button>
                     </div>
                 </div>
             </div>

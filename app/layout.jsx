@@ -5,7 +5,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata = {
-    title: "JeeShop - Shop Smarter",
+    title: "Jeescagemall - Shop Smarter",
     description: "Online retail store offering high-quality home furniture, trendy items, kitchen appliances, and all fashion items. Discover the best deals on furniture and fashion.",
     keywords: ["furniture", "fashion", "kitchen appliances", "home decor", "trendy items", "online shopping", "retail store"],
     icons: [
@@ -13,16 +13,16 @@ export const metadata = {
         { rel: 'icon', url: '/favicon.svg', type: 'image/svg+xml' }
     ],
     openGraph: {
-        title: "JeeShop - Shop Smarter",
+        title: "Jeescage - Shop Smarter",
         description: "Discover high-quality home furniture, trendy fashion items, and kitchen appliances at JeeShop. Shop smarter today!",
-        url: "https://jeescagemall.com", // Replace with your actual URL
+        url: "https://www.jeescagemall.com", // Replace with your actual URL
         siteName: "Jeescagemall",
         images: [
             {
-                url: "/og-image.jpg", // Add an Open Graph image in public folder
-                width: 1200,
-                height: 630,
-                alt: "JeeShop - Online Retail Store"
+                url: "/favicon.ico", // Use favicon as og-image
+                width: 32,
+                height: 32,
+                alt: "Jeescage - Online Retail Store"
             }
         ],
         locale: "en_US",
@@ -30,10 +30,11 @@ export const metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "JeeShop - Shop Smarter",
+        title: "Jeescage - Shop Smarter",
         description: "Discover high-quality home furniture, trendy fashion items, and kitchen appliances at JeeShop. Shop smarter today!",
-        images: ["/og-image.jpg"] // Same as Open Graph
-    }
+        images: ["/favicon.ico"] // Use favicon as twitter image
+    },
+    viewport: "width=device-width, initial-scale=1" // Add viewport for responsive design
 };
 
 export default function RootLayout({ children }) {
