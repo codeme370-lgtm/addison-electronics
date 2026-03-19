@@ -99,8 +99,8 @@ const ProductDetails = ({ product }) => {
     };
     
     return (
-        <div className="flex max-lg:flex-col gap-4 sm:gap-6 lg:gap-12">
-            <div className="flex max-sm:flex-col-reverse gap-1 sm:gap-3 w-full sm:w-auto">
+        <div className="flex max-lg:flex-col gap-4 sm:gap-6 lg:gap-12 w-full">
+            <div className="flex max-sm:flex-col-reverse gap-1 sm:gap-3 w-full">
                 {/* Thumbnail Gallery */}
                 <div className="flex sm:flex-col gap-1 sm:gap-3 max-sm:order-2 flex-shrink-0">
                     {product?.images && product.images.map((image, index) => (
@@ -122,11 +122,11 @@ const ProductDetails = ({ product }) => {
                 
                 {/* Main Image Gallery with Zoom */}
                 <div 
-                    className="flex justify-center items-center w-full h-80 sm:h-96 md:h-[450px] lg:h-[500px] bg-gradient-to-br from-slate-50 to-slate-100 rounded-lg overflow-hidden relative group cursor-zoom-in flex-1"
+                    className="flex justify-center items-center w-full min-h-[300px] sm:min-h-[400px] md:min-h-[450px] 2xl:min-h-[500px] bg-gradient-to-br from-slate-50 to-slate-100 rounded-lg overflow-hidden relative group cursor-zoom-in flex-shrink-0"
                     onMouseEnter={handleImageHover}
                     onMouseLeave={() => setIsZoomed(false)}
                 >
-                    <div className="relative w-full h-full flex items-center justify-center p-1 sm:p-4">
+                    <div className="relative w-full h-full flex items-center justify-center p-2 sm:p-4">
                         <Image 
                             src={mainImage} 
                             alt={product?.name ? `${product.name} main image` : 'Product main image'} 
@@ -146,7 +146,7 @@ const ProductDetails = ({ product }) => {
             </div>
             
             {/* Product Details */}
-            <div className="flex-1 w-full sm:min-w-0">
+            <div className="w-full">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent line-clamp-3">{product.name}</h1>
                 
                 {/* Rating Section */}
@@ -181,7 +181,7 @@ const ProductDetails = ({ product }) => {
                     <button 
                         onClick={() => !cart[productId] ? addToCartHandler() : router.push('/cart')} 
                         disabled={isAddingToCart}
-                        className={`flex items-center justify-center gap-2 px-6 sm:px-8 md:px-10 py-2 sm:py-3 text-xs sm:text-sm md:text-base font-semibold rounded-lg transition-all duration-300 whitespace-nowrap ${
+                        className={`flex items-center justify-center gap-2 w-full sm:w-auto px-6 sm:px-8 md:px-10 py-2 sm:py-3 text-xs sm:text-sm md:text-base font-semibold rounded-lg transition-all duration-300 ${
                             cartConfirmed 
                                 ? 'bg-green-500 text-white' 
                                 : !cart[productId]
