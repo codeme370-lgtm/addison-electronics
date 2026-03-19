@@ -99,22 +99,22 @@ const ProductDetails = ({ product }) => {
     };
     
     return (
-        <div className="flex max-lg:flex-col gap-12">
-            <div className="flex max-sm:flex-col-reverse gap-3">
+        <div className="flex max-lg:flex-col gap-6 lg:gap-12">
+            <div className="flex max-sm:flex-col-reverse gap-2 sm:gap-3">
                 {/* Thumbnail Gallery */}
-                <div className="flex sm:flex-col gap-3">
+                <div className="flex sm:flex-col gap-2 sm:gap-3">
                     {product?.images && product.images.map((image, index) => (
                         <div 
                             key={index} 
                             onClick={() => image && setMainImage(image)} 
-                            className={`bg-slate-100 flex items-center justify-center size-26 rounded-lg group cursor-pointer border-2 transition-all duration-200 ${mainImage === image ? 'border-green-500 shadow-lg' : 'border-transparent hover:border-slate-300'}`}
+                            className={`bg-slate-100 flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-lg group cursor-pointer border-2 transition-all duration-200 ${mainImage === image ? 'border-green-500 shadow-lg' : 'border-transparent hover:border-slate-300'}`}
                         >
                             <Image 
                                 src={image || assets.product_placeholder} 
-                                className="group-hover:scale-110 group-active:scale-95 transition duration-300" 
+                                className="group-hover:scale-110 group-active:scale-95 transition duration-300 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20" 
                                 alt={product?.name ? `${product.name} thumbnail ${index + 1}` : 'Product thumbnail'} 
-                                width={45} 
-                                height={45} 
+                                width={80} 
+                                height={80} 
                             />
                         </div>
                     ))}
@@ -122,17 +122,18 @@ const ProductDetails = ({ product }) => {
                 
                 {/* Main Image Gallery with Zoom */}
                 <div 
-                    className="flex justify-center items-center h-100 w-full sm:size-113 bg-gradient-to-br from-slate-50 to-slate-100 rounded-lg overflow-hidden relative group cursor-zoom-in"
+                    className="flex justify-center items-center w-full h-64 sm:h-80 md:h-96 lg:h-[500px] bg-gradient-to-br from-slate-50 to-slate-100 rounded-lg overflow-hidden relative group cursor-zoom-in"
                     onMouseEnter={handleImageHover}
                     onMouseLeave={() => setIsZoomed(false)}
                 >
-                    <div className="relative w-full h-full flex items-center justify-center">
+                    <div className="relative w-full h-full flex items-center justify-center p-2 sm:p-4">
                         <Image 
                             src={mainImage} 
                             alt={product?.name ? `${product.name} main image` : 'Product main image'} 
                             width={500} 
                             height={500} 
-                            className={`transition-transform duration-300 ${isZoomed ? 'scale-150' : 'scale-100'}`}
+                            priority
+                            className={`transition-transform duration-300 w-full h-full object-contain max-w-full ${isZoomed ? 'scale-150' : 'scale-100'}`}
                             style={{ transformOrigin: `${zoomPosition.x}px ${zoomPosition.y}px` }}
                         />
                     </div>
@@ -145,11 +146,11 @@ const ProductDetails = ({ product }) => {
             </div>
             
             {/* Product Details */}
-            <div className="flex-1">
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">{product.name}</h1>
+            <div className="flex-1 w-full">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent line-clamp-3">{product.name}</h1>
                 
                 {/* Rating Section */}
-                <div className='flex items-center mt-3 gap-2'>
+                <div className='flex items-center mt-3 gap-2 flex-wrap'>
                     <div className="flex">
                         {Array(5).fill('').map((_, index) => (
                             <StarIcon key={index} size={16} className='text-transparent' fill={averageRating >= index + 1 ? "#00C950" : "#D1D5DB"} />
@@ -159,20 +160,20 @@ const ProductDetails = ({ product }) => {
                 </div>
                 
                 {/* Price Section */}
-                <div className="flex items-start my-6 gap-4 text-2xl font-bold text-slate-800">
-                    <p className="bg-gradient-to-r from-green-600 to-green-500 bg-clip-text text-transparent">{currency}{product.price}</p>
-                    <p className="text-lg text-slate-400 line-through">{currency}{product.mrp}</p>
-                    <span className="text-sm font-semibold bg-green-100 text-green-700 px-3 py-1 rounded-full">Save {((product.mrp - product.price) / product.mrp * 100).toFixed(0)}%</span>
+                <div className="flex items-start my-6 gap-4 flex-wrap text-lg sm:text-xl md:text-2xl font-bold text-slate-800">
+                    <p className="bg-gradient-to-r from-green-600 to-green-500 bg-clip-text text-transparent text-xl sm:text-2xl md:text-3xl">{currency}{product.price}</p>
+                    <p className="text-sm sm:text-base md:text-lg text-slate-400 line-through">{currency}{product.mrp}</p>
+                    <span className="text-xs sm:text-sm font-semibold bg-green-100 text-green-700 px-2 sm:px-3 py-1 rounded-full whitespace-nowrap">Save {((product.mrp - product.price) / product.mrp * 100).toFixed(0)}%</span>
                 </div>
                 
                 <hr className="border-gray-300 my-6" />
                 
                 {/* Quantity and Add to Cart */}
-                <div className="flex items-end gap-5 mb-6">
+                <div className="flex flex-wrap items-end gap-3 sm:gap-5 mb-6">
                     {
                         cart[productId] && (
-                            <div className="flex flex-col gap-3">
-                                <p className="text-lg text-slate-800 font-semibold">Quantity</p>
+                            <div className="flex flex-col gap-2 sm:gap-3">
+                                <p className="text-sm sm:text-base md:text-lg text-slate-800 font-semibold">Quantity</p>
                                 <Counter productId={productId} />
                             </div>
                         )
@@ -180,7 +181,7 @@ const ProductDetails = ({ product }) => {
                     <button 
                         onClick={() => !cart[productId] ? addToCartHandler() : router.push('/cart')} 
                         disabled={isAddingToCart}
-                        className={`flex items-center justify-center gap-2 px-10 py-3 text-sm font-semibold rounded-lg transition-all duration-300 ${
+                        className={`flex items-center justify-center gap-2 px-6 sm:px-8 md:px-10 py-2 sm:py-3 text-xs sm:text-sm md:text-base font-semibold rounded-lg transition-all duration-300 whitespace-nowrap ${
                             cartConfirmed 
                                 ? 'bg-green-500 text-white' 
                                 : !cart[productId]
@@ -207,22 +208,22 @@ const ProductDetails = ({ product }) => {
                 <hr className="border-gray-300 my-6" />
                 
                 {/* Trust Badges */}
-                <div className="bg-gradient-to-r from-slate-50 to-slate-100 rounded-lg p-4 space-y-3 border border-slate-200">
-                    <div className="flex gap-3 items-center text-slate-700 font-medium"> 
-                        <div className="bg-red-100 p-2 rounded-full">
-                            <EarthIcon className="text-red-600" size={18} />
+                <div className="bg-gradient-to-r from-slate-50 to-slate-100 rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3 border border-slate-200">
+                    <div className="flex gap-2 sm:gap-3 items-center text-slate-700 text-xs sm:text-sm md:text-base font-medium"> 
+                        <div className="bg-red-100 p-1.5 sm:p-2 rounded-full flex-shrink-0">
+                            <EarthIcon className="text-red-600" size={16} />
                         </div>
                         Free delivery worldwide
                     </div>
-                    <div className="flex gap-3 items-center text-slate-700 font-medium"> 
-                        <div className="bg-blue-100 p-2 rounded-full">
-                            <CreditCardIcon className="text-blue-600" size={18} />
+                    <div className="flex gap-2 sm:gap-3 items-center text-slate-700 text-xs sm:text-sm md:text-base font-medium"> 
+                        <div className="bg-blue-100 p-1.5 sm:p-2 rounded-full flex-shrink-0">
+                            <CreditCardIcon className="text-blue-600" size={16} />
                         </div>
                         100% Secured Payment
                     </div>
-                    <div className="flex gap-3 items-center text-slate-700 font-medium"> 
-                        <div className="bg-purple-100 p-2 rounded-full">
-                            <UserIcon className="text-purple-600" size={18} />
+                    <div className="flex gap-2 sm:gap-3 items-center text-slate-700 text-xs sm:text-sm md:text-base font-medium"> 
+                        <div className="bg-purple-100 p-1.5 sm:p-2 rounded-full flex-shrink-0">
+                            <UserIcon className="text-purple-600" size={16} />
                         </div>
                         Trusted by thousands
                     </div>
@@ -230,47 +231,51 @@ const ProductDetails = ({ product }) => {
                 
                 {/* Share Options */}
                 <div className="mt-6">
-                    <h3 className="text-lg font-semibold text-slate-800 mb-3 flex items-center gap-2">
-                        <Share2 size={20} />
+                    <h3 className="text-base sm:text-lg font-semibold text-slate-800 mb-3 flex items-center gap-2">
+                        <Share2 size={18} className="sm:size-[20px]" />
                         Share this product
                     </h3>
-                    <div className="flex gap-3">
+                    <div className="flex flex-wrap gap-2 sm:gap-3">
                         {navigator.share && (
                             <button
                                 onClick={() => shareProduct('native')}
-                                className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg transition-colors"
+                                className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-lg transition-colors whitespace-nowrap"
                             >
-                                <Share2 size={16} />
+                                <Share2 size={14} className="sm:size-[16px]" />
                                 Share
                             </button>
                         )}
                         <button
                             onClick={() => shareProduct('facebook')}
-                            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+                            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-lg transition-colors whitespace-nowrap"
                         >
-                            <Facebook size={16} />
-                            Facebook
+                            <Facebook size={14} className="sm:size-[16px]" />
+                            <span className="hidden sm:inline">Facebook</span>
+                            <span className="sm:hidden">FB</span>
                         </button>
                         <button
                             onClick={() => shareProduct('twitter')}
-                            className="flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-lg transition-colors"
+                            className="flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-lg transition-colors whitespace-nowrap"
                         >
-                            <Twitter size={16} />
-                            Twitter
+                            <Twitter size={14} className="sm:size-[16px]" />
+                            <span className="hidden sm:inline">Twitter</span>
+                            <span className="sm:hidden">X</span>
                         </button>
                         <button
                             onClick={() => shareProduct('whatsapp')}
-                            className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors"
+                            className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-lg transition-colors whitespace-nowrap"
                         >
-                            <MessageCircle size={16} />
-                            WhatsApp
+                            <MessageCircle size={14} className="sm:size-[16px]" />
+                            <span className="hidden sm:inline">WhatsApp</span>
+                            <span className="sm:hidden">WA</span>
                         </button>
                         <button
                             onClick={() => shareProduct('copy')}
-                            className="flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors"
+                            className="flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-lg transition-colors whitespace-nowrap"
                         >
-                            <Copy size={16} />
-                            Copy Link
+                            <Copy size={14} className="sm:size-[16px]" />
+                            <span className="hidden sm:inline">Copy Link</span>
+                            <span className="sm:hidden">Copy</span>
                         </button>
                     </div>
                 </div>

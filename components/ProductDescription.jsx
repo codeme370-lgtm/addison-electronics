@@ -10,12 +10,12 @@ const ProductDescription = ({ product }) => {
     const [selectedTab, setSelectedTab] = useState('Description')
 
     return (
-        <div className="my-18 text-sm text-slate-600">
+        <div className="my-9 sm:my-12 md:my-18 text-xs sm:text-sm md:text-base text-slate-600">
 
             {/* Tabs */}
-            <div className="flex border-b border-slate-200 mb-6 max-w-2xl">
+            <div className="flex border-b border-slate-200 mb-4 sm:mb-6 max-w-2xl overflow-x-auto">
                 {['Description', 'Reviews'].map((tab, index) => (
-                    <button className={`${tab === selectedTab ? 'border-b-[1.5px] font-semibold' : 'text-slate-400'} px-3 py-2 font-medium`} key={index} onClick={() => setSelectedTab(tab)}>
+                    <button className={`${tab === selectedTab ? 'border-b-[1.5px] font-semibold' : 'text-slate-400'} px-2 sm:px-3 py-2 font-medium text-xs sm:text-sm whitespace-nowrap`} key={index} onClick={() => setSelectedTab(tab)}>
                         {tab}
                     </button>
                 ))}
@@ -23,27 +23,27 @@ const ProductDescription = ({ product }) => {
 
             {/* Description */}
             {selectedTab === "Description" && (
-                <p className="max-w-xl">{product.description}</p>
+                <p className="max-w-xl leading-relaxed">{product.description}</p>
             )}
 
             {/* Reviews */}
             {selectedTab === "Reviews" && (
-                <div className="flex flex-col gap-3 mt-14">
+                <div className="flex flex-col gap-3 mt-8 sm:mt-12 md:mt-14">
                     {product?.rating && product.rating.length > 0 ? product.rating.map((item,index) => (
-                        <div key={index} className="flex gap-5 mb-10">
-                            <Image src={item.user.image} alt={item.user?.name ? `${item.user.name} avatar` : 'User avatar'} className="size-10 rounded-full" width={100} height={100} />
-                            <div>
+                        <div key={index} className="flex gap-3 sm:gap-5 mb-8 sm:mb-10">
+                            <Image src={item.user.image} alt={item.user?.name ? `${item.user.name} avatar` : 'User avatar'} className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex-shrink-0" width={100} height={100} />
+                            <div className="flex-1 min-w-0">
                                 <div className="flex items-center" >
                                     {Array(5).fill('').map((_, index) => (
-                                        <StarIcon key={index} size={18} className='text-transparent mt-0.5' fill={item.rating >= index + 1 ? "#00C950" : "#D1D5DB"} />
+                                        <StarIcon key={index} size={14} className='sm:size-[18px] text-transparent mt-0.5' fill={item.rating >= index + 1 ? "#00C950" : "#D1D5DB"} />
                                     ))}
                                 </div>
-                                <p className="text-sm max-w-lg my-4">{item.review}</p>
-                                <p className="font-medium text-slate-800">{item.user.name}</p>
-                                <p className="mt-3 font-light">{new Date(item.createdAt).toDateString()}</p>
+                                <p className="text-xs sm:text-sm md:text-base max-w-lg my-2 sm:my-4 break-words">{item.review}</p>
+                                <p className="font-medium text-slate-800 text-xs sm:text-sm">{item.user.name}</p>
+                                <p className="mt-2 sm:mt-3 font-light text-xs sm:text-sm text-slate-500">{new Date(item.createdAt).toDateString()}</p>
                             </div>
                         </div>
-                    )) : <p className="text-slate-400">No reviews yet</p>}
+                    )) : <p className="text-slate-400 text-xs sm:text-sm">No reviews yet</p>}
                 </div>
             )}
 
