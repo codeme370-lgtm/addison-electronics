@@ -107,13 +107,14 @@ const ProductDetails = ({ product }) => {
                         <div 
                             key={index} 
                             onClick={() => image && setMainImage(image)} 
-                            className={`bg-slate-100 flex items-center justify-center size-26 rounded-lg group cursor-pointer border-2 transition-all duration-200 overflow-hidden ${mainImage === image ? 'border-green-500 shadow-lg' : 'border-transparent hover:border-slate-300'}`}
+                            className={`bg-slate-100 flex items-center justify-center size-26 rounded-lg group cursor-pointer border-2 transition-all duration-200 ${mainImage === image ? 'border-green-500 shadow-lg' : 'border-transparent hover:border-slate-300'}`}
                         >
                             <Image 
                                 src={image || assets.product_placeholder} 
-                                className="object-cover w-full h-full group-hover:scale-110 group-active:scale-95 transition duration-300" 
+                                className="group-hover:scale-110 group-active:scale-95 transition duration-300" 
                                 alt={product?.name ? `${product.name} thumbnail ${index + 1}` : 'Product thumbnail'} 
-                                fill
+                                width={45} 
+                                height={45} 
                             />
                         </div>
                     ))}
