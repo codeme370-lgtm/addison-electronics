@@ -99,10 +99,10 @@ const ProductDetails = ({ product }) => {
     };
     
     return (
-        <div className="flex max-lg:flex-col gap-6 lg:gap-12">
-            <div className="flex max-sm:flex-col-reverse gap-2 sm:gap-3">
+        <div className="flex max-lg:flex-col gap-4 sm:gap-6 lg:gap-12">
+            <div className="flex max-sm:flex-col-reverse gap-1 sm:gap-3 w-full sm:w-auto">
                 {/* Thumbnail Gallery */}
-                <div className="flex sm:flex-col gap-2 sm:gap-3">
+                <div className="flex sm:flex-col gap-1 sm:gap-3 max-sm:order-2 flex-shrink-0">
                     {product?.images && product.images.map((image, index) => (
                         <div 
                             key={index} 
@@ -122,11 +122,11 @@ const ProductDetails = ({ product }) => {
                 
                 {/* Main Image Gallery with Zoom */}
                 <div 
-                    className="flex justify-center items-center w-full h-64 sm:h-80 md:h-96 lg:h-[500px] bg-gradient-to-br from-slate-50 to-slate-100 rounded-lg overflow-hidden relative group cursor-zoom-in"
+                    className="flex justify-center items-center w-full h-80 sm:h-96 md:h-[450px] lg:h-[500px] bg-gradient-to-br from-slate-50 to-slate-100 rounded-lg overflow-hidden relative group cursor-zoom-in flex-1"
                     onMouseEnter={handleImageHover}
                     onMouseLeave={() => setIsZoomed(false)}
                 >
-                    <div className="relative w-full h-full flex items-center justify-center p-2 sm:p-4">
+                    <div className="relative w-full h-full flex items-center justify-center p-1 sm:p-4">
                         <Image 
                             src={mainImage} 
                             alt={product?.name ? `${product.name} main image` : 'Product main image'} 
@@ -146,11 +146,11 @@ const ProductDetails = ({ product }) => {
             </div>
             
             {/* Product Details */}
-            <div className="flex-1 w-full">
+            <div className="flex-1 w-full sm:min-w-0">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent line-clamp-3">{product.name}</h1>
                 
                 {/* Rating Section */}
-                <div className='flex items-center mt-3 gap-2 flex-wrap'>
+                <div className='flex items-center mt-2 sm:mt-3 gap-2 flex-wrap'>
                     <div className="flex">
                         {Array(5).fill('').map((_, index) => (
                             <StarIcon key={index} size={16} className='text-transparent' fill={averageRating >= index + 1 ? "#00C950" : "#D1D5DB"} />
@@ -160,7 +160,7 @@ const ProductDetails = ({ product }) => {
                 </div>
                 
                 {/* Price Section */}
-                <div className="flex items-start my-6 gap-4 flex-wrap text-lg sm:text-xl md:text-2xl font-bold text-slate-800">
+                <div className="flex items-start my-3 sm:my-4 md:my-6 gap-2 sm:gap-4 flex-wrap text-lg sm:text-xl md:text-2xl font-bold text-slate-800">
                     <p className="bg-gradient-to-r from-green-600 to-green-500 bg-clip-text text-transparent text-xl sm:text-2xl md:text-3xl">{currency}{product.price}</p>
                     <p className="text-sm sm:text-base md:text-lg text-slate-400 line-through">{currency}{product.mrp}</p>
                     <span className="text-xs sm:text-sm font-semibold bg-green-100 text-green-700 px-2 sm:px-3 py-1 rounded-full whitespace-nowrap">Save {((product.mrp - product.price) / product.mrp * 100).toFixed(0)}%</span>
@@ -169,7 +169,7 @@ const ProductDetails = ({ product }) => {
                 <hr className="border-gray-300 my-6" />
                 
                 {/* Quantity and Add to Cart */}
-                <div className="flex flex-wrap items-end gap-3 sm:gap-5 mb-6">
+                <div className="flex flex-wrap items-end gap-2 sm:gap-3 md:gap-5 mb-4 sm:mb-6">
                     {
                         cart[productId] && (
                             <div className="flex flex-col gap-2 sm:gap-3">
@@ -230,52 +230,48 @@ const ProductDetails = ({ product }) => {
                 </div>
                 
                 {/* Share Options */}
-                <div className="mt-6">
-                    <h3 className="text-base sm:text-lg font-semibold text-slate-800 mb-3 flex items-center gap-2">
-                        <Share2 size={18} className="sm:size-[20px]" />
-                        Share this product
+                <div className="mt-4 sm:mt-6">
+                    <h3 className="text-sm sm:text-base md:text-lg font-semibold text-slate-800 mb-2 sm:mb-3 flex items-center gap-2">
+                        <Share2 size={16} className="sm:size-[18px] md:size-[20px]" />
+                        Share
                     </h3>
-                    <div className="flex flex-wrap gap-2 sm:gap-3">
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2 md:gap-3">
                         {navigator.share && (
                             <button
                                 onClick={() => shareProduct('native')}
-                                className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-lg transition-colors whitespace-nowrap"
+                                className="flex items-center gap-1 sm:gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 text-xs md:text-sm rounded-lg transition-colors whitespace-nowrap"
                             >
-                                <Share2 size={14} className="sm:size-[16px]" />
-                                Share
+                                <Share2 size={12} className="sm:size-[14px] md:size-[16px]" />
+                                <span className="hidden sm:inline">Share</span>
                             </button>
                         )}
                         <button
                             onClick={() => shareProduct('facebook')}
-                            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-lg transition-colors whitespace-nowrap"
+                            className="flex items-center gap-1 sm:gap-2 bg-blue-600 hover:bg-blue-700 text-white px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 text-xs md:text-sm rounded-lg transition-colors whitespace-nowrap"
                         >
-                            <Facebook size={14} className="sm:size-[16px]" />
-                            <span className="hidden sm:inline">Facebook</span>
-                            <span className="sm:hidden">FB</span>
+                            <Facebook size={12} className="sm:size-[14px] md:size-[16px]" />
+                            <span className="hidden sm:inline">FB</span>
                         </button>
                         <button
                             onClick={() => shareProduct('twitter')}
-                            className="flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-lg transition-colors whitespace-nowrap"
+                            className="flex items-center gap-1 sm:gap-2 bg-sky-500 hover:bg-sky-600 text-white px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 text-xs md:text-sm rounded-lg transition-colors whitespace-nowrap"
                         >
-                            <Twitter size={14} className="sm:size-[16px]" />
-                            <span className="hidden sm:inline">Twitter</span>
-                            <span className="sm:hidden">X</span>
+                            <Twitter size={12} className="sm:size-[14px] md:size-[16px]" />
+                            <span className="hidden sm:inline">X</span>
                         </button>
                         <button
                             onClick={() => shareProduct('whatsapp')}
-                            className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-lg transition-colors whitespace-nowrap"
+                            className="flex items-center gap-1 sm:gap-2 bg-green-500 hover:bg-green-600 text-white px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 text-xs md:text-sm rounded-lg transition-colors whitespace-nowrap"
                         >
-                            <MessageCircle size={14} className="sm:size-[16px]" />
-                            <span className="hidden sm:inline">WhatsApp</span>
-                            <span className="sm:hidden">WA</span>
+                            <MessageCircle size={12} className="sm:size-[14px] md:size-[16px]" />
+                            <span className="hidden sm:inline">WA</span>
                         </button>
                         <button
                             onClick={() => shareProduct('copy')}
-                            className="flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-lg transition-colors whitespace-nowrap"
+                            className="flex items-center gap-1 sm:gap-2 bg-gray-600 hover:bg-gray-700 text-white px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 text-xs md:text-sm rounded-lg transition-colors whitespace-nowrap"
                         >
-                            <Copy size={14} className="sm:size-[16px]" />
-                            <span className="hidden sm:inline">Copy Link</span>
-                            <span className="sm:hidden">Copy</span>
+                            <Copy size={12} className="sm:size-[14px] md:size-[16px]" />
+                            <span className="hidden sm:inline">Link</span>
                         </button>
                     </div>
                 </div>
