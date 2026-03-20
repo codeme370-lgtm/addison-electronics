@@ -13,7 +13,7 @@ const BestSellersSection = () => {
     // Sort by some criteria (you can adjust based on your data)
     const bestSellers = [...products]
         .sort(() => Math.random() - 0.5) // Random for now, can be replaced with actual sales data
-        .slice(0, 8)
+        .slice(0, 20)
 
     return (
         <div className='w-full bg-white py-6 sm:py-8 px-2 sm:px-4 md:px-8'>

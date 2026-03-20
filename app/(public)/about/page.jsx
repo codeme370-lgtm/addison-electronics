@@ -53,15 +53,15 @@ const AboutPage = () => {
     return (
         <div className="w-full">
             {/* Hero Section */}
-            <section className="bg-gradient-to-r from-[#CD7F32] to-[#8C5A2D] text-white py-20 px-6">
+            <section className="bg-white text-slate-800 py-20 px-6 border-b border-slate-200">
                 <div className="max-w-7xl mx-auto text-center">
                     <h1 className="text-5xl font-bold mb-6">About jeescage</h1>
-                    <p className="text-xl max-w-2xl mx-auto">Your trusted destination for the latest gadgets and innovative tech products</p>
+                    <p className="text-xl max-w-2xl mx-auto text-slate-600">Your trusted destination for the latest gadgets and innovative tech products</p>
                 </div>
             </section>
 
             {/* Story Section */}
-            <section className="py-16 px-6">
+            <section className="bg-white py-16 px-6">
                 <div className="max-w-7xl mx-auto">
                     <div className="grid md:grid-cols-2 gap-12 items-center">
                         <div>
@@ -76,10 +76,10 @@ const AboutPage = () => {
                                 Today, jeescage is the go-to marketplace for gadgets across multiple categories, from smartphones and laptops to home appliances and accessories.
                             </p>
                         </div>
-                        <div className="bg-gradient-to-br from-[#FFF4E6] to-[#F0E6D8] rounded-xl p-12 h-96 flex items-center justify-center">
+                        <div className="bg-slate-50 rounded-xl p-12 h-96 flex items-center justify-center border border-slate-200">
                             <div className="text-center">
-                                <div className="text-6xl font-bold text-[#CD7F32] mb-4">5K+</div>
-                                <p className="text-slate-700 text-xl">Happy Customers</p>
+                                <div className="text-6xl font-bold text-slate-800 mb-4">5K+</div>
+                                <p className="text-slate-600 text-xl">Happy Customers</p>
                             </div>
                         </div>
                     </div>
@@ -87,7 +87,7 @@ const AboutPage = () => {
             </section>
 
             {/* Features Section */}
-            <section className="bg-slate-50 py-16 px-6">
+            <section className="bg-white py-16 px-6">
                 <div className="max-w-7xl mx-auto">
                     <h2 className="text-4xl font-bold text-slate-800 text-center mb-12">Why Choose Us</h2>
                     <div className="grid md:grid-cols-4 gap-8">
@@ -96,7 +96,7 @@ const AboutPage = () => {
                             return (
                                 <div key={index} className="bg-white rounded-lg p-8 text-center hover:shadow-lg transition">
                                     <div className="flex justify-center mb-4">
-                                        <Icon size={40} className="text-[#CD7F32]" />
+                                        <Icon size={40} className="text-slate-700" />
                                     </div>
                                     <h3 className="text-lg font-semibold text-slate-800 mb-2">{feature.title}</h3>
                                     <p className="text-slate-600">{feature.description}</p>
@@ -119,7 +119,7 @@ const AboutPage = () => {
                                 </div>
                                     <div className="p-6 text-center">
                                     <h3 className="text-lg font-semibold text-slate-800">{member.name}</h3>
-                                    <p className="text-[#CD7F32] text-sm">{member.role}</p>
+                                    <p className="text-slate-700 text-sm">{member.role}</p>
                                 </div>
                             </div>
                         ))}
@@ -131,11 +131,11 @@ const AboutPage = () => {
             
 
             {/* CTA Section */}
-            <section className="bg-gradient-to-r from-[#CD7F32] to-[#8C5A2D] text-white py-16 px-6">
+            <section className="bg-slate-50 text-slate-800 py-16 px-6">
                 <div className="max-w-7xl mx-auto text-center">
                     <h2 className="text-4xl font-bold mb-6">Ready to Explore?</h2>
-                    <p className="text-lg mb-8 max-w-2xl mx-auto">Discover our wide selection of gadgets and find exactly what you need</p>
-                    <Link href="/shop" className="inline-block bg-white text-[#CD7F32] px-8 py-3 rounded-full font-semibold hover:bg-slate-100 transition">
+                    <p className="text-lg mb-8 max-w-2xl mx-auto text-slate-600">Discover our wide selection of gadgets and find exactly what you need</p>
+                    <Link href="/shop" className="inline-block bg-slate-800 text-white px-8 py-3 rounded-full font-semibold hover:bg-slate-700 transition">
                         Shop Now
                     </Link>
                 </div>

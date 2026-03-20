@@ -42,7 +42,6 @@ const PopularCategoriesSection = () => {
     const categories = dbCategories
         .filter(cat => categoriesData[cat.name])
         .map(cat => categoriesData[cat.name])
-        .slice(0, 6)
 
     // Enhanced color palette for categories with gradients
     const colors = [
@@ -64,37 +63,39 @@ const PopularCategoriesSection = () => {
                     </Link>
                 </div>
                 
-                <div className='grid grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3 md:gap-4'>
-                    {categories.map((category, idx) => {
-                        const color = colors[idx % colors.length]
-                        const productImage = category.products?.[0]?.images?.[0]
-                        
-                        return (
-                            <Link key={idx} href={`/category/${encodeURIComponent(category.name)}`}>
-                                <div className={`relative bg-gradient-to-br ${color.gradient} rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transform hover:scale-105 transition-all duration-200 h-28 sm:h-40 md:h-48 flex flex-col items-center justify-center`}>
-                                    {/* Background product image with overlay */}
-                                    {productImage && (
-                                        <Image
-                                            src={productImage}
-                                            alt={category.name}
-                                            fill
-                                            className='object-cover opacity-10 absolute inset-0'
-                                        />
-                                    )}
-                                    
-                                    {/* Content overlay */}
-                                    <div className='relative z-10 text-center px-2 sm:px-4'>
-                                        <h3 className={`font-bold text-xs sm:text-sm md:text-base line-clamp-2 mb-0.5 sm:mb-1 ${color.text}`}>
-                                            {category.name}
-                                        </h3>
-                                        <p className={`text-[10px] sm:text-xs opacity-80 ${color.text}`}>
-                                            {category.count} items
-                                        </p>
+                <div className='overflow-x-auto no-scrollbar -mx-2 px-2 sm:-mx-4 sm:px-4'>
+                    <div className='flex gap-2 sm:gap-3 md:gap-4 min-w-max'>
+                        {categories.map((category, idx) => {
+                            const color = colors[idx % colors.length]
+                            const productImage = category.products?.[0]?.images?.[0]
+                            
+                            return (
+                                <Link key={idx} href={`/category/${encodeURIComponent(category.name)}`}>
+                                    <div className={`relative bg-gradient-to-br ${color.gradient} rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transform hover:scale-105 transition-all duration-200 h-28 sm:h-40 md:h-48 min-w-[180px] md:min-w-[220px] flex flex-col items-center justify-center`}>
+                                        {/* Background product image with overlay */}
+                                        {productImage && (
+                                            <Image
+                                                src={productImage}
+                                                alt={category.name}
+                                                fill
+                                                className='object-cover opacity-10 absolute inset-0'
+                                            />
+                                        )}
+
+                                        {/* Content overlay */}
+                                        <div className='relative z-10 text-center px-2 sm:px-4'>
+                                            <h3 className={`font-bold text-xs sm:text-sm md:text-base line-clamp-2 mb-0.5 sm:mb-1 ${color.text}`}>
+                                                {category.name}
+                                            </h3>
+                                            <p className={`text-[10px] sm:text-xs opacity-80 ${color.text}`}>
+                                                {category.count} items
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                            </Link>
-                        )
-                    })}
+                                </Link>
+                            )
+                        })}
+                    </div>
                 </div>
             </div>
         </div>

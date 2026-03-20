@@ -150,9 +150,8 @@ const AddressEditModal = ({ address, orderId, orderStatus, onClose, onAddressUpd
                                             />
                                             <div className="flex-1 text-sm">
                                                 <p className="font-medium text-slate-700">{addr.name}</p>
-                                                <p className="text-xs text-slate-600">{addr.email}</p>
                                                 <p className="text-xs text-slate-600">{addr.street}</p>
-                                                <p className="text-xs text-slate-600">{addr.city}, {addr.state} {addr.zip}</p>
+                                                <p className="text-xs text-slate-600">{addr.city}</p>
                                                 <p className="text-xs text-slate-600">{addr.phone}</p>
                                             </div>
                                         </label>
@@ -173,17 +172,14 @@ const AddressEditModal = ({ address, orderId, orderStatus, onClose, onAddressUpd
                         </div>
 
                         <div className="bg-gray-50 rounded-lg p-3 mt-4">
-                            <p className="text-xs text-slate-600 font-medium mb-2">📍 New Address Preview</p>
-                            <div className="text-xs space-y-1">
-                                <p><span className="font-medium">Name:</span> {displayAddress?.name || '—'}</p>
-                                <p><span className="font-medium">Email:</span> {displayAddress?.email || '—'}</p>
-                                <p><span className="font-medium">Street:</span> {displayAddress?.street || '—'}</p>
-                                <p><span className="font-medium">City:</span> {displayAddress?.city || '—'} ({displayAddress?.state || '—'})</p>
-                                <p><span className="font-medium">Zip:</span> {displayAddress?.zip || '—'}</p>
-                                <p><span className="font-medium">Phone:</span> {displayAddress?.phone || '—'}</p>
+                                <p className="text-xs text-slate-600 font-medium mb-2">📍 New Address Preview</p>
+                                <div className="text-xs space-y-1">
+                                    <p><span className="font-medium">Name:</span> {displayAddress?.name || '—'}</p>
+                                    <p><span className="font-medium">Street:</span> {displayAddress?.street || '—'}</p>
+                                    <p><span className="font-medium">City:</span> {displayAddress?.city || '—'}</p>
+                                    <p><span className="font-medium">Phone:</span> {displayAddress?.phone || '—'}</p>
+                                </div>
                             </div>
-                        </div>
-
                         <div className="flex gap-2 pt-4 border-t border-gray-200">
                             <button
                                 onClick={onClose}
