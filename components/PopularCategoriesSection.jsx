@@ -71,24 +71,26 @@ const PopularCategoriesSection = () => {
                             
                             return (
                                 <Link key={idx} href={`/category/${encodeURIComponent(category.name)}`}>
-                                    <div className={`relative bg-gradient-to-br ${color.gradient} rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transform hover:scale-105 transition-all duration-200 h-28 sm:h-40 md:h-48 min-w-[180px] md:min-w-[220px] flex flex-col items-center justify-center`}>
-                                        {/* Background product image with overlay */}
+                                    <div className='relative bg-white border border-slate-200 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transform hover:scale-105 transition-all duration-200 h-28 sm:h-40 md:h-48 min-w-[180px] md:min-w-[220px] flex flex-col items-center justify-center'>
+                                        {/* Background product image with low opacity */}
                                         {productImage && (
                                             <Image
                                                 src={productImage}
                                                 alt={category.name}
                                                 fill
-                                                className='object-cover opacity-10 absolute inset-0'
+                                                className='object-cover opacity-20 absolute inset-0'
                                             />
                                         )}
 
+                                        <div className='absolute inset-0 bg-slate-50/60'></div>
+
                                         {/* Content overlay */}
                                         <div className='relative z-10 text-center px-2 sm:px-4'>
-                                            <h3 className={`font-bold text-xs sm:text-sm md:text-base line-clamp-2 mb-0.5 sm:mb-1 ${color.text}`}>
+                                            <h3 className='font-bold text-sm sm:text-base md:text-lg line-clamp-2 mb-1 text-slate-900'>
                                                 {category.name}
                                             </h3>
-                                            <p className={`text-[10px] sm:text-xs opacity-80 ${color.text}`}>
-                                                {category.count} items
+                                            <p className='text-sm sm:text-base text-slate-700 font-semibold'>
+                                                {category.count} products
                                             </p>
                                         </div>
                                     </div>
