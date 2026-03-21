@@ -9,6 +9,9 @@ export const metadata = {
     title: "Jeescagemall - Shop Smarter",
     description: "Online retail store offering high-quality home furniture, trendy items, kitchen appliances, and all fashion items. Discover the best deals on furniture and fashion.",
     keywords: ["furniture", "fashion", "kitchen appliances", "home decor", "trendy items", "online shopping", "retail store"],
+    verification: {
+        google: "mtDIJBRWYPYjWGn7noYLQ7eNfdsH5xfvwUUBJ3lQc_k"
+    },
     icons: [
         { rel: 'icon', url: '/favicon.ico' },
         { rel: 'icon', url: '/favicon.svg', type: 'image/svg+xml' }

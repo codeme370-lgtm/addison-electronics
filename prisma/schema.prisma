@@ -97,12 +97,8 @@ model Address {
   id        String   @id @default(cuid())
   userId    String
   name      String
-  email     String
   street    String
   city      String
-  state     String
-  zip       String
-  country   String
   phone     String
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
