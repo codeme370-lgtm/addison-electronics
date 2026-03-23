@@ -16,6 +16,17 @@ export const metadata = {
         { rel: 'icon', url: '/favicon.ico' },
         { rel: 'icon', url: '/favicon.svg', type: 'image/svg+xml' }
     ],
+    robots: {
+        index: true,
+        follow: true,
+        nocache: false,
+        googleBot: {
+            index: true,
+            follow: true,
+            noimageindex: false,
+            noarchive: false,
+        }
+    },
     openGraph: {
         title: "Jeescagemall - Shop Smarter",
         description: "Discover high-quality home furniture, trendy fashion items, and kitchen appliances at JeeShop. Shop smarter today!",
