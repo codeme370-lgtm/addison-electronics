@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Loading from "@/components/Loading"
 import AddressViewModal from "@/components/AddressViewModal"
-import { useAuth } from "@clerk/nextjs"
+import { useAuth } from "@/context/AuthContext"
 import axios from "axios"
 import toast from "react-hot-toast"
 import { X, AlertCircle, CheckCircle } from "lucide-react"
@@ -21,22 +21,10 @@ export default function StoreOrders() {
     const [deliveryMessage, setDeliveryMessage] = useState('')
     const [sendingSms, setSendingSms] = useState(false)
 
-    const {getToken} = useAuth()
-
 
     const fetchOrders = async () => {
        try {
-        const token = await getToken()
-        if (!token) {
-            toast.error("Authentication required. Please sign in.")
-            setLoading(false)
-            return
-        }
-        const {data} = await axios.get("/api/store/orders", {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
+        const {data} = await axios.get("/api/store/orders")
         setOrders(data.orders)
         setLoading(false)
        } catch (error) {
@@ -48,23 +36,9 @@ export default function StoreOrders() {
 
     const fetchAddressAlerts = async () => {
         try {
-            let token
-            try {
-                token = await getToken()
-            } catch (tErr) {
-                console.warn('getToken failed in fetchAddressAlerts', tErr?.message)
-            }
-            if (!token) {
-                // Not authenticated - clear alerts and return
-                setAlerts([])
-                return
-            }
-
             // use fetch instead of axios to avoid Axios throwing on 401 and spamming console
             try {
-                const resp = await fetch('/api/store/address-alerts?unreadOnly=true', {
-                    headers: { Authorization: `Bearer ${token}` }
-                })
+                const resp = await fetch('/api/store/address-alerts?unreadOnly=true')
                 if (resp.status === 200) {
                     const body = await resp.json()
                     setAlerts(body.alerts || [])
@@ -97,12 +71,7 @@ export default function StoreOrders() {
 
     const markAlertAsRead = async (alertId) => {
         try {
-            const token = await getToken()
-            if (!token) return
-
-            await axios.patch("/api/store/address-alerts", { alertId }, {
-                headers: { Authorization: `Bearer ${token}` }
-            })
+            await axios.patch("/api/store/address-alerts", { alertId })
             setAlerts(prevAlerts => prevAlerts.filter(alert => alert.id !== alertId))
             toast.success("Alert marked as checked")
         } catch (error) {
@@ -367,9 +336,7 @@ export default function StoreOrders() {
                                     onClick={async (e) => { e.stopPropagation(); if (!selectedOrder) return; if (!selectedOrder.address?.phone) { toast.error('Customer phone number is missing'); return };
                                         try {
                                             setSendingSms(true)
-                                            const token = await getToken()
-                                            if (!token) { toast.error('Authentication required'); setSendingSms(false); return }
-                                            const { data: resp } = await axios.post('/api/store/send-delivery-sms', { orderId: selectedOrder.id, hours: deliveryHours, message: deliveryMessage }, { headers: { Authorization: `Bearer ${token}` } })
+                                            const { data: resp } = await axios.post('/api/store/send-delivery-sms', { orderId: selectedOrder.id, hours: deliveryHours, message: deliveryMessage })
                                             // if API returned updated order, update UI immediately
                                             if (resp?.order) {
                                                 setOrders(prev => prev.map(o => o.id === resp.order.id ? resp.order : o))

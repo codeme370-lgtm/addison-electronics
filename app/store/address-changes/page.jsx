@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Loading from "@/components/Loading"
-import { useAuth } from "@clerk/nextjs"
+import { useAuth } from "@/context/AuthContext"
 import axios from "axios"
 import toast from "react-hot-toast"
 import { ArrowRight, CheckCircle, Clock } from "lucide-react"
@@ -14,20 +14,9 @@ export default function AddressChanges() {
     const [loading, setLoading] = useState(true)
     const [filter, setFilter] = useState('all') // 'all', 'unread'
 
-    const { getToken } = useAuth()
-
     const fetchAllAlerts = async () => {
         try {
-            const token = await getToken()
-            if (!token) {
-                toast.error("Authentication required. Please sign in.")
-                setLoading(false)
-                return
-            }
-            
-            const { data } = await axios.get("/api/store/address-alerts", {
-                headers: { Authorization: `Bearer ${token}` }
-            })
+            const { data } = await axios.get("/api/store/address-alerts")
             setAlerts(data.alerts || [])
             setLoading(false)
         } catch (error) {
@@ -39,12 +28,7 @@ export default function AddressChanges() {
 
     const markAlertAsRead = async (alertId) => {
         try {
-            const token = await getToken()
-            if (!token) return
-
-            await axios.patch("/api/store/address-alerts", { alertId }, {
-                headers: { Authorization: `Bearer ${token}` }
-            })
+            await axios.patch("/api/store/address-alerts", { alertId })
             
             setAlerts(prevAlerts => prevAlerts.map(alert => 
                 alert.id === alertId ? { ...alert, isRead: true } : alert

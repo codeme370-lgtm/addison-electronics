@@ -1,0 +1,248 @@
+﻿C:\Users\HomePC\Desktop\electronic\app\(public)\brands\BrandsContent.jsx:140:{ title: 'Free Worldwide Shipping', desc: 'On orders over $99' },
+C:\Users\HomePC\Desktop\electronic\app\(public)\cart\CartClient.jsx:36:{ title: 'HAVIT HV-F2066 Laptop Cooling Pad', price: '$39.99', oldPrice: '$59.99' },
+C:\Users\HomePC\Desktop\electronic\app\(public)\cart\CartClient.jsx:37:{ title: 'ROG Sheath Gaming Mouse Pad', price: '$19.99', oldPrice: '$29.99' },
+C:\Users\HomePC\Desktop\electronic\app\(public)\cart\CartClient.jsx:38:{ title: 'ASUS ROG Ranger Gaming Backpack', price: '$79.99', oldPrice: '$99.99' },
+C:\Users\HomePC\Desktop\electronic\app\(public)\cart\CartClient.jsx:112:<p className="mt-2 text-xl font-semibold text-white">${item.price.toFixed(2)}</p>
+C:\Users\HomePC\Desktop\electronic\app\(public)\cart\CartClient.jsx:124:<p className="mt-2 text-xl font-semibold text-white">${(item.price * item.quantity).toFixed(2)}</p>
+C:\Users\HomePC\Desktop\electronic\app\(public)\cart\CartClient.jsx:173:<span className="text-slate-100">${subtotal.toFixed(2)}</span>
+C:\Users\HomePC\Desktop\electronic\app\(public)\cart\CartClient.jsx:181:<span className="text-slate-100">${tax.toFixed(2)}</span>
+C:\Users\HomePC\Desktop\electronic\app\(public)\cart\CartClient.jsx:188:<span className="text-3xl font-semibold text-white">${total.toFixed(2)}</span>
+C:\Users\HomePC\Desktop\electronic\app\(public)\cart\CartClient.jsx:190:<p className="mt-3 text-slate-500">You're saving $199.00 on this order!</p>
+C:\Users\HomePC\Desktop\electronic\app\(public)\cart\CartClient.jsx:241:<span className="text-slate-100">$19.99</span>
+C:\Users\HomePC\Desktop\electronic\app\(public)\category\[categoryName]\page.jsx:80:<Link key={cat} href={`/category/${encodeURIComponent(cat)}`}>
+C:\Users\HomePC\Desktop\electronic\app\(public)\category\[categoryName]\page.jsx:82:className={`w-full text-left px-4 py-3 rounded-lg transition-all font-medium ${
+C:\Users\HomePC\Desktop\electronic\app\(public)\category\CategoryContent.jsx:69:className={`w-full text-left px-4 py-3 rounded-lg transition-all font-medium ${
+C:\Users\HomePC\Desktop\electronic\app\(public)\category\CategoryContent.jsx:81:className={`w-full text-left px-4 py-3 rounded-lg transition-all font-medium ${
+C:\Users\HomePC\Desktop\electronic\app\(public)\category\CategoryContent.jsx:130:{selectedCategory ? `No products available in the ${selectedCategory} category` : 'No products available'}
+C:\Users\HomePC\Desktop\electronic\app\(public)\compare\page.jsx:59:className={`w-full rounded-3xl border px-4 py-4 text-left text-sm transition ${selectedIds.includes(product.id) ? 'border-violet-500 bg-violet-500/10 text-white' : 'border-slate-800 bg-slate-900/80 text-slate-300 hover:border-violet-500 hover:bg-slate-950'}`}
+C:\Users\HomePC\Desktop\electronic\app\(public)\compare\page.jsx:96:? `${product.rating || 0}★`
+C:\Users\HomePC\Desktop\electronic\app\(public)\create-store\page.jsx:52:headers: { Authorization: `Bearer ${token}` },
+C:\Users\HomePC\Desktop\electronic\app\(public)\create-store\page.jsx:96:Authorization: `Bearer ${token}`,
+C:\Users\HomePC\Desktop\electronic\app\(public)\orders\OrdersClient.jsx:11:amount: '$2,135.15',
+C:\Users\HomePC\Desktop\electronic\app\(public)\orders\OrdersClient.jsx:20:amount: '$799.00',
+C:\Users\HomePC\Desktop\electronic\app\(public)\orders\OrdersClient.jsx:29:amount: '$1,099.00',
+C:\Users\HomePC\Desktop\electronic\app\(public)\orders\OrdersClient.jsx:38:amount: '$249.00',
+C:\Users\HomePC\Desktop\electronic\app\(public)\orders\OrdersClient.jsx:47:amount: '$189.00',
+C:\Users\HomePC\Desktop\electronic\app\(public)\orders\OrdersClient.jsx:81:totalSpent: '$5,081.15',
+C:\Users\HomePC\Desktop\electronic\app\(public)\orders\OrdersClient.jsx:108:className={`rounded-full px-4 py-2 text-sm transition ${activeTab === tab ? 'bg-violet-500 text-white' : 'bg-white/5 text-slate-300 hover:bg-white/10'}`}>
+C:\Users\HomePC\Desktop\electronic\app\(public)\orders\OrdersClient.jsx:137:<p className="text-sm text-slate-400">{order.items.length > 1 ? `${order.items.length} items` : '1 item'}</p>
+C:\Users\HomePC\Desktop\electronic\app\(public)\orders\OrdersClient.jsx:150:<span className={`inline-flex h-8 w-8 items-center justify-center rounded-full border ${index < order.progress.length - 1 ? 'border-violet-500 bg-violet-500/10 text-violet-300' : 'border-slate-700 bg-slate-900 text-slate-400'}`}>
+C:\Users\HomePC\Desktop\electronic\app\(public)\orders\OrdersClient.jsx:158:<span className={`inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold ${statusColors[order.status]}`}>
+C:\Users\HomePC\Desktop\electronic\app\(public)\orders\OrdersClient.jsx:206:<div className="h-2 rounded-full bg-amber-400" style={{ width: `${(summary.pending / summary.totalOrders) * 100}%` }} />
+C:\Users\HomePC\Desktop\electronic\app\(public)\orders\OrdersClient.jsx:215:<div className="h-2 rounded-full bg-emerald-400" style={{ width: `${(summary.delivered / summary.totalOrders) * 100}%` }} />
+C:\Users\HomePC\Desktop\electronic\app\(public)\orders\OrdersClient.jsx:224:<div className="h-2 rounded-full bg-rose-400" style={{ width: `${(summary.cancelled / summary.totalOrders) * 100}%` }} />
+C:\Users\HomePC\Desktop\electronic\app\(public)\orders\OrdersClient.jsx:243:<span className="text-sm text-slate-400">{item.includes('G14') ? '$1,499.00' : item.includes('XM5') ? '$348.00' : '$799.00'}</span>
+C:\Users\HomePC\Desktop\electronic\app\(public)\profile\page.jsx:45:{ id: 'TN-78491', date: 'Jun 20, 2024', items: '3 items', total: '$2,135.15', status: 'Delivered' },
+C:\Users\HomePC\Desktop\electronic\app\(public)\profile\page.jsx:46:{ id: 'TN-78432', date: 'Jun 15, 2024', items: '1 item', total: '$799.00', status: 'Shipped' },
+C:\Users\HomePC\Desktop\electronic\app\(public)\profile\page.jsx:47:{ id: 'TN-78211', date: 'Jun 10, 2024', items: '2 items', total: '$1,099.00', status: 'Processing' },
+C:\Users\HomePC\Desktop\electronic\app\(public)\profile\page.jsx:48:{ id: 'TN-77890', date: 'May 28, 2024', items: '1 item', total: '$249.00', status: 'Delivered' },
+C:\Users\HomePC\Desktop\electronic\app\(public)\profile\page.jsx:49:{ id: 'TN-76543', date: 'May 18, 2024', items: '1 item', total: '$189.00', status: 'Cancelled' },
+C:\Users\HomePC\Desktop\electronic\app\(public)\profile\page.jsx:53:{ title: 'ASUS ROG Zephyrus G14', price: '$1,499.00' },
+C:\Users\HomePC\Desktop\electronic\app\(public)\profile\page.jsx:54:{ title: 'Sony WH-1000XM5', price: '$348.00' },
+C:\Users\HomePC\Desktop\electronic\app\(public)\profile\page.jsx:55:{ title: 'NVIDIA RTX 4070 Ti', price: '$799.00' },
+C:\Users\HomePC\Desktop\electronic\app\(public)\profile\page.jsx:56:{ title: 'Apple Watch Series 9', price: '$399.00' },
+C:\Users\HomePC\Desktop\electronic\app\(public)\profile\page.jsx:57:{ title: 'Logitech G Pro X Mouse', price: '$129.99' },
+C:\Users\HomePC\Desktop\electronic\app\(public)\profile\page.jsx:100:className={`flex items-center justify-between rounded-3xl px-4 py-3 text-sm transition ${item.active ? 'bg-violet-500 text-white shadow-lg shadow-violet-500/10' : 'border border-slate-800 bg-slate-950/80 text-slate-300 hover:bg-slate-900'}`}
+C:\Users\HomePC\Desktop\electronic\app\(public)\profile\page.jsx:262:className={`rounded-full px-4 py-2 transition ${activeTab === tab ? 'bg-violet-500 text-white' : 'bg-slate-950 text-slate-300 hover:bg-slate-900'}`}
+C:\Users\HomePC\Desktop\electronic\app\(public)\profile\page.jsx:301:<span className={`mt-1 inline-flex rounded-full px-3 py-2 text-xs font-semibold ${order.status === 'Delivered' ? 'bg-emerald-500/10 text-emerald-300' : order.status === 'Shipped' ? 'bg-sky-500/10 text-sky-300' : order.status === 'Processing' ? 'bg-amber-500/10 text-amber-300' : 'bg-rose-500/10 text-rose-300'}`}>
+C:\Users\HomePC\Desktop\electronic\app\(public)\search\SearchClient.jsx:43:const { data } = await axios.get(`/api/products/search?${params}`)
+C:\Users\HomePC\Desktop\electronic\app\(public)\search\SearchClient.jsx:48:router.push(`?${params.toString()}`, { shallow: true })
+C:\Users\HomePC\Desktop\electronic\app\(public)\search\SearchClient.jsx:95:className={`px-4 py-2 border rounded-lg transition ${showFilters ? 'bg-blue-50 border-blue-600 text-blue-600' : 'border-slate-300'}`}>
+C:\Users\HomePC\Desktop\electronic\app\(public)\seller\[username]\page.jsx:25:const { data } = await axios.get(`/api/seller/profile?username=${username}`);
+C:\Users\HomePC\Desktop\electronic\app\(public)\seller\[username]\page.jsx:118:<a href={`tel:${seller.contact}`} className="flex items-center gap-2 text-slate-600 hover:text-blue-600">
+C:\Users\HomePC\Desktop\electronic\app\(public)\seller\[username]\page.jsx:124:<a href={`mailto:${seller.email}`} className="flex items-center gap-2 text-slate-600 hover:text-blue-600">
+C:\Users\HomePC\Desktop\electronic\app\(public)\seller\[username]\page.jsx:157:className={`pb-4 font-medium border-b-2 transition ${
+C:\Users\HomePC\Desktop\electronic\app\(public)\seller\[username]\page.jsx:167:className={`pb-4 font-medium border-b-2 transition ${
+C:\Users\HomePC\Desktop\electronic\app\(public)\seller\page.jsx:102:<Link key={seller.id} href={`/seller/${seller.username}`} className="block">
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\[username]\page.jsx:21:const {data} = await axios.get(`/api/store/data?username=${username}`)
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\page.new.jsx:195:className={`w-full rounded-3xl border px-4 py-3 text-left text-sm transition ${selectedCategory === category ? 'border-violet-500 bg-violet-500/10 text-white' : 'border-slate-800 bg-slate-950 text-slate-300 hover:border-violet-500 hover:bg-slate-900'}`}
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\page.new.jsx:215:<span>${Math.max(100, priceRange - 200)}</span>
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\page.new.jsx:216:<span>${priceRange}</span>
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\page.new.jsx:267:<button onClick={() => setViewMode('grid')} className={`inline-flex items-center gap-2 rounded-3xl px-4 py-3 text-sm transition ${viewMode === 'grid' ? 'bg-violet-500 text-white' : 'bg-slate-900 text-slate-300 hover:bg-slate-800'}`}>
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\page.new.jsx:270:<button onClick={() => setViewMode('list')} className={`inline-flex items-center gap-2 rounded-3xl px-4 py-3 text-sm transition ${viewMode === 'list' ? 'bg-violet-500 text-white' : 'bg-slate-900 text-slate-300 hover:bg-slate-800'}`}>
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\page.new.jsx:303:<p className="text-2xl font-semibold text-white">${product.price.toLocaleString()}</p>
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\page.new.jsx:304:{product.oldPrice > 0 && <p className="text-sm text-slate-500 line-through">${product.oldPrice.toLocaleString()}</p>}
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\page.new.jsx:346:<p className="text-sm text-slate-500">${item.includes('ASUS') ? '1,499.00' : '1,899.00'}</p>
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\page.new.jsx:367:{ label: 'Free Worldwide Shipping', detail: 'On orders over $99' },
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\ShopClient.jsx:243:<button onClick={() => setViewMode('grid')} className={`inline-flex items-center gap-2 rounded-3xl px-4 py-3 text-sm transition ${viewMode === 'grid' ? 'bg-violet-500 text-white' : 'bg-slate-900 text-slate-300 hover:bg-slate-800'}`}>
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\ShopClient.jsx:246:<button onClick={() => setViewMode('list')} className={`inline-flex items-center gap-2 rounded-3xl px-4 py-3 text-sm transition ${viewMode === 'list' ? 'bg-violet-500 text-white' : 'bg-slate-900 text-slate-300 hover:bg-slate-800'}`}>
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\ShopClient.jsx:279:<p className="text-2xl font-semibold text-white">${product.price.toLocaleString()}</p>
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\ShopClient.jsx:280:{product.oldPrice > 0 && <p className="text-sm text-slate-500 line-through">${product.oldPrice.toLocaleString()}</p>}
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\ShopClient.jsx:322:<p className="text-sm text-slate-500">${item.includes('ASUS') ? '1,499.00' : '1,899.00'}</p>
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\ShopClient.jsx:343:{ label: 'Free Worldwide Shipping', detail: 'On orders over $99' },
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\ShopClient.jsx:396:className={`w-full rounded-3xl border px-4 py-3 text-left text-sm transition ${selectedCategory === category ? 'border-violet-500 bg-violet-500/10 text-white' : 'border-slate-800 bg-slate-950 text-slate-300 hover:border-violet-500 hover:bg-slate-900'}`}>
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\ShopClient.jsx:415:<span>${Math.max(100, priceRange - 200)}</span>
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\ShopClient.jsx:416:<span>${priceRange}</span>
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\ShopClient.jsx:475:<p className="text-sm text-slate-500">${item.includes('ASUS') ? '1,499.00' : '1,899.00'}</p>
+C:\Users\HomePC\Desktop\electronic\app\(public)\shop\ShopClient.jsx:496:{ label: 'Free Worldwide Shipping', detail: 'On orders over $99' },
+C:\Users\HomePC\Desktop\electronic\app\(public)\video-guides\VideoGuidesClient.jsx:43:<div className={`rounded-[32px] border border-slate-800 bg-slate-900/90 p-6 shadow-[0_40px_120px_-40px_rgba(15,23,42,0.9)] transition duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+C:\Users\HomePC\Desktop\electronic\app\(public)\video-guides\VideoGuidesClient.jsx:99:className={`flex w-full items-start justify-between gap-3 rounded-3xl border px-4 py-3 text-left text-sm transition ${activeChapter === chapter.time ? 'border-violet-500 bg-violet-500/10 text-white' : 'border-slate-800 bg-slate-950/90 text-slate-300 hover:border-violet-500 hover:bg-slate-950'}`}
+C:\Users\HomePC\Desktop\electronic\app\(public)\video-guides\VideoGuidesClient.jsx:160:<div key={chapter.time} className={`rounded-3xl border px-4 py-4 transition ${activeChapter === chapter.time ? 'border-violet-500 bg-violet-500/10 text-white' : 'border-slate-800 bg-slate-950/80 text-slate-300 hover:border-violet-500 hover:bg-slate-950'}`}>
+C:\Users\HomePC\Desktop\electronic\app\(public)\wishlist\page.jsx:98:<Link href={`/product/${product.id}`}>
+C:\Users\HomePC\Desktop\electronic\app\(public)\wishlist\page.jsx:123:<Link href={`/product/${product.id}`}>
+C:\Users\HomePC\Desktop\electronic\app\(public)\page.jsx:21:description: "Discover the latest in electronics, gaming gear, laptops, and tech accessories at Teknova. Free shipping on orders over $99. Shop smarter today!",
+C:\Users\HomePC\Desktop\electronic\app\(public)\page.jsx:26:{ title: 'Free Worldwide Shipping', subtitle: 'On orders over $99', icon: Truck },
+C:\Users\HomePC\Desktop\electronic\app\(public)\page.jsx:50:price: '$759.00',
+C:\Users\HomePC\Desktop\electronic\app\(public)\page.jsx:51:oldPrice: '$899.00',
+C:\Users\HomePC\Desktop\electronic\app\(public)\page.jsx:58:price: '$278.00',
+C:\Users\HomePC\Desktop\electronic\app\(public)\page.jsx:59:oldPrice: '$348.00',
+C:\Users\HomePC\Desktop\electronic\app\(public)\page.jsx:66:price: '$1,229.00',
+C:\Users\HomePC\Desktop\electronic\app\(public)\page.jsx:67:oldPrice: '$1,499.00',
+C:\Users\HomePC\Desktop\electronic\app\(public)\page.jsx:74:price: '$159.00',
+C:\Users\HomePC\Desktop\electronic\app\(public)\page.jsx:75:oldPrice: '$179.00',
+C:\Users\HomePC\Desktop\electronic\app\(public)\page.jsx:82:price: '$292.00',
+C:\Users\HomePC\Desktop\electronic\app\(public)\page.jsx:83:oldPrice: '$349.00',
+C:\Users\HomePC\Desktop\electronic\app\(public)\page.jsx:149:<p className="mt-3 text-4xl font-semibold text-white">$1,299</p>
+C:\Users\HomePC\Desktop\electronic\app\admin\approve\page.jsx:35:Authorization: `Bearer ${token}`,
+C:\Users\HomePC\Desktop\electronic\app\admin\approve\page.jsx:51:Authorization: `Bearer ${token}`,
+C:\Users\HomePC\Desktop\electronic\app\admin\approve\page.jsx:56:toast.success(`Store ${status === 'approved' ? 'approved' : 'rejected'} successfully`);
+C:\Users\HomePC\Desktop\electronic\app\admin\coupons\page.jsx:40:Authorization: `Bearer ${token}`,
+C:\Users\HomePC\Desktop\electronic\app\admin\coupons\page.jsx:60:Authorization: `Bearer ${token}`,
+C:\Users\HomePC\Desktop\electronic\app\admin\coupons\page.jsx:85:const {data} = await axios.delete(`/api/admin/coupon?code=${code}`, {
+C:\Users\HomePC\Desktop\electronic\app\admin\coupons\page.jsx:87:Authorization: `Bearer ${token}`,
+C:\Users\HomePC\Desktop\electronic\app\admin\orders\page.jsx:25:{ id: '#TN12345', customer: 'Alex Johnson', email: 'alexjohnson@email.com', date: 'May 15, 2024', time: '10:30 AM', total: '$1,299.00', items: '1 item', payment: 'Credit Card', status: 'Delivered' },
+C:\Users\HomePC\Desktop\electronic\app\admin\orders\page.jsx:26:{ id: '#TN12344', customer: 'Sarah Williams', email: 'sarah.w@email.com', date: 'May 15, 2024', time: '09:15 AM', total: '$278.00', items: '2 items', payment: 'PayPal', status: 'Processing' },
+C:\Users\HomePC\Desktop\electronic\app\admin\orders\page.jsx:27:{ id: '#TN12343', customer: 'Michael Brown', email: 'michael.b@email.com', date: 'May 14, 2024', time: '08:45 PM', total: '$159.00', items: '1 item', payment: 'Credit Card', status: 'Shipped' },
+C:\Users\HomePC\Desktop\electronic\app\admin\orders\page.jsx:28:{ id: '#TN12342', customer: 'Emily Davis', email: 'emily.d@email.com', date: 'May 14, 2024', time: '06:20 PM', total: '$759.00', items: '1 item', payment: 'Credit Card', status: 'Delivered' },
+C:\Users\HomePC\Desktop\electronic\app\admin\orders\page.jsx:29:{ id: '#TN12341', customer: 'David Wilson', email: 'david.w@email.com', date: 'May 14, 2024', time: '04:10 PM', total: '$92.00', items: '1 item', payment: 'COD', status: 'Pending' },
+C:\Users\HomePC\Desktop\electronic\app\admin\orders\page.jsx:30:{ id: '#TN12340', customer: 'Jessica Taylor', email: 'jessica.t@email.com', date: 'May 13, 2024', time: '11:30 AM', total: '$1,499.00', items: '2 items', payment: 'Credit Card', status: 'Delivered' },
+C:\Users\HomePC\Desktop\electronic\app\admin\orders\page.jsx:31:{ id: '#TN12339', customer: 'Daniel Martinez', email: 'daniel.m@email.com', date: 'May 13, 2024', time: '10:05 AM', total: '$188.00', items: '1 item', payment: 'PayPal', status: 'Cancelled' },
+C:\Users\HomePC\Desktop\electronic\app\admin\orders\page.jsx:32:{ id: '#TN12338', customer: 'Sophia Anderson', email: 'sophia.a@email.com', date: 'May 12, 2024', time: '09:50 PM', total: '$349.00', items: '1 item', payment: 'Credit Card', status: 'Refunded' },
+C:\Users\HomePC\Desktop\electronic\app\admin\orders\page.jsx:33:{ id: '#TN12337', customer: 'James Thomas', email: 'james.t@email.com', date: 'May 12, 2024', time: '07:25 PM', total: '$279.00', items: '1 item', payment: 'Credit Card', status: 'Processing' },
+C:\Users\HomePC\Desktop\electronic\app\admin\orders\page.jsx:34:{ id: '#TN12336', customer: 'Olivia White', email: 'olivia.w@email.com', date: 'May 12, 2024', time: '05:15 PM', total: '$1,099.00', items: '1 item', payment: 'Credit Card', status: 'Shipped' },
+C:\Users\HomePC\Desktop\electronic\app\admin\orders\page.jsx:70:const totalRevenue = dummyOrders.reduce((sum, order) => sum + Number(order.total.replace(/[$,]/g, '')), 0)
+C:\Users\HomePC\Desktop\electronic\app\admin\orders\page.jsx:190:<span className={`mt-2 inline-flex rounded-full px-3 py-2 text-xs font-semibold ${statusMap[order.status] || 'bg-slate-500/10 text-slate-400'}`}>
+C:\Users\HomePC\Desktop\electronic\app\admin\orders\page.jsx:222:<p className="mt-3 text-3xl font-semibold text-white">${summary.totalRevenue.toLocaleString()}</p>
+C:\Users\HomePC\Desktop\electronic\app\admin\orders\page.jsx:226:<p className="mt-3 text-3xl font-semibold text-white">${summary.avgOrder.toFixed(2)}</p>
+C:\Users\HomePC\Desktop\electronic\app\admin\orders\page.jsx:245:<span className={`inline-flex h-3 w-3 rounded-full ${item.color}`} />
+C:\Users\HomePC\Desktop\electronic\app\admin\products\add-product\page.jsx:42:price: formState.price ? `$${formState.price}` : '-',
+C:\Users\HomePC\Desktop\electronic\app\admin\products\add-product\page.jsx:62:placeholder="$299.00"
+C:\Users\HomePC\Desktop\electronic\app\admin\products\add-product\page.jsx:71:placeholder="$249.00"
+C:\Users\HomePC\Desktop\electronic\app\admin\products\add-product\page.jsx:297:className={`rounded-full px-4 py-2 text-sm transition ${activeSection === section ? 'bg-violet-500 text-white' : 'bg-slate-900 text-slate-300 hover:bg-slate-800'}`}
+C:\Users\HomePC\Desktop\electronic\app\admin\stores\page.jsx:34:Authorization: `Bearer ${token}`,
+C:\Users\HomePC\Desktop\electronic\app\admin\stores\page.jsx:51:Authorization: `Bearer ${token}`,
+C:\Users\HomePC\Desktop\electronic\app\admin\page.jsx:48:Authorization: `Bearer ${token}`,
+C:\Users\HomePC\Desktop\electronic\app\api\admin\authorize-payment\route.js:68:Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+C:\Users\HomePC\Desktop\electronic\app\api\admin\stores\approve\route.js:34:return NextResponse.json({message: `Store ${status}`, store: updatedStore}, {status:200})
+C:\Users\HomePC\Desktop\electronic\app\api\orders\delivery-report\route.js:27:await pusher.trigger(`private-store-${order.storeId}`, 'deliveryReport', { report, orderId })
+C:\Users\HomePC\Desktop\electronic\app\api\orders\route.js:182:const origin = request?.headers?.get?.('origin') || process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null)
+C:\Users\HomePC\Desktop\electronic\app\api\orders\route.js:197:callback_url: `${origin}/paystack`
+C:\Users\HomePC\Desktop\electronic\app\api\orders\route.js:201:Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+C:\Users\HomePC\Desktop\electronic\app\api\paystack\verify\route.js:13:const resp = await axios.get(`https://api.paystack.co/transaction/verify/${reference}`, {
+C:\Users\HomePC\Desktop\electronic\app\api\paystack\verify\route.js:14:headers: { Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}` },
+C:\Users\HomePC\Desktop\electronic\app\api\store\ai\route.js:32:url: `data:${mimeType};base64,${base64Image}`,
+C:\Users\HomePC\Desktop\electronic\app\api\store\ai-category\route.js:14:content: `Analyze this product and suggest category and prices. Name: ${name || ''} Description: ${description || ''}`,
+C:\Users\HomePC\Desktop\electronic\app\api\store\ai-category\route.js:22:content: `Image: data:${mimeType};base64,${base64Image}`
+C:\Users\HomePC\Desktop\electronic\app\api\store\category\route.js:26:const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+C:\Users\HomePC\Desktop\electronic\app\api\store\deliver-order\route.js:64:Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+C:\Users\HomePC\Desktop\electronic\app\api\store\send-delivery-sms\route.js:31:const defaultMessage = `Hello ${order.user?.name || ''}, thanks for buying ${previewList || 'your items'} from ${siteName}. Your order #${shortId} will be delivered within the next ${hours} hours. We'll notify you if anything changes — ${siteName}`
+C:\Users\HomePC\Desktop\electronic\app\api\store\send-delivery-sms\route.js:47:await pusher.trigger(`private-user-${updatedOrder.userId}`, 'orderUpdated', { orderId: updatedOrder.id, deliveryDeadline: updatedOrder.deliveryDeadline })
+C:\Users\HomePC\Desktop\electronic\app\api\store\send-delivery-sms\route.js:50:await pusher.trigger(`private-store-${updatedOrder.storeId}`, 'orderUpdated', { orderId: updatedOrder.id, deliveryDeadline: updatedOrder.deliveryDeadline })
+C:\Users\HomePC\Desktop\electronic\app\api\store\upload\route.js:44:const dataURI = `data:${file.type};base64,${base64}`;
+C:\Users\HomePC\Desktop\electronic\app\api\store\upload\route.js:53:const signatureString = `folder=jeeshop/products&timestamp=${timestamp}${apiSecret}`;
+C:\Users\HomePC\Desktop\electronic\app\api\store\upload\route.js:69:`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+C:\Users\HomePC\Desktop\electronic\app\store\add-product\page.jsx:170:<label key={key} htmlFor={`images${key}`}>
+C:\Users\HomePC\Desktop\electronic\app\store\add-product\page.jsx:171:<Image width={300} height={300} className='h-15 w-auto border border-slate-200 rounded cursor-pointer' src={images[key] ? URL.createObjectURL(images[key]) : assets.upload_area} alt={images[key] ? `Product image ${key} preview` : 'Upload placeholder'} />
+C:\Users\HomePC\Desktop\electronic\app\store\add-product\page.jsx:172:<input type="file" accept='image/*' id={`images${key}`}
+C:\Users\HomePC\Desktop\electronic\app\store\address-changes\page.jsx:68:className={`px-4 py-2 rounded-lg font-medium transition ${
+C:\Users\HomePC\Desktop\electronic\app\store\address-changes\page.jsx:78:className={`px-4 py-2 rounded-lg font-medium transition ${
+C:\Users\HomePC\Desktop\electronic\app\store\address-changes\page.jsx:104:className={`border-2 rounded-lg p-6 transition ${
+C:\Users\HomePC\Desktop\electronic\app\store\manage-product\page.jsx:126:<Image width={40} height={40} className='p-1 shadow rounded cursor-pointer' src={product.images[0]} alt={product?.name ? `${product.name} image` : 'Product image'} />
+C:\Users\HomePC\Desktop\electronic\app\store\manage-product\page.jsx:148:`${currency} ${product.price.toLocaleString()}`
+C:\Users\HomePC\Desktop\electronic\app\store\orders\page.jsx:97:Authorization: `Bearer ${token}`
+C:\Users\HomePC\Desktop\electronic\app\store\orders\page.jsx:114:setDeliveryMessage(`Hello ${order.user?.name || ''}, thanks for buying ${previewProducts || 'your items'}. Your order #${shortId} will be delivered within the next ${deliveryHours} hours. — ${process.env.NEXT_PUBLIC_SITE_NAME || 'Jeeshop'}`)
+C:\Users\HomePC\Desktop\electronic\app\store\orders\page.jsx:209:className={`transition-colors duration-150 cursor-pointer ${hasUnreadChange ? 'bg-yellow-50 hover:bg-yellow-100' : 'hover:bg-gray-50'}`}
+C:\Users\HomePC\Desktop\electronic\app\store\orders\page.jsx:231:<span>{`${order.address?.street || ''}, ${order.address?.city || ''}, ${order.address?.state || ''}`.slice(0, 40)}{(`${order.address?.street || ''}${order.address?.city || ''}${order.address?.state || ''}`).length > 40 ? '...' : ''}</span>
+C:\Users\HomePC\Desktop\electronic\app\store\orders\page.jsx:285:<span className="text-slate-700">{`${selectedOrder.address?.street || ''}${selectedOrder.address?.street ? ', ' : ''}${selectedOrder.address?.city || ''}${selectedOrder.address?.city ? ', ' : ''}${selectedOrder.address?.state || ''}`.slice(0, 80)}{(selectedOrder.address && (`${selectedOrder.address.street || ''}` + `${selectedOrder.address.city || ''}`).length > 80) ? '...' : ''}</span>
+C:\Users\HomePC\Desktop\electronic\app\store\page.jsx:117:<Image src={review.user.image} alt={review.user?.name ? `${review.user.name} avatar` : 'User avatar'} className="w-10 aspect-square rounded-full" width={100} height={100} />
+C:\Users\HomePC\Desktop\electronic\app\store\page.jsx:135:<button onClick={() => router.push(`/product/${review.product.id}`)} className="bg-slate-100 px-5 py-2 hover:bg-slate-200 rounded transition-all">View Product</button>
+C:\Users\HomePC\Desktop\electronic\components\admin\AdminDrawer.jsx:88:className={`fixed inset-0 bg-black/40 transition-opacity ${open ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+C:\Users\HomePC\Desktop\electronic\components\admin\AdminDrawer.jsx:95:className={`fixed top-0 left-0 h-full w-80 sm:w-96 bg-[#080b16] shadow-2xl ring-1 ring-white/10 transform transition-transform duration-300 ${open ? 'translate-x-0' : '-translate-x-full'}`}
+C:\Users\HomePC\Desktop\electronic\components\admin\AdminLayout.jsx:26:headers:{Authorization:`Bearer ${token}`}
+C:\Users\HomePC\Desktop\electronic\components\admin\AdminSidebar.jsx:120:className={`group relative flex items-center gap-3 rounded-3xl px-4 py-3 text-sm font-medium transition ${active ? 'bg-white/10 text-white shadow-[0_10px_30px_rgba(139,92,246,0.18)]' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}
+C:\Users\HomePC\Desktop\electronic\components\admin\AdminSidebar.jsx:122:<span className={`absolute left-0 top-0 h-full w-1 rounded-r-full transition ${active ? 'bg-violet-500' : 'bg-transparent'}`} />
+C:\Users\HomePC\Desktop\electronic\components\admin\AdminSidebar.jsx:138:alt={user?.fullName ? `${user.fullName} avatar` : 'Admin avatar'}
+C:\Users\HomePC\Desktop\electronic\components\admin\StoreInfo.jsx:17:className={`text-xs font-semibold px-4 py-1 rounded-full ${store.status === 'pending'
+C:\Users\HomePC\Desktop\electronic\components\store\StoreDrawer.jsx:20:className={`fixed inset-0 bg-black/40 transition-opacity ${open ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+C:\Users\HomePC\Desktop\electronic\components\store\StoreDrawer.jsx:27:className={`fixed top-0 left-0 h-full w-80 sm:w-96 bg-white shadow-2xl transform transition-transform duration-300 backdrop-blur-sm ${open ? 'translate-x-0' : '-translate-x-full'}`}
+C:\Users\HomePC\Desktop\electronic\components\store\StoreLayout.jsx:36:Authorization: `Bearer ${token}`
+C:\Users\HomePC\Desktop\electronic\components\store\StoreNavbar.jsx:28:headers: { Authorization: `Bearer ${token}` }
+C:\Users\HomePC\Desktop\electronic\components\store\StoreNavbar.jsx:35:const dr = await axios.get('/api/store/delivery-reports', { headers: { Authorization: `Bearer ${token}` } })
+C:\Users\HomePC\Desktop\electronic\components\store\StoreNavbar.jsx:58:channel = p.subscribe(`private-store-${storeId}`)
+C:\Users\HomePC\Desktop\electronic\components\store\StoreNavbar.jsx:71:id: payload.id || `dr-${Date.now()}`,
+C:\Users\HomePC\Desktop\electronic\components\store\StoreNavbar.jsx:136:<span className={`absolute -top-1 -right-1 inline-flex items-center justify-center px-2 py-0.5 rounded-full text-xs font-semibold bg-red-600 text-white ${pulse ? 'animate-pulse' : ''}`}>
+C:\Users\HomePC\Desktop\electronic\components\store\StoreNavbar.jsx:157:<div key={alert.id} className={`p-3 hover:bg-gray-50 cursor-pointer flex items-start gap-3 ${!alert.isRead ? 'bg-yellow-50' : ''}`}>
+C:\Users\HomePC\Desktop\electronic\components\store\StoreSidebar.jsx:23:<Image className="w-14 h-14 rounded-full shadow-md object-cover" src={storeInfo?.logo || '/favicon.ico'} alt={storeInfo?.name ? `${storeInfo.name} logo` : 'Store logo'} width={80} height={80} />
+C:\Users\HomePC\Desktop\electronic\components\store\StoreSidebar.jsx:30:<Link key={index} href={link.href} className={`relative flex items-center gap-3 text-slate-500 hover:bg-slate-50 p-2.5 transition ${pathname === link.href && 'bg-slate-100 sm:text-slate-600'}`}>
+C:\Users\HomePC\Desktop\electronic\components\AddressEditModal.jsx:32:headers: { Authorization: `Bearer ${token}` }
+C:\Users\HomePC\Desktop\electronic\components\AddressEditModal.jsx:67:headers: { Authorization: `Bearer ${token}` }
+C:\Users\HomePC\Desktop\electronic\components\AddressModal.jsx:50:Authorization: `Bearer ${token}`
+C:\Users\HomePC\Desktop\electronic\components\BestSelling.jsx:13:<Title title='Best Selling' description={`Showing ${products.length < displayQuantity ? products.length : displayQuantity} of ${products.length} products`} href='/shop' />
+C:\Users\HomePC\Desktop\electronic\components\Drawer.jsx:75:className={`fixed inset-0 bg-black/50 transition-opacity ${open ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+C:\Users\HomePC\Desktop\electronic\components\Drawer.jsx:80:className={`fixed inset-y-0 left-0 w-[min(90vw,320px)] bg-slate-950 text-slate-100 shadow-2xl transform transition-transform duration-300 ${open ? 'translate-x-0' : '-translate-x-full'}`}
+C:\Users\HomePC\Desktop\electronic\components\Drawer.jsx:99:className={`hidden md:flex fixed left-0 top-0 h-20 bg-slate-950 border-b border-slate-800 items-center transition-all duration-300 z-50 ${isSidebarOpen ? 'w-80' : 'w-20'}`}
+C:\Users\HomePC\Desktop\electronic\components\Drawer.jsx:101:<div className={`flex items-center gap-3 p-4 w-full ${isSidebarOpen ? '' : 'justify-center'}`}>
+C:\Users\HomePC\Desktop\electronic\components\Drawer.jsx:114:className={`hidden md:flex fixed left-0 top-20 h-[calc(100vh-80px)] bg-slate-950 border-r border-slate-800 flex-col transition-all duration-300 ${isSidebarOpen ? 'w-80' : 'w-20'}`}
+C:\Users\HomePC\Desktop\electronic\components\Drawer.jsx:122:<ChevronLeft size={18} className={`${!isSidebarOpen ? 'rotate-180' : ''}`} />
+C:\Users\HomePC\Desktop\electronic\components\Drawer.jsx:212:<div className={`h-full flex flex-col overflow-y-auto ${isSidebar ? 'pt-6 pb-6' : 'pt-4 pb-6'} px-4`}>
+C:\Users\HomePC\Desktop\electronic\components\Drawer.jsx:240:className={`group flex items-center gap-3 rounded-3xl px-3 py-3 transition ${
+C:\Users\HomePC\Desktop\electronic\components\Drawer.jsx:244:<span className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl transition ${
+C:\Users\HomePC\Desktop\electronic\components\Drawer.jsx:249:<span className={`font-semibold text-sm ${active ? 'text-white' : 'text-slate-200'}`}>{item.name}</span>
+C:\Users\HomePC\Desktop\electronic\components\Footer.jsx:95:<a key={i} href={item.link} className="w-10 h-10 flex items-center justify-center rounded-md shadow-sm bg-slate-800 hover:opacity-90 transition" aria-label={`social-${i}`}>
+C:\Users\HomePC\Desktop\electronic\components\FrequentlySearched.jsx:62:href={`/category/${encodeURIComponent(category)}`}
+C:\Users\HomePC\Desktop\electronic\components\FrequentlySearched.jsx:88:href={`/product/${product.id}`}
+C:\Users\HomePC\Desktop\electronic\components\FrequentlySearched.jsx:166:className={`w-2 h-2 rounded-full transition-all ${
+C:\Users\HomePC\Desktop\electronic\components\Hero.jsx:30:backgroundImage: `url(${src(banners[idx])})`,
+C:\Users\HomePC\Desktop\electronic\components\Hero.jsx:39:alt={`Banner ${idx + 1}`}
+C:\Users\HomePC\Desktop\electronic\components\HomeCategories.jsx:27:<a href={`/category/${encodeURIComponent(categoryName)}`} className='text-sm text-red-600 hover:underline flex items-center gap-2'>
+C:\Users\HomePC\Desktop\electronic\components\Navbar.jsx:33:router.push(`/search?q=${search}`)
+C:\Users\HomePC\Desktop\electronic\components\Navbar.jsx:99:<div className="text-sm font-semibold text-white">${(cartCount * 199).toFixed(2)}</div>
+C:\Users\HomePC\Desktop\electronic\components\OrderItem.jsx:64:: <button onClick={() => setRatingModal({ orderId: order.id, productId: item.product.id })} className={`text-green-500 hover:bg-green-50 transition ${order.status !== "DELIVERED" && 'hidden'}`}>Rate Product</button>
+C:\Users\HomePC\Desktop\electronic\components\OrderItem.jsx:81:className={`flex items-center justify-center gap-1 rounded-full p-1 ${order.status === 'confirmed'
+C:\Users\HomePC\Desktop\electronic\components\OrderItem.jsx:131:}} disabled={reporting || (timeLeft !== null && timeLeft > 0)} className={`px-3 py-1 text-sm rounded ${ (timeLeft !== null && timeLeft > 0) ? 'bg-gray-300 text-gray-600' : 'bg-red-600 text-white' }`}>
+C:\Users\HomePC\Desktop\electronic\components\OrderItem.jsx:167:}} disabled={reporting || order.deliveryConfirmed} className={`px-3 py-1 text-sm rounded ${order.deliveryConfirmed ? 'bg-gray-200 text-gray-600' : 'bg-blue-600 text-white'}`}>
+C:\Users\HomePC\Desktop\electronic\components\OrderItem.jsx:172:}} disabled={reporting || (timeLeft !== null && timeLeft > 0)} className={`px-3 py-1 text-sm rounded ${ (timeLeft !== null && timeLeft > 0) ? 'bg-gray-300 text-gray-600' : 'bg-red-600 text-white' }`}>Report Not Received</button>
+C:\Users\HomePC\Desktop\electronic\components\OrderSummary.jsx:50:Authorization: `Bearer ${token}`,
+C:\Users\HomePC\Desktop\electronic\components\OrderSummary.jsx:85:Authorization: `Bearer ${token}`,
+C:\Users\HomePC\Desktop\electronic\components\OrderSummary.jsx:169:<span>{deliveryAmount === 0 ? 'Free' : `${currency}${deliveryAmount.toFixed(2)}`}</span>
+C:\Users\HomePC\Desktop\electronic\components\PageTransitionWrapper.jsx:18:className={`transition-all duration-500 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'}`}
+C:\Users\HomePC\Desktop\electronic\components\PopularCategoriesSection.jsx:73:<Link key={idx} href={`/category/${encodeURIComponent(category.name)}`}>
+C:\Users\HomePC\Desktop\electronic\components\ProductCard.jsx:73:router.push(`/seller/${username}`)
+C:\Users\HomePC\Desktop\electronic\components\ProductCard.jsx:77:<Link href={`/product/${product.id}`} className='group max-xl:mx-auto block'>
+C:\Users\HomePC\Desktop\electronic\components\ProductCard.jsx:86:alt={product?.name ? `${product.name} image` : 'Product image'}
+C:\Users\HomePC\Desktop\electronic\components\ProductCard.jsx:101:className={`absolute top-1 right-1 sm:top-2 sm:right-2 p-1.5 sm:p-2 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 ${
+C:\Users\HomePC\Desktop\electronic\components\ProductCard.jsx:107:} ${isAdding ? 'scale-95' : ''}`}
+C:\Users\HomePC\Desktop\electronic\components\ProductCard.jsx:123:className={`absolute top-1 left-1 sm:top-2 sm:left-2 p-1.5 sm:p-2 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 ${
+C:\Users\HomePC\Desktop\electronic\components\ProductCard.jsx:129:<Heart size={14} className={`sm:w-5 sm:h-5 ${isInWishlist ? 'fill-white' : ''}`} />
+C:\Users\HomePC\Desktop\electronic\components\ProductDescription.jsx:18:<button className={`${tab === selectedTab ? 'border-b-[1.5px] font-semibold' : 'text-slate-400'} px-2 sm:px-3 py-2 font-medium text-xs sm:text-sm whitespace-nowrap`} key={index} onClick={() => setSelectedTab(tab)}>
+C:\Users\HomePC\Desktop\electronic\components\ProductDescription.jsx:34:<Image src={item.user.image} alt={item.user?.name ? `${item.user.name} avatar` : 'User avatar'} className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex-shrink-0" width={100} height={100} />
+C:\Users\HomePC\Desktop\electronic\components\ProductDescription.jsx:52:<Image src={product.store?.logo || '/favicon.ico' || assets.product_placeholder || '/placeholder.svg'} alt={product.store?.name ? `${product.store.name} logo` : 'Store logo'} className="size-11 rounded-full ring ring-slate-400 object-cover" width={100} height={100} />
+C:\Users\HomePC\Desktop\electronic\components\ProductDescription.jsx:55:<Link href={`/shop/${product.store.username}`} className="flex items-center gap-1.5 text-green-500"> view store <ArrowRight size={14} /></Link>
+C:\Users\HomePC\Desktop\electronic\components\ProductDetails.jsx:66:const text = `Check out this product: ${title} - ${currency}${product.price}`;
+C:\Users\HomePC\Desktop\electronic\components\ProductDetails.jsx:82:shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+C:\Users\HomePC\Desktop\electronic\components\ProductDetails.jsx:85:shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+C:\Users\HomePC\Desktop\electronic\components\ProductDetails.jsx:88:shareUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
+C:\Users\HomePC\Desktop\electronic\components\ProductDetails.jsx:110:className={`bg-slate-100 flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-lg group cursor-pointer border-2 transition-all duration-200 ${mainImage === image ? 'border-green-500 shadow-lg' : 'border-transparent hover:border-slate-300'}`}
+C:\Users\HomePC\Desktop\electronic\components\ProductDetails.jsx:115:alt={product?.name ? `${product.name} thumbnail ${index + 1}` : 'Product thumbnail'}
+C:\Users\HomePC\Desktop\electronic\components\ProductDetails.jsx:132:alt={product?.name ? `${product.name} main image` : 'Product main image'}
+C:\Users\HomePC\Desktop\electronic\components\ProductDetails.jsx:136:className={`transition-transform duration-300 w-full h-full object-contain max-w-full ${isZoomed ? 'scale-150' : 'scale-100'}`}
+C:\Users\HomePC\Desktop\electronic\components\ProductDetails.jsx:137:style={{ transformOrigin: `${zoomPosition.x}px ${zoomPosition.y}px` }}
+C:\Users\HomePC\Desktop\electronic\components\ProductDetails.jsx:184:className={`flex items-center justify-center gap-2 w-full sm:w-auto px-6 sm:px-8 md:px-10 py-2 sm:py-3 text-xs sm:text-sm md:text-base font-semibold rounded-lg transition-all duration-300 ${
+C:\Users\HomePC\Desktop\electronic\components\ProductDetails.jsx:190:} ${isAddingToCart ? 'opacity-80' : ''}`}
+C:\Users\HomePC\Desktop\electronic\components\QuickLinks.jsx:41:<div className={`${link.bgColor} p-1.5 sm:p-2 md:p-3 rounded-lg text-center cursor-pointer hover:shadow-lg transition-all duration-200 h-full flex flex-col items-center justify-center transform hover:scale-105`}>
+C:\Users\HomePC\Desktop\electronic\components\Rating.jsx:11:className={`shrink-0 size-4 fill-current ${value > i ? "text-green-400" : "text-gray-300"}`}
+C:\Users\HomePC\Desktop\electronic\components\RatingModal.jsx:38:Authorization: `Bearer ${token}`
+C:\Users\HomePC\Desktop\electronic\components\RatingModal.jsx:63:className={`size-8 cursor-pointer ${rating > i ? "text-green-400 fill-current" : "text-gray-300"}`}
+C:\Users\HomePC\Desktop\electronic\components\SideDrawer.jsx:9:className={`fixed inset-0 bg-black/50 transition-opacity ${open ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+C:\Users\HomePC\Desktop\electronic\components\SideDrawer.jsx:15:className={`fixed inset-y-0 left-0 w-[min(90vw,360px)] bg-slate-950 text-slate-100 shadow-2xl transform transition-transform duration-300 ${open ? 'translate-x-0' : '-translate-x-full'}`}
+C:\Users\HomePC\Desktop\electronic\components\TestimonialsCarousel.jsx:105:className={`transition-all duration-700 transform ${
+C:\Users\HomePC\Desktop\electronic\components\TestimonialsCarousel.jsx:169:className={`transition-all duration-300 rounded-full ${
+C:\Users\HomePC\Desktop\electronic\components\TestimonialsCarousel.jsx:174:aria-label={`Go to testimonial ${index + 1}`}
+C:\Users\HomePC\Desktop\electronic\components\WhyShopWithUsSection.jsx:48:<div key={idx} className={`${feature.bgColor} p-3 sm:p-4 md:p-6 lg:p-8 rounded-lg text-center hover:shadow-md transition-all duration-200 border border-gray-100`}>
+C:\Users\HomePC\Desktop\electronic\components\WhyShopWithUsSection.jsx:50:<Icon className={`${feature.color} w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16`} />
+C:\Users\HomePC\Desktop\electronic\lib\features\category\categorySlice.js:16:headers: { Authorization: `Bearer ${token}` }
+C:\Users\HomePC\Desktop\electronic\lib\features\category\categorySlice.js:41:state.list.unshift({ name, slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') })
+C:\Users\HomePC\Desktop\electronic\lib\features\product\productSlice.js:9:const {data} = await axios.get('/api/products' + (storeId? `?storeId=$
+C:\Users\HomePC\Desktop\electronic\lib\authHelpers.js:15:return `session=${encoded}; Path=/; ${secureFlag}HttpOnly; SameSite=Lax; Max-Age=${7 * 24 * 60 * 60}`
+C:\Users\HomePC\Desktop\electronic\lib\authHelpers.js:43:return `${salt}:${derivedKey}`
+C:\Users\HomePC\Desktop\electronic\lib\prisma.js:17:const connectionString = `${process.env.DATABASE_URL}`;

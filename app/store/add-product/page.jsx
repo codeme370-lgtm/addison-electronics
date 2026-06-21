@@ -4,7 +4,7 @@ import { assets } from "@/assets/assets"
 import Image from "next/image"
 import { useState } from "react"
 import { toast } from "react-hot-toast"
-import { useAuth } from "@clerk/nextjs"
+import { useAuth } from "@/context/AuthContext"
 import axios from "axios"
 import React from "react"
 import { useEffect } from 'react'
@@ -32,7 +32,6 @@ export default function StoreAddProduct() {
      const [aiUsed, setAiUsed] = useState(false)
 
 
-    const {getToken} = useAuth()
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -59,14 +58,10 @@ export default function StoreAddProduct() {
             reader.onloadend=async () => {
                 const base64String = reader.result.split(",")[1]
                 const mimeType = file.type
-                const token = await getToken()
-
                 //make the api call
                 try {
                     await toast.promise(
-                        axios.post('/api/store/ai',{base64Image: base64String, mimeType},{
-                            headers:{Authorization: `Bearer ${token}`}
-                        }),
+                        axios.post('/api/store/ai',{base64Image: base64String, mimeType}),
                         {
                             loading:"Analyzing image with AI....",
                             success: (res)=>{
@@ -117,7 +112,6 @@ export default function StoreAddProduct() {
                     
                     const uploadResponse = await axios.post('/api/store/upload', uploadFormData, {
                         headers: {
-                            Authorization: `Bearer ${token}`,
                             'Content-Type': 'multipart/form-data'
                         }
                     })
@@ -140,11 +134,7 @@ export default function StoreAddProduct() {
             })
 
             //send the form data to the api
-            const response = await axios.post("/api/store/product", formData, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+            const response = await axios.post("/api/store/product", formData)
             toast.success("Product added successfully")
             // Add the new product to the Redux store
             if (response.data.product) {
@@ -223,8 +213,7 @@ export default function StoreAddProduct() {
                 <button type="button" onClick={async () => {
                     if(!newCategoryName) return toast.error('Enter a category name')
                     try{
-                        const token = await getToken()
-                        const { data } = await axios.post('/api/store/category', { name: newCategoryName }, { headers: { Authorization: `Bearer ${token}` } })
+                        const { data } = await axios.post('/api/store/category', { name: newCategoryName })
                         setCategories(prev => [data.category.name, ...prev])
                         setProductInfo(prev => ({ ...prev, category: data.category.name }))
                         setNewCategoryName('')
@@ -252,7 +241,7 @@ export default function StoreAddProduct() {
                             mimeType = imageFile.type
                         }
                         const body = { name: productInfo.name, description: productInfo.description, base64Image: base64, mimeType }
-                        const { data } = await axios.post('/api/store/ai-category', body, { headers: { Authorization: `Bearer ${token}` } })
+                        const { data } = await axios.post('/api/store/ai-category', body)
                         setAiSuggestion(data)
                         if(data?.category) setProductInfo(prev=>({ ...prev, category: data.category }))
                         if(data?.suggestedMrp) setProductInfo(prev=>({ ...prev, mrp: data.suggestedMrp }))
