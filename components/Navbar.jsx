@@ -1,40 +1,25 @@
 'use client'
-import { PackageIcon, Search, ShoppingCart, MapPin, Heart, Home, Grid } from "lucide-react";
+import { PackageIcon, Search, ShoppingCart, Heart } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useClerk, UserButton, useUser } from "@clerk/nextjs";
-import { useSidebar } from "@/context/SidebarContext";
-import logo from "@/app/logo.jpg";
+import { useAuth } from "@/context/AuthContext";
+import logo from "@/app/logo.png";
 import Drawer from './Drawer'
 import "./Navbar.css";
 
 const Navbar = () => {
-    const { user, isLoaded } = useUser();
-    const { openSignIn } = useClerk();
+    const { user, loading, signOut } = useAuth();
     const router = useRouter();
     const pathname = usePathname();
-    const { sidebarOpen, setSidebarOpen } = useSidebar()
-
     const [search, setSearch] = useState('')
     const [cartPulse, setCartPulse] = useState(false)
-    const [isMobile, setIsMobile] = useState(true)
     const cartCount = useSelector(state => state.cart.total)
     const wishlistCount = useSelector(state => state.wishlist.total)
     const [drawerOpen, setDrawerOpen] = useState(false)
     const [showLocationDropdown, setShowLocationDropdown] = useState(false)
-
-    useEffect(() => {
-        const handleResize = () => {
-            const mobile = window.innerWidth < 768
-            setIsMobile(mobile)
-        }
-        handleResize()
-        window.addEventListener('resize', handleResize)
-        return () => window.removeEventListener('resize', handleResize)
-    }, [])
 
     useEffect(() => {
         if (cartCount > 0) {
@@ -50,172 +35,118 @@ const Navbar = () => {
     }
 
     const handleOpenSignIn = () => {
-        openSignIn({
-            redirectUrl: pathname
-        })
+        router.push('/sign-in')
     }
 
     return (
-        <nav className="relative bg-white border-b border-gray-200">
-            <div className="w-full px-2 sm:px-4 lg:px-8">
-                <div className="flex items-center justify-between gap-1 sm:gap-3 lg:gap-6 py-2.5 sm:py-3 max-w-full">
-                    
-                    {/* Left: Hamburger + Logo */}
-                    <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0 min-w-0">
-                        <button 
-                            aria-label="Open menu" 
-                            onClick={() => setDrawerOpen(true)} 
-                            className="p-1.5 sm:p-2 rounded-md hover:bg-gray-100 lg:hidden flex-shrink-0"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
-                        </button>
-                        
-                        <Link href="/" className="flex items-center gap-1 sm:gap-2 flex-shrink-0 min-w-0">
-                            <div className="w-7 h-7 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full overflow-hidden border-2 border-red-600 shadow hidden sm:flex items-center justify-center flex-shrink-0">
-                                <Image 
-                                    src={logo} 
-                                    alt="Jeescage Logo" 
-                                    width={40}
-                                    height={40}
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
-                            <span className="font-bold text-black text-lg sm:text-3xl md:text-4xl whitespace-nowrap">
-                                jees<span className="text-amber-700">cage</span>
-                            </span>
-                        </Link>
-                    </div>
-                    {/* Center: Search Bar - Always expanded on mobile, responsive on larger screens */}
-                    <div className="flex-1 min-w-0 max-w-xs mx-auto md:max-w-sm md:ml-auto">
-                        <form onSubmit={handleSearch} className="flex items-center gap-1 sm:gap-2 bg-white border-2 border-gray-200 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 hover:border-orange-400 focus-within:border-orange-500 transition-all">
-                            <Search size={16} className="text-gray-400 flex-shrink-0 sm:w-5 sm:h-5 hidden sm:block" />
-                            <input 
-                                className="flex-1 bg-transparent outline-none placeholder-gray-500 text-gray-700 text-xs sm:text-sm" 
-                                type="text" 
-                                placeholder="Search..." 
-                                value={search} 
-                                onChange={(e) => setSearch(e.target.value)}
-                                autoFocus={isMobile}
-                            />
-                            <button 
-                                type="submit"
-                                className="bg-orange-500 hover:bg-orange-600 text-white px-2 sm:px-3 py-1 rounded-md flex-shrink-0 transition-all"
-                            >
-                                <Search size={16} className="sm:w-5 sm:h-5" />
+        <nav className="w-full bg-[#06070b] text-slate-200">
+            <div className="max-w-[1400px] mx-auto px-4 py-5">
+                <div className="rounded-2xl bg-gradient-to-b from-[#0b0e14]/80 to-[#07080b]/80 ring-1 ring-white/5 p-4">
+                    <div className="flex items-center gap-6">
+                        {/* Left: Logo & Hamburger */}
+                        <div className="flex items-center gap-4 flex-shrink-0">
+                            <button aria-label="Open menu" onClick={() => setDrawerOpen(true)} className="p-2 rounded-lg bg-white/5 hover:bg-white/10">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-slate-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                                </svg>
                             </button>
-                        </form>
-                    </div>
-
-
-                    {/* Right: Location + Orders + Wishlist + Cart + User */}
-                    <div className="flex items-center gap-1 sm:gap-2 lg:gap-3 flex-shrink-0">
-                        
-                        {/* Location Dropdown - hidden on small screens */}
-                        <div className="hidden lg:block relative">
-                            <button 
-                                onClick={() => setShowLocationDropdown(!showLocationDropdown)}
-                                className="flex items-center gap-2 text-gray-700 hover:text-orange-600 transition-colors px-1.5 lg:px-2 py-2 text-xs lg:text-sm whitespace-nowrap"
-                            >
-                                <MapPin size={16} className="lg:w-5 lg:h-5" />
-                                <div className="text-left hidden xl:block">
-                                    <div className="text-xs text-gray-600">Deliver to</div>
-                                    <div className="font-semibold text-gray-900 text-xs">Your Location</div>
+                            <Link href="/" className="flex items-center gap-3">
+                                <div className="h-12 w-12 rounded-3xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center text-white font-bold text-lg">
+                                    TN
                                 </div>
-                            </button>
-                            {showLocationDropdown && (
-                                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg p-3 z-50">
-                                    <p className="text-sm text-gray-600 mb-3">Select your location</p>
-                                    <input 
-                                        type="text" 
-                                        placeholder="Enter your location" 
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
-                                    />
+                                <div className="hidden sm:block">
+                                    <div className="text-2xl font-bold text-white">Tech<span className="text-violet-400">Nova</span></div>
+                                    <div className="text-xs text-slate-400">TECH FOR THE FUTURE</div>
                                 </div>
-                            )}
+                            </Link>
                         </div>
 
-                        {/* Home - hidden on mobile */}
-                        <Link 
-                            href="/"
-                            className="hidden sm:flex flex-col items-center justify-center text-gray-700 hover:text-white hover:bg-green-600 bg-gray-50 rounded-lg px-1.5 sm:px-2 py-1.5 sm:py-2 text-xs transition-all duration-200 transform hover:scale-110 hover:shadow-md active:scale-95 flex-shrink-0"
-                            title="Home"
-                        >
-                            <Home size={18} className="sm:w-5 sm:h-5" />
-                            <span className="font-semibold text-[10px] sm:text-xs mt-0.5">Home</span>
-                        </Link>
-
-                        {/* Categories */}
-                        <Link 
-                            href="/category"
-                            className="hidden md:flex flex-col items-center justify-center text-gray-700 hover:text-white hover:bg-purple-600 bg-gray-50 rounded-lg px-1.5 md:px-2 py-1.5 md:py-2 text-xs transition-all duration-200 transform hover:scale-110 hover:shadow-md active:scale-95 flex-shrink-0"
-                            title="Categories"
-                        >
-                            <Grid size={18} className="md:w-5 md:h-5" />
-                            <span className="font-semibold text-[10px] md:text-xs mt-0.5">Categories</span>
-                        </Link>
-
-                        {/* Orders - hidden on mobile */}
-                        <Link 
-                            href="/orders"
-                            className="hidden sm:flex flex-col items-center justify-center text-gray-700 hover:text-white hover:bg-blue-600 bg-gray-50 rounded-lg px-1.5 sm:px-2 py-1.5 sm:py-2 text-xs transition-all duration-200 transform hover:scale-110 hover:shadow-md active:scale-95 flex-shrink-0"
-                            title="Orders"
-                        >
-                            <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
-                            <span className="font-semibold text-[10px] sm:text-xs mt-0.5">Orders</span>
-                        </Link>
-
-                        {/* Wishlist - hidden on mobile */}
-                        <Link 
-                            href="/wishlist"
-                            className="relative hidden sm:flex flex-col items-center justify-center text-gray-700 hover:text-white hover:bg-red-600 bg-gray-50 rounded-lg px-1.5 sm:px-2 py-1.5 sm:py-2 text-xs transition-all duration-200 transform hover:scale-110 hover:shadow-md active:scale-95 flex-shrink-0"
-                            title="Wishlist"
-                        >
-                            <Heart size={18} className="sm:w-5 sm:h-5" />
-                            <span className="font-semibold text-[10px] sm:text-xs mt-0.5">Wishlist</span>
-                            {wishlistCount > 0 && (
-                                <span className={`absolute -top-1 -right-1 text-[8px] sm:text-[10px] text-white bg-red-600 w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center font-bold shadow-lg`}>
-                                    {wishlistCount}
-                                </span>
-                            )}
-                        </Link>
-
-                        {/* Cart - hidden on mobile */}
-                        <Link 
-                            href="/cart"
-                            className="relative hidden sm:flex flex-col items-center justify-center text-gray-700 hover:text-white hover:bg-orange-600 bg-gray-50 rounded-lg px-1.5 sm:px-2 py-1.5 sm:py-2 text-xs transition-all duration-200 transform hover:scale-110 hover:shadow-md active:scale-95 flex-shrink-0"
-                            title="Cart"
-                        >
-                            <ShoppingCart size={18} className="sm:w-5 sm:h-5" />
-                            <span className="font-semibold text-[10px] sm:text-xs mt-0.5">Cart</span>
-                            {cartCount > 0 && (
-                                <span className={`absolute -top-1 -right-1 text-[8px] sm:text-[10px] text-white bg-red-600 w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center font-bold shadow-lg ${cartPulse ? 'cart-badge-pulse' : 'cart-badge-bounce'}`}>
-                                    {cartCount}
-                                </span>
-                            )}
-                        </Link>
-
-                        {/* User Profile / Login */}
-                        <div className="flex items-center gap-1 ml-1 px-1.5 sm:px-2 py-1.5 sm:py-2">
-                            {user ? (
-                                <>
-                                    <UserButton />
-                                    <div className="hidden sm:block text-left">
-                                        <div className="text-xs text-gray-600">Hello,</div>
-                                        <div className="font-semibold text-gray-900 text-xs">{user.firstName?.substring(0, 8)}</div>
-                                    </div>
-                                </>
-                            ) : (
-                                <button 
-                                    onClick={handleOpenSignIn}
-                                    className="bg-orange-500 hover:bg-orange-600 text-white px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg font-semibold text-xs sm:text-sm transition-all flex-shrink-0 whitespace-nowrap"
-                                >
-                                    Login
+                        {/* Center: Search */}
+                        <div className="flex-1">
+                            <form onSubmit={handleSearch} className="flex items-center gap-2 bg-[#0b0f16] px-3 py-2 rounded-full border border-white/5">
+                                <Search size={18} className="text-slate-400" />
+                                <input
+                                    type="text"
+                                    placeholder="Search for products, brands and more..."
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                    className="flex-1 bg-transparent outline-none text-slate-200 placeholder-slate-500 text-sm"
+                                />
+                                <select className="bg-transparent text-slate-300 text-sm outline-none hidden md:block">
+                                    <option>All Categories</option>
+                                </select>
+                                <button type="submit" className="ml-3 bg-violet-600 hover:bg-violet-500 text-white rounded-full px-4 py-2">
+                                    <Search size={18} />
                                 </button>
-                            )}
+                            </form>
+                        </div>
+
+                        {/* Right: actions */}
+                        <div className="flex items-center gap-4">
+                            <div className="hidden md:flex items-center gap-4">
+                                <div className="flex flex-col items-center text-center text-slate-300">
+                                    <PackageIcon size={20} />
+                                    <span className="text-xs">Compare</span>
+                                </div>
+                                <Link href="/wishlist" className="relative flex flex-col items-center text-slate-300">
+                                    <Heart size={20} />
+                                    {wishlistCount > 0 && <span className="absolute -top-2 -right-3 bg-violet-500 text-white text-[10px] font-semibold rounded-full w-5 h-5 flex items-center justify-center">{wishlistCount}</span>}
+                                    <span className="text-xs">Wishlist</span>
+                                </Link>
+                                <Link href="/cart" className="relative flex items-center gap-2 bg-white/5 px-3 py-2 rounded-full">
+                                    <ShoppingCart size={20} />
+                                    <div className="text-left">
+                                        <div className="text-xs text-slate-300">Cart</div>
+                                        <div className="text-sm font-semibold text-white">${(cartCount * 199).toFixed(2)}</div>
+                                    </div>
+                                    {cartCount > 0 && <span className={`absolute -top-2 -right-2 text-[10px] text-white bg-red-600 w-5 h-5 rounded-full flex items-center justify-center font-bold`}>{cartCount}</span>}
+                                </Link>
+                            </div>
+
+                            <div>
+                                {user ? (
+                                    <div className="flex items-center gap-3">
+                                        <div className="h-9 w-9 rounded-full overflow-hidden bg-slate-800 flex items-center justify-center">
+                                            <Image src={user.imageUrl || logo} alt={user?.name || 'User'} width={36} height={36} className="object-cover" />
+                                        </div>
+                                        <div className="hidden sm:block text-left">
+                                            <div className="text-sm font-medium">Hi, {user.name?.split(' ')[0] || user.email}</div>
+                                            <div className="text-xs text-slate-400">My Account</div>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <button onClick={handleOpenSignIn} className="bg-violet-600 px-4 py-2 rounded-full text-white">Login</button>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Secondary nav */}
+                    <div className="mt-4 border-t border-white/5 pt-4">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                                <button className="bg-violet-600 text-white px-4 py-2 rounded-lg flex items-center gap-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
+                                    All Categories
+                                </button>
+                                <nav className="hidden md:flex items-center gap-6 ml-4 text-slate-300">
+                                    <Link href="/" className={`${pathname === '/' ? 'text-white font-medium border-b-2 border-violet-500 pb-1' : 'hover:text-white'}`}>Home</Link>
+                                    <Link href="/products" className={`${pathname.startsWith('/products') || pathname.startsWith('/product/') ? 'text-white font-medium border-b-2 border-violet-500 pb-1' : 'hover:text-white'}`}>Products</Link>
+                                    <Link href="/brands" className={`${pathname.startsWith('/brands') || pathname.startsWith('/brand/') ? 'text-white font-medium border-b-2 border-violet-500 pb-1' : 'hover:text-white'}`}>Brands</Link>
+                                    <Link href="/deals" className={`${pathname.startsWith('/deals') ? 'text-white font-medium border-b-2 border-violet-500 pb-1' : 'hover:text-white'}`}>Deals</Link>
+                                    <Link href="/video-guides" className={`${pathname.startsWith('/video-guides') ? 'text-white font-medium border-b-2 border-violet-500 pb-1' : 'hover:text-white'}`}>Video Guides <span className="ml-1 text-xs bg-violet-600 px-2 py-0.5 rounded-full">New</span></Link>
+                                    <Link href="/about" className={`${pathname.startsWith('/about') ? 'text-white font-medium border-b-2 border-violet-500 pb-1' : 'hover:text-white'}`}>About Us</Link>
+                                    <Link href="/contact" className={`${pathname.startsWith('/contact') ? 'text-white font-medium border-b-2 border-violet-500 pb-1' : 'hover:text-white'}`}>Contact Us</Link>
+                                </nav>
+                            </div>
+
+                            <div className="hidden md:flex items-center gap-4">
+                                <div className="flex items-center gap-2 text-violet-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-violet-400" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2a1 1 0 00-2 0v1H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2h-4V2z"/></svg>
+                                    <div className="text-sm">Flash Sale</div>
+                                    <div className="text-xs font-mono">02 : 45 : 30</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -223,9 +154,6 @@ const Navbar = () => {
             <Drawer 
                 open={drawerOpen} 
                 onClose={() => setDrawerOpen(false)} 
-                isSidebarMode={!isMobile}
-                isSidebarOpen={sidebarOpen}
-                onSidebarToggle={() => setSidebarOpen(!sidebarOpen)}
             />
         </nav>
     )

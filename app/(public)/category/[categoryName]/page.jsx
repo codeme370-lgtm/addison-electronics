@@ -5,7 +5,6 @@ import { useParams } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCategories } from '@/lib/features/category/categorySlice'
 import { fetchProducts } from '@/lib/features/product/productSlice'
-import { useSidebar } from '@/context/SidebarContext'
 import ProductCard from '@/components/ProductCard'
 import Loading from '@/components/Loading'
 import Link from 'next/link'
@@ -15,7 +14,6 @@ export default function CategoryPage() {
   const params = useParams()
   const categoryName = decodeURIComponent(params.categoryName)
   const dispatch = useDispatch()
-  const { sidebarOpen } = useSidebar()
   
   const categories = useSelector(state => state.category.list)
   const categoryStatus = useSelector(state => state.category.status)
@@ -69,46 +67,33 @@ export default function CategoryPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Category Sidebar */}
-          <aside className="hidden lg:block">
-            <div className="bg-white rounded-lg border border-slate-200 p-6 sticky top-20">
-              <h2 className="text-lg font-bold text-slate-900 mb-4">Categories</h2>
-              
-              <Link href="/category" className="w-full">
+        <div className="space-y-6">
+        <div className="bg-white rounded-lg border border-slate-200 p-6">
+          <h2 className="text-lg font-bold text-slate-900 mb-4">Browse Categories</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            <Link href="/category" className="w-full">
+              <button className="w-full text-left px-4 py-3 rounded-lg transition-all font-medium text-slate-700 hover:bg-slate-100 bg-slate-50">
+                All Categories
+              </button>
+            </Link>
+            {productCategories.map((cat) => (
+              <Link key={cat} href={`/category/${encodeURIComponent(cat)}`}>
                 <button
-                  className="w-full text-left px-4 py-3 rounded-lg transition-all font-medium mb-2 flex items-center justify-between text-slate-700 hover:bg-slate-100"
+                  className={`w-full text-left px-4 py-3 rounded-lg transition-all font-medium ${
+                    categoryName === cat
+                      ? 'bg-red-600 text-white shadow-md'
+                      : 'text-slate-700 hover:bg-slate-100 bg-slate-50'
+                  }`}
                 >
-                  All Categories
-                  <ChevronRight size={18} />
+                  <span className="capitalize">{cat}</span>
                 </button>
               </Link>
+            ))}
+          </div>
+        </div>
 
-              <div className="space-y-2">
-                {productCategories.map((cat) => (
-                  <Link key={cat} href={`/category/${encodeURIComponent(cat)}`}>
-                    <button
-                      className={`w-full text-left px-4 py-3 rounded-lg transition-all font-medium flex items-center justify-between group ${
-                        categoryName === cat
-                          ? 'bg-red-600 text-white shadow-md'
-                          : 'text-slate-700 hover:bg-slate-100'
-                      }`}
-                    >
-                      <span className="capitalize">{cat}</span>
-                      <span className={`text-sm font-semibold ${
-                        categoryName === cat ? 'text-white' : 'text-slate-500 group-hover:text-slate-700'
-                      }`}>
-                        {products.filter(p => p.category === cat).length}
-                      </span>
-                    </button>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </aside>
-
-          {/* Products Grid */}
-          <div className="lg:col-span-3">
+        {/* Products Grid */}
+        <div>
             {filteredProducts.length > 0 ? (
               <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
                 {filteredProducts.map((product) => (

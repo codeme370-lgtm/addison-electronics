@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Award, CreditCard, Truck, RefreshCw, Headphones } from "lucide-react";
 
 
 const Footer = () => {
@@ -24,95 +25,173 @@ const Footer = () => {
 
     const linkSections = [
         {
-            title: "USEFUL LINKS",
+            title: "Shop",
             links: [
-                { text: "Home", path: '/', icon: null },
-                { text: "About Us", path: '/about', icon: null },
-                { text: "Contact Us", path: '/contact', icon: null },
-                { text: "Privacy Policy", path: '/policy', icon: null },
+                { text: "All Products", path: '/shop' },
+                { text: "Smartphones", path: '/category/smartphones' },
+                { text: "Laptops", path: '/category/laptops' },
+                { text: "Accessories", path: '/category/accessories' },
+                { text: "Gaming", path: '/category/gaming' },
+                { text: "Top Deals", path: '/deals' },
+            ]
+        },
+        {
+            title: "Company",
+            links: [
+                { text: "About Us", path: '/about' },
+                { text: "Careers", path: '/company/careers' },
+                { text: "Sustainability", path: '/company/sustainability' },
+                { text: "Blog", path: '/blog' },
+            ]
+        },
+        {
+            title: "Customer Service",
+            links: [
+                { text: "Contact Us", path: '/contact' },
+                { text: "Track Your Order", path: '/orders' },
+                { text: "Returns & Refunds", path: '/returns' },
+                { text: "FAQs", path: '/faq' },
             ]
         }
     ];
 
     const socialIcons = [
-        { icon: WhatsappIcon, link: "https://wa.me/233248608602", color: '#25D366' },
-        { icon: TikTokIcon, link: "https://www.tiktok.com/@best_shop_jeescage", color: '#69C9D0' },
+        { icon: WhatsappIcon, link: "https://wa.me/233248608602", color: '#7C3AED' },
+        { icon: TikTokIcon, link: "https://www.tiktok.com/@best_shop_teknova", color: '#69C9D0' },
         { icon: InstagramIcon, link: "https://www.instagram.com/jc_shopping_mall", color: '#E1306C' },
-        { icon: FacebookIcon, link: "https://www.facebook.com/100021363870050/posts/pdfid028SgA9fPoWVH7GXj86LLsUWq4RE9efqX5DozN9VBD3NJA89399ozsvWTwSUMvDB6I/?_rdc=1^_rdr#", color: '#1877F2' },
+        { icon: FacebookIcon, link: "https://www.facebook.com/100021363870050", color: '#1877F2' },
+        { icon: TwitterIcon, link: "https://twitter.com/teknova", color: '#1DA1F2' },
     ]
 
-    return (
-        <footer className="mx-0 bg-slate-900 text-slate-200">
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="flex flex-col lg:flex-row items-start justify-between gap-8 py-12 border-b border-slate-700">
+    const features = [
+        { icon: CreditCard, title: 'Secure Payments', desc: '100% protected transactions' },
+        { icon: Truck, title: 'Free Shipping', desc: 'On orders over $99' },
+        { icon: RefreshCw, title: 'Easy Returns', desc: '30-day return policy' },
+        { icon: Headphones, title: '24/7 Support', desc: 'Dedicated support team' },
+        { icon: Award, title: 'Quality Guarantee', desc: '100% original products' },
+    ];
 
-                    {/* Left: Contact block (narrow) */}
-                    <div className="w-full lg:w-1/3 lg:pr-8">
-                        <div className="flex-shrink-0">
-                            <div className="flex flex-col items-start gap-6">
-                                {/* Address */}
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center">
+    return (
+        <footer className="bg-gradient-to-b from-[#050712] via-[#06071a] to-[#02030a] text-slate-300">
+            <div className="max-w-[1400px] mx-auto px-6 py-12">
+                <div className="rounded-2xl border border-white/6 p-8 bg-[linear-gradient(180deg,rgba(6,6,12,0.6),rgba(2,3,10,0.6))]">
+                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                        {/* Brand */}
+                        <div className="space-y-4">
+                            <div className="flex items-center gap-3">
+                                <div className="h-10 w-10 flex items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-pink-500 text-white font-bold">TN</div>
+                                <div>
+                                    <div className="text-xl font-semibold text-white">TechNova</div>
+                                    <div className="text-xs text-slate-400">Tech for the future</div>
+                                </div>
+                            </div>
+                            <p className="text-sm text-slate-300">Your trusted destination for premium electronics. Discover the latest tech products with unbeatable prices and exceptional service.</p>
+
+                            <div className="space-y-3 mt-4 text-sm">
+                                <div className="flex items-start gap-3">
+                                    <div className="mt-1 w-9 h-9 rounded-full bg-[#0b0f18] flex items-center justify-center">
                                         <MapPinIcon />
                                     </div>
                                     <div>
-                                        <div className="text-base font-semibold text-white">Accra, Ghana</div>
+                                        <div>123 Tech Street, Silicon Valley</div>
+                                        <div className="text-slate-400 text-xs">California, USA - 94025</div>
                                     </div>
                                 </div>
-
-                                {/* Phone */}
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center">
-                                        <PhoneIcon />
-                                    </div>
-                                    <div>
-                                        <div className="text-base font-semibold text-white">+233 248608602</div>
-                                        <div className="text-slate-300">Mon - Fri: 9:00 - 17:00</div>
-                                    </div>
-                                </div>
-
-                                {/* Email */}
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center">
+                                <div className="flex items-start gap-3">
+                                    <div className="mt-1 w-9 h-9 rounded-full bg-[#0b0f18] flex items-center justify-center">
                                         <MailIcon />
                                     </div>
                                     <div>
-                                        <a href="mailto:support@company.com" className="text-base font-semibold text-sky-400">support@company.com</a>
-                                        <div className="text-slate-300">Support</div>
+                                        <a href="mailto:support@technova.com" className="text-sky-400">support@technova.com</a>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-3">
+                                    <div className="mt-1 w-9 h-9 rounded-full bg-[#0b0f18] flex items-center justify-center">
+                                        <PhoneIcon />
+                                    </div>
+                                    <div>
+                                        <div className="text-sm">+1 (555) 123-4567</div>
+                                        <div className="text-xs text-slate-400">Mon - Fri: 9:00 AM - 6:00 PM</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        {/* Columns */}
+                        {linkSections.map((section, sIdx) => (
+                            <div key={sIdx} className="pt-2">
+                                <h4 className="text-lg font-semibold text-white mb-4">{section.title}</h4>
+                                <ul className="space-y-2 text-sm text-slate-300">
+                                    {section.links.map((ln, i) => (
+                                        <li key={i}><Link href={ln.path} className="hover:text-white">{ln.text}</Link></li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
+
+                        {/* Subscribe */}
+                        <div>
+                            <h4 className="text-lg font-semibold text-white mb-4">Stay Updated</h4>
+                            <p className="text-sm text-slate-300 mb-4">Subscribe to get the latest updates on new arrivals, exclusive offers and more.</p>
+                            <div className="flex gap-3">
+                                <input aria-label="email" placeholder="Enter your email address" className="flex-1 rounded-lg bg-[#0b0f18] px-4 py-3 text-sm placeholder:text-slate-500 focus:outline-none" />
+                                <button className="rounded-lg bg-violet-600 px-4 py-3 text-white">↗</button>
+                            </div>
+                            <label className="mt-3 flex items-start gap-3 text-sm text-slate-400">
+                                <input type="checkbox" className="mt-1" />
+                                I agree to receive marketing emails and updates from TechNova.
+                            </label>
+
+                            <div className="mt-6 flex gap-3">
+                                {socialIcons.map((s, i) => (
+                                    <a key={i} href={s.link} className="w-10 h-10 bg-[#0b0f18] rounded-md flex items-center justify-center" aria-label={`social-${i}`}>
+                                        <s.icon color={s.color} />
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
                     </div>
 
-                    {/* Middle: About block */}
-                    <div className="w-full lg:w-1/3">
-                        <h3 className="text-2xl font-semibold text-white">About the company</h3>
-                        <p className="mt-4 text-slate-300 max-w-xl">Welcome to jeescage — your smart destination for the latest gadgets and tech accessories. We source quality products and make shopping fast and secure.</p>
-
-                        <div className="mt-6 flex items-center gap-3">
-                            {socialIcons.map((item, i) => (
-                                <a key={i} href={item.link} className="w-10 h-10 flex items-center justify-center rounded-md shadow-sm bg-slate-800 hover:opacity-90 transition" aria-label={`social-${i}`}>
-                                    <item.icon color={item.color} />
-                                </a>
+                    {/* Features Row */}
+                    <div className="mt-8 rounded-lg border border-white/6 bg-[linear-gradient(180deg,rgba(10,10,20,0.3),rgba(4,6,10,0.3))] p-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 text-sm">
+                            {features.map((f, i) => (
+                                <div key={i} className="flex items-center gap-4">
+                                    <div className="p-3 rounded-md bg-[#060814]">
+                                        <f.icon size={18} className="text-violet-400" />
+                                    </div>
+                                    <div>
+                                        <div className="font-semibold text-white">{f.title}</div>
+                                        <div className="text-xs text-slate-400">{f.desc}</div>
+                                    </div>
+                                </div>
                             ))}
                         </div>
                     </div>
 
-                    {/* Right: Useful links (moved to right) */}
-                    <div className="w-full lg:w-1/3 lg:pl-8">
-                        <ul className="space-y-3 text-slate-300">
-                            <li className="text-right"><Link href="/" className="hover:text-white">Home</Link></li>
-                            <li className="text-right"><Link href="/about" className="hover:text-white">About Us</Link></li>
-                            <li className="text-right"><Link href="/contact" className="hover:text-white">Contact Us</Link></li>
-                            <li className="text-right"><Link href="/policy" className="hover:text-white">Privacy & Policy</Link></li>
-                        </ul>
+                    {/* Bottom */}
+                    <div className="mt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+                        <div className="text-sm text-slate-400">© {new Date().getFullYear()} TechNova. All rights reserved.</div>
+
+                        <div className="flex items-center gap-4">
+                            <div className="hidden sm:flex items-center gap-3">
+                                <Link href="/policy" className="text-sm text-slate-400 hover:text-white">Privacy Policy</Link>
+                                <Link href="/terms" className="text-sm text-slate-400 hover:text-white">Terms of Use</Link>
+                                <Link href="/refund" className="text-sm text-slate-400 hover:text-white">Refund Policy</Link>
+                            </div>
+
+                            <div className="flex items-center gap-3">
+                                {/* Payment badges (simple placeholders) */}
+                                <div className="flex items-center gap-2">
+                                    <div className="px-2 py-1 rounded-md bg-white/5 text-xs">VISA</div>
+                                    <div className="px-2 py-1 rounded-md bg-white/5 text-xs">MC</div>
+                                    <div className="px-2 py-1 rounded-md bg-white/5 text-xs">AMEX</div>
+                                    <div className="px-2 py-1 rounded-md bg-white/5 text-xs">PayPal</div>
+                                    <div className="px-2 py-1 rounded-md bg-white/5 text-xs">Apple Pay</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                </div>
-
-                <div className="py-6 text-sm text-slate-400 text-center">
-                    © {new Date().getFullYear()} jeescage. All rights reserved.
                 </div>
             </div>
         </footer>

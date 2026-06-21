@@ -1,10 +1,10 @@
 'use client'
 
-import { useUser } from '@clerk/nextjs'
+import { useAuth } from '@/context/AuthContext';
 import { useEffect, useState } from 'react'
 
 const Greeting = () => {
-    const { user } = useUser()
+    const { user } = useAuth()
     const [greeting, setGreeting] = useState('')
     const [timeOfDay, setTimeOfDay] = useState('')
 
@@ -51,7 +51,7 @@ const Greeting = () => {
                                 )}
                             </p>
                             <p className='text-sm sm:text-base text-slate-600 mt-1'>
-                                Welcome to JeesCage - Your favorite shopping destination
+                                Welcome to Teknova - Your favorite shopping destination
                             </p>
                         </div>
                     </div>

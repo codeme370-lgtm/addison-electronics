@@ -1,23 +1,26 @@
-import { clerkClient } from "@clerk/nextjs/server"
+import prisma from '../lib/prisma.js'
 
-
-const authAdmin =async (userId) => {
+const authAdmin = async (userId) => {
     try {
-        //let's check user
-        if(!userId) return false;
+        // Check if userId exists
+        if (!userId) return false;
 
-        const client = await clerkClient()
-        const user = await client.users.getUser(userId)
+        // Get user from database
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+            select: { email: true }
+        });
+
+        if (!user) return false;
 
         const raw = process.env.ADMIN_EMAIL || '';
         const list = raw.replace(/['"]/g, '').split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
-        const userEmail = (user.emailAddresses?.[0]?.emailAddress || '').toLowerCase();
+        const userEmail = user.email.toLowerCase();
         return list.includes(userEmail);
     } catch (error) {
         console.error(error)
         return false
-        
     }
-    
 }
+
 export default authAdmin;

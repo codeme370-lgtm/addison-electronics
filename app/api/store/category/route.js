@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAuth } from "@clerk/nextjs/server";
+import { getServerAuth } from '@/lib/serverAuth';
 import prisma from "@/lib/prisma";
 import authSeller from "@/middlewares/authSeller";
 
@@ -15,7 +15,7 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
-    const { userId } = getAuth(request);
+    const { userId } = getServerAuth(request);
     const storeId = await authSeller(userId);
     if (!storeId) {
       return NextResponse.json({ error: 'Not authorized' }, { status: 403 });

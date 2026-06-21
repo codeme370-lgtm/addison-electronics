@@ -2,6 +2,19 @@ import { Suspense } from 'react'
 import Loading from '@/components/Loading'
 import CategoryContent from './CategoryContent'
 
+export const metadata = {
+  title: "Product Categories - Teknova",
+  description: "Browse electronics and tech product categories at Teknova. Find gaming gear, laptops, audio devices, and more.",
+  keywords: ["product categories", "electronics", "gaming", "laptops", "audio", "tech accessories"],
+  openGraph: {
+    title: "Product Categories - Teknova",
+    description: "Explore our wide range of electronics and tech product categories.",
+    url: "/category",
+    siteName: "Teknova",
+    type: "website"
+  }
+};
+
 export default function CategoryPage() {
   return (
     <div className="min-h-screen bg-slate-50">

@@ -1,4 +1,4 @@
-import { getAuth } from "@clerk/nextjs/server";
+import { getServerAuth } from "@/lib/serverAuth";
 import { NextResponse } from "next/server";
 import { PaymentMethod } from "@prisma/client";
 import prisma from "@/lib/prisma";
@@ -10,9 +10,9 @@ export async function POST(request) {
         console.log('POST /api/orders incoming')
         const textBody = request ? await request.text().catch(() => null) : null
         if(textBody) console.log('raw body length:', textBody.length)
-        //user and has from clerk
-        const {userId, has} = getAuth(request)
-       //check if the userid is  not there
+        // user and has from server auth
+        const { userId, has } = await getServerAuth(request)
+       //check if the userid is not there
        if(!userId){
         return NextResponse.json({error: "Unauthorized"}, {status: 401})
        }
@@ -240,7 +240,7 @@ return NextResponse.json({message: "Order placed successfully", orderIds, totalO
 export async function GET(request) {
     try {
         //userid
-        const {userId} = getAuth(request)
+        const { userId } = getServerAuth(request)
         //find many orders
         const orders = await prisma.order.findMany({
             where: {

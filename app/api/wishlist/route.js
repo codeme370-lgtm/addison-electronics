@@ -1,11 +1,11 @@
-import { getAuth } from "@clerk/nextjs/server";
+import { getServerAuth } from "@/lib/serverAuth";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
 // Update user wishlist
 export async function POST(request) {
     try {
-        const { userId } = getAuth(request)
+        const { userId } = getServerAuth(request)
         const { wishlistItems } = await request.json()
 
         // Save the wishlist to the user object
@@ -23,7 +23,7 @@ export async function POST(request) {
 // Get user wishlist
 export async function GET(request) {
     try {
-        const { userId } = getAuth(request)
+        const { userId } = getServerAuth(request)
         
         // Find the user and get their wishlist
         const user = await prisma.user.findUnique({

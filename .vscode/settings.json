@@ -1,18 +1,21 @@
 {
-    "cSpell.words": [
-        "cuid",
-        "ecommerce",
-        "Inngest",
-        "jeema",
-        "jeescage",
-        "jeeshop",
-        "neondatabase",
-        "turbopack",
-        "Updation"
-    ],
-    "prisma.pinToPrisma6": false,
-    "powerquery.client.additionalSymbolsDirectories": [
-        "c:/Users/KA/Desktop/jeeshop/.vscode/excel-pq-symbols",
-        "c:/Users/KA/OneDrive/Desktop/jeeshop/.vscode/excel-pq-symbols"
-    ]
+  "cSpell.words": [
+    "neon",
+    "inngest",
+    "paystack",
+    "Neon",
+    "Inngest",
+    "Paystack"
+  ],
+  "cSpell.enabled": true,
+  "cSpell.enableFiletypes": [
+    "javascript",
+    "typescript",
+    "json",
+    "markdown",
+    "plaintext"
+  ],
+  "powerquery.client.additionalSymbolsDirectories": [
+    "c:/Users/KA/OneDrive/Desktop/electronic/.vscode/excel-pq-symbols"
+  ]
 }

@@ -1,96 +1,18 @@
-'use client'
+import OrdersClient from './OrdersClient';
 
-import PageTitle from "@/components/PageTitle"
-import { useEffect, useState } from "react";
-import OrderItem from "@/components/OrderItem";
-import { useAuth, useUser } from "@clerk/nextjs";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import Loading from "@/components/Loading";
+export const metadata = {
+  title: "My Orders - Teknova",
+  description: "Track and manage your orders at Teknova. View order history, status updates, and delivery information.",
+  keywords: ["my orders", "order tracking", "purchase history", "Teknova"],
+  openGraph: {
+    title: "My Orders - Teknova",
+    description: "Keep track of your electronics and tech purchases with Teknova's order management.",
+    url: "/orders",
+    siteName: "Teknova",
+    type: "website",
+  },
+};
 
-
-export default function Orders() {
-const {getToken}=useAuth();
-const {user, isLoaded}=useUser();
-    const [orders, setOrders] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    const router = useRouter();
-    
-    const fetchOrders = async () => {
-        try{
-            //when the user is logged in
-            const token = await getToken();
-            const {data} = await axios.get('/api/orders', {
-                headers: {
-                  Authorization: `Bearer ${token}`
-                }
-            });
-            setOrders(data.orders);
-            setLoading(false);
-        }catch(error){
-            console.log("Error fetching orders:", error);
-        }
-    }
-
-    const handleAddressUpdated = (updatedOrder) => {
-        // Update the order in the state
-        setOrders(prevOrders => 
-            prevOrders.map(order => 
-                order.id === updatedOrder.id ? updatedOrder : order
-            )
-        )
-    }
-
-    useEffect(() => {
-       if(isLoaded){
-       //when the user is logged in
-       if(user){
-        fetchOrders();
-       }else{
-        router.push('/');
-       }
-    }
-    }, [isLoaded, user, getToken, router]);
-
-    //if loading is false
-    if(!isLoaded || loading){
-        return <Loading/>
-    }
-
-    return (
-        <div className="min-h-[70vh] mx-6">
-            {orders.length > 0 ? (
-                (
-                    <div className="my-20 max-w-7xl mx-auto">
-                        <PageTitle heading="My Orders" text={`Showing total ${orders.length} orders`} linkText={'Go to home'} />
-
-                        <table className="w-full max-w-5xl text-slate-500 table-auto border-separate border-spacing-y-12 border-spacing-x-4">
-                            <thead>
-                                <tr className="max-sm:text-sm text-slate-600 max-md:hidden">
-                                    <th className="text-left">Product</th>
-                                    <th className="text-center">Total Price</th>
-                                    <th className="text-left">Address</th>
-                                    <th className="text-left">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {orders.map((order) => (
-                                    <OrderItem 
-                                        order={order} 
-                                        key={order.id} 
-                                        onAddressUpdated={handleAddressUpdated}
-                                    />
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                )
-            ) : (
-                <div className="min-h-[80vh] mx-6 flex items-center justify-center text-slate-400">
-                    <h1 className="text-2xl sm:text-4xl font-semibold">You have no orders</h1>
-                </div>
-            )}
-        </div>
-    )
+export default function OrdersPage() {
+  return <OrdersClient />;
 }

@@ -1,48 +1,40 @@
-'use client'
+import PageClient from './page.client'
 
-import ProductDescription from "@/components/ProductDescription";
-import ProductDetails from "@/components/ProductDetails";
-import RelatedProducts from "@/components/RelatedProducts";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+export const metadata = {
+  title: "Product Details - Teknova",
+  description: "View detailed information about electronics and tech products at Teknova. Read reviews, check specifications, and add to cart.",
+  keywords: ["product details", "electronics", "tech specs", "reviews", "Teknova"],
+  openGraph: {
+    title: "Product Details - Teknova",
+    description: "Explore detailed product information and specifications.",
+    url: "/product",
+    siteName: "Teknova",
+    type: "product"
+  },
+  other: {
+    "application/ld+json": JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Electronics Product",
+      "description": "High-quality electronics and tech product available at Teknova.",
+      "brand": {
+        "@type": "Brand",
+        "name": "Various"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5",
+        "reviewCount": "100"
+      }
+    })
+  }
+};
 
-export default function Product({ params }) {
-
-    const { productId } = useParams() || params;
-    const [product, setProduct] = useState();
-    const products = useSelector(state => state.product.list);
-
-    const fetchProduct = async () => {
-        const product = products.find((product) => product.id === productId);
-        setProduct(product);
-    }
-
-    useEffect(() => {
-        if (products.length > 0) {
-            fetchProduct()
-        }
-        scrollTo(0, 0)
-    }, [productId, products]);
-
-    return (
-        <div className="mx-3 sm:mx-4 md:mx-6">
-            <div className="max-w-7xl mx-auto px-0">
-
-                {/* Breadcrums */}
-                <div className="text-gray-600 text-xs sm:text-sm mt-6 sm:mt-8 mb-4 sm:mb-5">
-                    Home / Products / {product?.category}
-                </div>
-
-                {/* Product Details */}
-                {product && (<ProductDetails product={product} />)}
-
-                {/* Description & Reviews */}
-                {product && (<ProductDescription product={product} />)}
-
-                {/* Related Products */}
-                {product && (<RelatedProducts product={product} />)}
-            </div>
-        </div>
-    );
+export default function Page() {
+  return <PageClient />;
 }

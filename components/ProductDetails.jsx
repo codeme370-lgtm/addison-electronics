@@ -5,7 +5,7 @@ import { StarIcon, TagIcon, EarthIcon, CreditCardIcon, UserIcon, Check, Loader, 
 import { useState } from "react";
 import Image from "next/image";
 import Counter from "./Counter";
-import { useUser } from '@clerk/nextjs'
+import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from "react-redux";
@@ -26,7 +26,7 @@ const ProductDetails = ({ product }) => {
     const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
     const [isAddingToCart, setIsAddingToCart] = useState(false);
     const [cartConfirmed, setCartConfirmed] = useState(false);
-    const { user, isLoaded } = useUser()
+    const { user, loading } = useAuth()
     const router = useRouter()
 
     const addToCartHandler = async () => {

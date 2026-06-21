@@ -1,4 +1,4 @@
-import { getAuth } from "@clerk/nextjs/server";
+import { getServerAuth } from "@/lib/serverAuth";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import authSeller from "@/middlewares/authSeller";
@@ -6,7 +6,7 @@ import authSeller from "@/middlewares/authSeller";
 
 export async function POST(request) {
   try {
-    const { userId } = getAuth(request);
+    const { userId } = await getServerAuth(request);
     if (!userId) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
@@ -72,7 +72,7 @@ export async function POST(request) {
 // Update existing product (store owner)
 export async function PATCH(request) {
   try {
-    const { userId } = getAuth(request);
+    const { userId } = getServerAuth(request);
     if (!userId) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
@@ -125,7 +125,7 @@ export async function PATCH(request) {
 //Get all products for a seller
 export async function GET(request) {
   try {
-    const { userId } = getAuth(request);
+    const { userId } = getServerAuth(request);
     if (!userId) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
@@ -170,7 +170,7 @@ export async function GET(request) {
 //Delete a product
 export async function DELETE(request) {
   try {
-    const { userId } = getAuth(request);
+    const { userId } = getServerAuth(request);
     if (!userId) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }

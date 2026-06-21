@@ -1,18 +1,17 @@
 "use client"
 import Link from "next/link"
-import { useUser, UserButton, useAuth } from "@clerk/nextjs"
 import { Menu, Bell } from "lucide-react"
 import { useEffect, useState, useRef } from "react"
 import Pusher from "pusher-js"
 import toast from "react-hot-toast"
 import axios from "axios"
 import { useRouter } from "next/navigation"
+import { useAuth } from "@/context/AuthContext"
 
 
 const StoreNavbar = ({ onMenuClick }) => {
-    // create the user from clerk
-    const { user } = useUser()
-    const { getToken } = useAuth()
+    // create the user from auth
+    const { user, signOut } = useAuth()
     const [unreadCount, setUnreadCount] = useState(0)
     const [deliveryReportCount, setDeliveryReportCount] = useState(0)
     const [showDropdown, setShowDropdown] = useState(false)
@@ -25,8 +24,6 @@ const StoreNavbar = ({ onMenuClick }) => {
 
     const fetchRecent = async () => {
         try {
-            const token = await getToken()
-            if (!token) return null
             const { data } = await axios.get('/api/store/address-alerts', {
                 headers: { Authorization: `Bearer ${token}` }
             })
@@ -55,10 +52,7 @@ const StoreNavbar = ({ onMenuClick }) => {
             if (!pusherClient) {
                 const p = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
                     cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
-                    authEndpoint: "/api/pusher/auth",
-                    auth: {
-                        headers: { Authorization: `Bearer ${await getToken()}` }
-                    }
+                    authEndpoint: "/api/pusher/auth"
                 })
                 setPusherClient(p)
                 channel = p.subscribe(`private-store-${storeId}`)
@@ -179,9 +173,7 @@ const StoreNavbar = ({ onMenuClick }) => {
                                                     setUnreadCount(c => Math.max(0, c - 1))
                                                     toast.success('Marked as verified')
                                                     try {
-                                                        const token = await getToken()
-                                                        if (!token) throw new Error('Authentication required')
-                                                        await axios.patch('/api/store/address-alerts', { alertId: alert.id }, { headers: { Authorization: `Bearer ${token}` } })
+                                                        await axios.patch('/api/store/address-alerts', { alertId: alert.id })
                                                     } catch (err) {
                                                         // revert optimistic change
                                                         setRecentAlerts(prev => prev.map(a => a.id === alert.id ? { ...a, isRead: false } : a))
@@ -200,8 +192,8 @@ const StoreNavbar = ({ onMenuClick }) => {
                         </div>
                     )}
                 </div>
-                <p>Hi, {user?.firstName}</p>
-                <UserButton />
+                <p>Hi, {user?.name}</p>
+                <button onClick={signOut} className="text-sm text-red-600">Sign Out</button>
             </div>
         </div>
     )

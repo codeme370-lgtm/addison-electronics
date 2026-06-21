@@ -1,12 +1,12 @@
-import { getAuth } from "@clerk/nextjs/server"
+import { getSessionFromRequest } from "@/lib/authHelpers"
 import { NextResponse } from "next/server"
 import pusher from "@/lib/pusher"
 import prisma from "@/lib/prisma"
 
 export async function POST(req) {
   try {
-    const { userId } = getAuth(req)
-    if (!userId) {
+    const session = getSessionFromRequest(req)
+    if (!session || !session.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
@@ -22,7 +22,7 @@ export async function POST(req) {
 
     const storeId = channel_name.replace('private-store-', '')
     const store = await prisma.store.findUnique({ where: { id: storeId } })
-    if (!store || store.userId !== userId) {
+    if (!store || store.userId !== session.id) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 })
     }
 

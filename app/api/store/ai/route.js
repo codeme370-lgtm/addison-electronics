@@ -1,5 +1,5 @@
 import authSeller from "@/middlewares/authSeller";
-import { getAuth } from "@clerk/nextjs/server";
+import { getServerAuth } from '@/lib/serverAuth';
 import { NextResponse } from "next/server";
 import { openai } from "@/configs/openai";
 
@@ -60,7 +60,7 @@ Schema:
 
 export async function POST(request) {
   try {
-    const { userId } = getAuth(request);
+    const { userId } = getServerAuth(request);
 
     const isSeller = await authSeller(userId);
     if (!isSeller) {

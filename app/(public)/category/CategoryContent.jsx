@@ -5,7 +5,6 @@ import { useSearchParams } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCategories } from '@/lib/features/category/categorySlice'
 import { fetchProducts } from '@/lib/features/product/productSlice'
-import { useSidebar } from '@/context/SidebarContext'
 import ProductCard from '@/components/ProductCard'
 import Loading from '@/components/Loading'
 import Link from 'next/link'
@@ -13,7 +12,6 @@ import { ChevronRight } from 'lucide-react'
 
 export default function CategoryContent() {
   const dispatch = useDispatch()
-  const { sidebarOpen } = useSidebar()
   const searchParams = useSearchParams()
   const categoryFromUrl = searchParams.get('category')
   
@@ -62,49 +60,38 @@ export default function CategoryContent() {
   const productCategories = Array.from(new Set(products.map(p => p.category))).sort()
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-      {/* Category Sidebar */}
-      <aside className="hidden">
-        <div className="bg-white rounded-lg border border-slate-200 p-6 sticky top-20">
-          <h2 className="text-lg font-bold text-slate-900 mb-4">Categories</h2>
-          
+    <div className="space-y-6">
+      <div className="bg-white rounded-lg border border-slate-200 p-6">
+        <h2 className="text-lg font-bold text-slate-900 mb-4">Filter by Category</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
           <button
             onClick={() => setSelectedCategory(null)}
-            className={`w-full text-left px-4 py-3 rounded-lg transition-all font-medium mb-2 flex items-center justify-between ${
+            className={`w-full text-left px-4 py-3 rounded-lg transition-all font-medium ${
               selectedCategory === null
-                ? 'bg-red-600 text-white shadow-md'
-                : 'text-slate-700 hover:bg-slate-100'
+                ? 'bg-orange-600 text-white shadow-md'
+                : 'text-slate-700 hover:bg-slate-100 bg-slate-50'
             }`}
           >
             All Products
-            <ChevronRight size={18} />
           </button>
-
-          <div className="space-y-2">
-            {productCategories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`w-full text-left px-4 py-3 rounded-lg transition-all font-medium flex items-center justify-between group ${
-                  selectedCategory === cat
-                    ? 'bg-orange-600 text-white shadow-md'
-                    : 'text-slate-700 hover:bg-slate-100'
-                }`}
-              >
-                <span className="capitalize">{cat}</span>
-                <span className={`text-sm font-semibold ${
-                  selectedCategory === cat ? 'text-white' : 'text-slate-500 group-hover:text-slate-700'
-                }`}>
-                  {products.filter(p => p.category === cat).length}
-                </span>
-              </button>
-            ))}
-          </div>
+          {productCategories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              className={`w-full text-left px-4 py-3 rounded-lg transition-all font-medium ${
+                selectedCategory === cat
+                  ? 'bg-orange-600 text-white shadow-md'
+                  : 'text-slate-700 hover:bg-slate-100 bg-slate-50'
+              }`}
+            >
+              <span className="capitalize">{cat}</span>
+            </button>
+          ))}
         </div>
-      </aside>
+      </div>
 
       {/* Products Grid */}
-      <div className="lg:col-span-4">
+      <div>
         {/* Selected Category Title */}
         {selectedCategory && (
           <div className="mb-6">

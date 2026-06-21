@@ -1,4 +1,4 @@
-import { getAuth } from "@clerk/nextjs/server";
+import { getServerAuth } from "@/lib/serverAuth";
 import { NextResponse } from "next/server";
 import authSeller from "@/middlewares/authSeller";
 import crypto from "crypto";
@@ -6,7 +6,7 @@ import crypto from "crypto";
 // Upload image and return URL
 export async function POST(request) {
   try {
-    const { userId } = getAuth(request);
+    const { userId } = await getServerAuth(request);
     if (!userId) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }

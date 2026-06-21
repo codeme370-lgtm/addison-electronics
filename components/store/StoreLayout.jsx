@@ -4,9 +4,8 @@ import Loading from "../Loading"
 import Link from "next/link"
 import { ArrowRightIcon } from "lucide-react"
 import SellerNavbar from "./StoreNavbar"
-import SellerSidebar from "./StoreSidebar"
 import StoreDrawer from "./StoreDrawer"
-import { useAuth } from "@clerk/nextjs"
+import { useAuth } from '@/context/AuthContext';
 import axios from "axios"
 
 
@@ -64,9 +63,8 @@ const {getToken} = useAuth()
         <div className="flex flex-col h-screen">
             <SellerNavbar onMenuClick={() => setDrawerOpen(true)} />
             <StoreDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} storeInfo={storeInfo} />
-            <div className="flex flex-1 items-start h-full overflow-y-scroll no-scrollbar">
-                <SellerSidebar storeInfo={storeInfo} />
-                <div className="flex-1 h-full p-5 lg:pl-12 lg:pt-12 overflow-y-scroll">
+            <div className="flex flex-1 h-full overflow-y-scroll no-scrollbar">
+                <div className="flex-1 h-full p-5 overflow-y-scroll">
                     {children}
                 </div>
             </div>

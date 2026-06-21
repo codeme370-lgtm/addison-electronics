@@ -1,30 +1,35 @@
 'use client'
 
 import Link from "next/link"
-import { useUser, UserButton } from "@clerk/nextjs"
+import { useAuth } from "@/context/AuthContext";
 import { Menu } from "lucide-react"
+import { usePathname } from 'next/navigation'
 
 
 const AdminNavbar = ({ onMenuClick }) => {
-//let's return the admin
-const {user}=useUser()
+const pathname = usePathname()
+const title = pathname === '/admin' ? 'Dashboard' : pathname.split('/').filter(Boolean).slice(-1)[0]?.replace(/-/g,' ').replace(/\b\w/g, (c) => c.toUpperCase()) || 'Dashboard'
+const {user, signOut}=useAuth()
 
     return (
-        <div className="flex items-center justify-between px-12 py-3 border-b border-slate-200 transition-all">
+        <div className="flex items-center justify-between px-8 py-4 border-b border-white/10 bg-[#080b16] text-slate-200">
             <div className="flex items-center gap-4">
-                <button onClick={onMenuClick} className="p-2 hover:bg-slate-100 rounded-md" aria-label="Open menu">
-                    <Menu size={24} />
+                <button onClick={onMenuClick} className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/5 text-slate-200 transition hover:bg-white/10" aria-label="Open menu">
+                    <Menu size={22} />
                 </button>
-                <Link href="/" className="relative text-5xl md:text-6xl font-semibold text-slate-700">
-                    <span className="text-red-600">jees</span>cage<span className="text-red-600 text-6xl md:text-7xl leading-0">.</span>
-                    <p className="absolute text-xs font-semibold -top-1 -right-13 px-3 p-0.5 rounded-full flex items-center gap-2 text-white bg-red-600">
-                        Admin
-                    </p>
-                </Link>
+                <div>
+                    <p className="text-xs uppercase tracking-[0.28em] text-slate-500">Admin Panel</p>
+                    <h1 className="text-xl font-semibold text-white">{title}</h1>
+                </div>
             </div>
             <div className="flex items-center gap-3">
-                <p>Hi, {user?.firstName}</p>
-                <UserButton/>
+                <p className="text-sm text-slate-200">Hi, {user?.fullName || user?.name || user?.email}</p>
+                <button 
+                    onClick={signOut}
+                    className="rounded-2xl bg-violet-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-violet-500"
+                >
+                    Sign Out
+                </button>
             </div>
         </div>
     )

@@ -1,15 +1,13 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { useUser } from '@clerk/nextjs'
+import { useAuth } from '@/context/AuthContext';
 import ProductCard from './ProductCard'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
-import { useSidebar } from '@/context/SidebarContext'
 
 const FlashDealsSection = () => {
-    const { sidebarOpen } = useSidebar()
-    const { user } = useUser()
+    const { user } = useAuth()
     const products = useSelector(state => state.product.list)
     const [timeLeft, setTimeLeft] = useState({ hours: 2, minutes: 15, seconds: 22 })
     const [scrollPos, setScrollPos] = useState(0)
@@ -114,7 +112,7 @@ const FlashDealsSection = () => {
                 </div>
 
                 {/* Grid layout for flash deals - responsive */}
-                <div className={`grid gap-2 sm:gap-3 md:gap-4 ${sidebarOpen ? 'grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4' : 'grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5'}`}>
+                <div className='grid gap-2 sm:gap-3 md:gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5'>
                     {flashProducts.map((product, idx) => (
                         <div key={product.id || idx} className='group relative'>
                             {/* Discount badge */}

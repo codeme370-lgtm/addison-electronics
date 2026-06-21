@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import  prisma  from "@/lib/prisma";
-import { getAuth } from "@clerk/nextjs/server";
+import { getServerAuth } from "@/lib/serverAuth";
 
 //Get a store info and Seller Info
 

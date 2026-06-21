@@ -1,5 +1,5 @@
 import {NextResponse} from 'next/server'
-import {getAuth} from '@clerk/nextjs/server'
+import { getServerAuth } from '@/lib/serverAuth';
 import authAdmin from '@/middlewares/authAdmin'
 import prisma from '@/lib/prisma'
 
@@ -8,7 +8,7 @@ import prisma from '@/lib/prisma'
 export async function POST(request) {
     try {
         //let's get our user
-        const {userId}=getAuth(request)
+        const { userId } = getServerAuth(request)
         const isAdmin= await authAdmin(userId)
 
         //check if  not admin
@@ -32,11 +32,11 @@ export async function POST(request) {
        }
 
        //suppose store is found, let's toggle the active status
-      await prisma.store.update({
-        where:{id:storeId},
-        data:{isActive:!store.isActive}
+       const updatedStore = await prisma.store.update({
+         where:{id:storeId},
+         data:{isActive:!store.isActive}
        })
-       return NextResponse.json({message:'Store status toggled successfully'}, {status:200})
+       return NextResponse.json({message:'Store status toggled successfully', store: updatedStore}, {status:200})
     } catch (error) {
      console.error(error)
         return NextResponse.json({error:error.code || error.message}, {status:400})

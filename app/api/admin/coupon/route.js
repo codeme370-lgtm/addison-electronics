@@ -1,4 +1,4 @@
-import { getAuth } from "@clerk/nextjs/server";
+import { getServerAuth } from '@/lib/serverAuth';
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import authAdmin from "@/middlewares/authAdmin";
@@ -10,31 +10,37 @@ import { inngest } from "@/lib/inngest";
 export async function POST(request) {
     try {
        //let's get the user Id
-       const { userId } = getAuth(request);
+       const { userId } = getServerAuth(request);
        //check if the user is an admin from the middleware
        const isAdmin = await authAdmin(userId)
        //if it is not an admin, return error
        if(!isAdmin){
         return NextResponse.json({ error: 'you are not authorized to perform this action' }, { status: 401 });
        }
-       //if it an admin, return the coupon details from the request body
-       const {coupon}=await request.json();
-       //get the coupon code
-       coupon.code=coupon.code.toUpperCase();
+       const {coupon} = await request.json();
+       if (!coupon || !coupon.code || !coupon.discount || !coupon.expiresAt) {
+          return NextResponse.json({ error: 'Coupon code, discount and expiry date are required' }, { status: 400 });
+       }
 
-       await prisma.coupon.create({
-        data:coupon
-       }).then(async(coupon)=>{
-// run inngest function to delete coupon on expiry
-        await inngest.send(
-        {
-            name:'app/coupon.expired',
-            data:{
-                code:coupon.code,
-                expires_at:coupon.expiresAt
+       const couponData = {
+         ...coupon,
+         code: coupon.code.toUpperCase(),
+         discount: Number(coupon.discount),
+         expiresAt: new Date(coupon.expiresAt)
+       }
+
+       const createdCoupon = await prisma.coupon.create({
+         data: couponData
+       })
+
+       await inngest.send({
+            name: 'app/coupon.expired',
+            data: {
+                code: createdCoupon.code,
+                expires_at: createdCoupon.expiresAt
             }
-        })
-       });
+        });
+
        return NextResponse.json({message:'coupon created successfully'});
     } catch (error) {
         console.error(error);
@@ -42,27 +48,33 @@ export async function POST(request) {
     }
 }
 
-//Delete a coupon /api/coupon?id=couponId
+//Delete a coupon /api/admin/coupon?code=COUPONCODE
 export async function DELETE(request){
     try{
-//let's get the user Id and check if admin
-       const { userId } = getAuth(request);
+       // let's get the user Id and check if admin
+       const { userId } = getServerAuth(request);
        const isAdmin = await authAdmin(userId)
-       //if it is not an admin, return error
        if(!isAdmin){
         return NextResponse.json({ error: 'you are not authorized to perform this action' }, { status: 401 });
        }
-       //let's get the request url and search params
-       const {searchParams}=new URL(request.url);
-       const code=searchParams.get('code');
 
-       //lets get code fom prisma and delete
-       await prisma.coupon.delete({
-        where:{code}
-       })
-       //return success message
+       const { searchParams } = new URL(request.url);
+       const code = searchParams.get('code');
+
+       if (!code) {
+           return NextResponse.json({ error: 'Coupon code is required' }, { status: 400 });
+       }
+
+       const deleted = await prisma.coupon.delete({
+        where: { code }
+       });
+
+       if (!deleted) {
+           return NextResponse.json({ error: 'Coupon not found' }, { status: 404 });
+       }
+
        return NextResponse.json({message:'coupon deleted successfully'});
-    }catch (error) {
+    } catch (error) {
         console.error(error);
         return NextResponse.json({ error: error.code || error.message }, { status: 400 } )
     }
@@ -72,7 +84,7 @@ export async function DELETE(request){
 export async function GET(request){
     try{
         //get the user and check if admin
-       const { userId } = getAuth(request);
+       const { userId } = getServerAuth(request);
        const isAdmin = await authAdmin(userId)
        //if it is not an admin, return error
        if(!isAdmin){

@@ -1,22 +1,14 @@
-'use client'
+import PageClient from './page.client'
 
-import Loading from "@/components/Loading"
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+export const metadata = {
+  title: "Loading - Teknova",
+  description: "Please wait while we redirect you to your destination on Teknova.",
+  robots: {
+    index: false,
+    follow: false
+  }
+};
 
-export default function LoadingPage() {
-    const router = useRouter()
-
-    useEffect(() => {
-        const params = new URLSearchParams(window.location.search)
-        const url = params.get('nextUrl')
-
-        if (url) {
-            setTimeout(() => {
-                router.push(url)
-            }, 8000)
-        }
-    }, [router])
-
-    return <Loading />
+export default function Page() {
+  return <PageClient />;
 }
